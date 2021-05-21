@@ -1,0 +1,443 @@
+<html>
+<title>Aplicatia 8 - Sisteme de reglare automata </title>
+<body>
+<table width="100%">
+<tr><td height="50" background="../../Images/imm_s.bmp"><center><font color= "blue" size=5>Aplicatia 8 - Sisteme de reglare automata </Center></TD></TR>
+</table>
+<br><font color= "Blue" size=5> Obiective </font>
+<ul>
+<table  border=1>
+<tr><td bgcolor="whitesmoke">
+<li>Implementarea sistemelor de reglare automata (SRA) in aplicatii SCADA.
+<li>Utilizarea obiectului "Trend" pentru afisarea formelor de unda ale marimilor caracteristice unui SRA.
+<li>Utilizarea SRA de tip PI, PID.
+<li>Utilizarea obiectului "Faceplate SRA".
+<li>Realizarea unei pagini grafice in care se controleaza temperatura prin intermediul unui SRA - PID.
+<li>Realizarea unei pagini grafice in care se controleaza nivelul de iluminare prin intermediul unui "Faceplate SRA-PI".  
+</td></tr></table>
+</ul>
+<font color= "Blue" size=5> Prezentare teoretica </font>
+<br><br><b> Sisteme de reglare automata (SRA)  </b>
+<br><br>&nbsp;&nbsp;&nbsp;&nbsp;SRA - Sistemele de Reglre Automata sunt sisteme cu bucla de reactie (loop control) care functioneaza pe baza analizei in 
+permanenta a valorii de iesire (marimii reglate), preluata prin intermediul reactiei negative. Diferenta dintre valoarea de iesire si valoarea de referinta, numita "eroare",  
+este folosita de SRA pentru eliminarea acesteia sau mentinerea ei in anumite intervale prestabilite. 
+<br><br><center><img src="../sist_regl/im_citect701.gif"></center>
+<br>&nbsp;&nbsp;&nbsp;&nbsp; Un SRA se compune din urmatoarele elemente:
+<ul>
+	<li> RA - Regulator automat;
+	<li> PF - Partea fixata(Procesul condus);
+</ul>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Marimile definite:
+<ul>
+	<li> r - Referinta;
+	<li> e - Eroarea;
+	<li> u - Comanda;
+	<li> v - Perturbatia;
+	<li> y - Variabila de proces(Marimea reglata, iesirea);
+</ul>
+<br><br><font color= "Blue" size=5> Tematica de laborator </font>
+<br><br><font color= "Blue" size=4> Controlul temperaturii </font>
+<br><br>&nbsp;&nbsp;&nbsp;&nbsp;Utilizand mediul de dezvoltare SCADA-CITECT creati o pagina grafica in care se controleaza temperatura 
+prin intermediul unui SRA - PID.
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Se va crea un nou proiect cu numele <b> Labs </b> in in care se va crea pagina  <b> labs8_01 </b>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Pentru implementarea regulatorului PID se va folosi metoda “Velocity”. Conform acesti metode, comanda u  
+din momentul k depinde de referinta r, de iesirea y si de  e_v (e, din momentul k-1). Intervalul de timp dintre momentul k si momentul k-1 
+este Te(Timpul de esantionare). 
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Comanda u se obtine prin insumarea elementului proportional, integrativ (inte)  si derivativ(deriv) astfel:
+<br><br><!------------------------------------------------------------------->
+<table width="100%" border=1><tr><td bgcolor="WhiteSmoke">
+<font size="3" color="DarkBlue"><pre>
+    e = r - y;
+    inte = inte + e * Te;
+    deriv = (e - e_v) / Te;
+    u = kp * e + ki * inte + kd * deriv;
+    e_v = e;
+
+</pre> </font>
+</td></tr></table>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;In care:
+<ul>
+	<li> y este iesirea din pasul curent
+	<li> r este valoareareferinta
+	<li> e este eroarea calculata (r-y) din pasul curent
+	<li> e_v este valoarea calculata pentru e in pasul anterior
+	<li> u este valoarea calculata pentru comanda din pasul curent
+	<li> kp este constanta - Proportionala (cu valori intre 0-4)
+	<li> ki este constanta - Integrativa (cu valori intre 0-5)
+	<li> kd este constanta - Derivativa (cu valori intre 0.2-2)
+	<li> Te este timpul de esantionare (250 ms adica timpul de Refresh al HMI)
+</ul>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Variabila de proces adica iesirea y reprezentand totodata marimea reglata ar trebui sa provina din procesul tehnologic(PT) prin
+plasarea unui traductor. Pentru simularea iesirii y, se va folosi functia de transfer a unui sistem de ordinul 5 si anume: H<sub>f</sub>(s)=1/(5s+1).
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Dupa discretizare obtinandu-se relatia care simuleaza iesirea y in functie de comanda u de forma:
+<br><br><center><b> y = (u*Te + 5 * y_v) / (5 + Te);</b> </center>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;In care:
+<ul>
+	<li> y este valoarea calculata pentru iesire din pasul curent
+	<li> y_v este valoarea calculata pentru y in pasul anterior
+	<li> u este valoarea calculata pentru comanda din pasul curent
+	<li> Te este timpul de esantionare (250 ms adica timpul de Refresh al HMI)
+</ul>
+
+
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Pentru realizarea aplicatiei, aveti nevoie deci de urmatoarele TAG-uri:
+<br><br><center>
+<Table border=1> 
+<tr>
+ <td colspan="6" bgcolor="yellow"><center> Tag-uri aferente </center></td>
+</tr> 
+<tr>
+  <td align="center"><b> Nume </b>  </td>
+  <td align="center"><b> Tip </b> </td>
+  <td align="center"><b> Domeniu </b></td>
+  <td align="center"><b> Um </b> </td>
+  <td align="center"><b> Array Size </b> </td>
+  <td align="center"><b> Comentariu </b> </td>
+</tr> 
+<tr>
+  <td> init_temp </td>
+  <td> DIGITAL </td>
+  <td> - </td>
+  <td> - </td>
+  <td> - </td>
+  <td> Variabila pentu initializare </b> </td>    
+</tr> 
+<tr>
+  <td> y </td>
+  <td> REAL </td>
+  <td> 250 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA- y - Iesirea, Process variable </b> </td>    
+</tr> 
+
+<tr>
+  <td> y_v </td>
+  <td> REAL </td>
+  <td> 250 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA- y_v - Iesirea_v, Process variable_v </b> </td>       
+</tr>
+
+<tr>
+  <td> u </td>
+  <td> REAL </td>
+  <td> 250 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA - u - Comanda  Output </b> </td>       
+</tr>
+
+<tr>
+  <td> r </td>
+  <td> REAL </td>
+  <td> 250 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA - r - Referinta, Set Point </b> </td>       
+</tr>
+
+<tr>
+  <td> e </td>
+  <td> REAL </td>
+  <td> 250 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA - e - Eroarea Error </b> </td>       
+</tr>
+
+<tr>
+  <td> e_v </td>
+  <td> REAL </td>
+  <td> 250 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA - e_v - Eroarea_v Error_v </b> </td>       
+</tr>
+<tr>
+  <td> v </td>
+  <td> REAL </td>
+  <td> 250 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA - v - Perturbatia </b> </td>       
+</tr>
+
+<tr>
+  <td> kp </td>
+  <td> REAL </td>
+  <td> 10 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA - kp - coeficient roportional </b> </td>       
+</tr>
+<tr>
+  <td> ki </td>
+  <td> REAL </td>
+  <td> 5 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA - ki - coeficient integrativ </b> </td>       
+</tr>
+<tr>
+  <td> kd </td>
+  <td> REAL </td>
+  <td> 2 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA - kd - coeficient derivativ </b> </td>  
+<tr>
+  <td> Te </td>
+  <td> REAL </td>
+  <td> 5 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA - Te - Timp de esantionare </b> </td>       
+</tr>
+<tr>
+  <td> inte </td>
+  <td> REAL </td>
+  <td> 5 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA - inte - Element integrativ </b> </td>       
+</tr>
+<tr>
+  <td> deriv </td>
+  <td> REAL </td>
+  <td> 5 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA - deriv - Element derivativ </b> </td>       
+</tr>
+</tr>
+</table></center>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Aveti nevoie de asemenea de doua variabile de tip Trand TAG pentru a afisa evolutia in timp a comenzii si a
+iesirii(valorii reglate).
+<br><br><center><img src="../sist_regl/im_citect706.gif"></center>
+
+<br><br><font color= "Blue" size=4> Controlul iluminarii </font>
+<br><br>&nbsp;&nbsp;&nbsp;&nbsp;Se va dezvolta o noua pagina grafica avand numele <b>"labs8_02" </b> in care se controleaza nivelul de iluminare al unei incaperi 
+prin intermediul unui "Faceplate SRA-PI". Se va tine cont de nivelul de iluminare naturala. 
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Se foloseste metoda “Velocity PI” sau “incrementala” pentru un sistem avand functia de transfer  H<sub>f</sub>(s)=1/(5s+1)
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Dupa discretizare, se obtine relatia pentru comanda u:
+<br><br><Center><b> u = u_v + e*(kp+ (ki*(Te/2))) + e_v*((ki*(Te / 2)) - kp);</b></center>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;In care:
+<ul>
+	<li> u este valoarea calculata pentru comanda din pasul curent
+	<li> u_v este valoarea calculata pentru u in pasul anterior
+	<li> e este eroarea calculata (r-y) din pasul curent
+	<li> e_v este valoarea calculata pentru e in pasul anterior
+	<li> kp este constanta - Proportionala (cu valori intre 0-4)
+	<li> ki este constanta - Integrativa (cu valori intre 0-5)
+	<li> Te este timpul de esantionare (250 ms adica timpul de Refresh al HMI)
+</ul>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Variabila de proces adica iesirea y reprezentand totodata marimea reglata ar trebui sa provina din procesul tehnologic(PT) prin
+plasarea unui traductor. Aplicatia fiind o simulare, se va simula y cu o relatie obtinuta prin discretizarea functiei de transfer a unui sistem de ordinul 2 
+corespunzatoare unui sistem de reglare automata a iluminarii.
+
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Pentru realizarea aplicatiei, avem nevoie deci de urmatoarele TAG-uri:
+<br><br><center>
+<Table border=1> 
+<tr>
+ <td colspan="6" bgcolor="yellow"><center> Tag-uri aferente </center></td>
+</tr> 
+<tr>
+  <td align="center"><b> Nume </b>  </td>
+  <td align="center"><b> Tip </b> </td>
+  <td align="center"><b> Domeniu </b></td>
+  <td align="center"><b> Um </b> </td>
+  <td align="center"><b> Array Size </b> </td>
+  <td align="center"><b> Comentariu </b> </td>
+</tr> 
+<tr>
+  <td> init_ilum </td>
+  <td> DIGITAL </td>
+  <td> - </td>
+  <td> - </td>
+  <td> - </td>
+  <td> Variabila pentu initializare </b> </td>    
+</tr> 
+
+<tr>
+  <td> LOOP_1_OPM </td>
+  <td> DIGITAL </td>
+  <td> - </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA Output mode </b> </td>    
+</tr> 
+
+<tr>
+  <td> LOOP_1_PV </td>
+  <td> REAL </td>
+  <td> 250 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA- y - Ierirea, Process variable </b> </td>    
+</tr>
+ 
+</tr>
+  <td> y_v </td>
+  <td> REAL </td>
+  <td> 250 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA- y_v -  Process variable_v </b> </td>       
+</tr>
+
+<tr>
+  <td> LOOP_1_OP </td>
+  <td> REAL </td>
+  <td> 250 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA - u - Comanda, Output </b> </td>       
+</tr>
+
+<tr>
+  <td> u_v </td>
+  <td> REAL </td>
+  <td> 250 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA - u_v - Comanda_v, Output_v </b> </td>       
+</tr>
+
+<tr>
+  <td> LOOP_1_SP </td>
+  <td> REAL </td>
+  <td> 250 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA - r - Refereinta, Set Point </b> </td>       
+
+<tr>
+  <td> e </td>
+  <td> REAL </td>
+  <td> 250 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA - e -Eroarea, Error </b> </td>       
+</tr>
+
+<tr>
+  <td> e_v </td>
+  <td> REAL </td>
+  <td> 250 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA - e_v - Error_v </b> </td>       
+</tr>
+<tr>
+  <td> v </td>
+  <td> REAL </td>
+  <td> 250 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA - v - Perturbatia </b> </td>       
+</tr>
+<tr>
+  <td> niv_il_nat </td>
+  <td> REAL </td>
+  <td> 250 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> Nivel de iluminare naturala </b> </td>       
+</tr>
+
+<tr>
+  <td> kp </td>
+  <td> REAL </td>
+  <td> 10 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA - kp - Coeficient Proportional </b> </td>       
+</tr>
+<tr>
+  <td> ki </td>
+  <td> REAL </td>
+  <td> 5 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA - ki - Coeficient Integrativ </b> </td>       
+</tr>
+<tr>
+  <td> Te </td>
+  <td> REAL </td>
+  <td> 5 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA - Te - Timp de esantionare </b> </td>       
+</tr>
+</table></center>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Avem nevoie de asemenea de doua variabile de tip Trand TAG pentru a afisa evolutia in timp a comenzii si a
+iesirii(valorii reglate).
+<br><br><center><img src="../sist_regl/im_citect705.gif"></center>
+
+<br><br><font color= "Blue" size=5> Cerinte de rezolvat </font>
+<ul>
+<table  border=1>
+<tr><td bgcolor="whitesmoke">
+<li>Crearea unui nou proiect "Labs"
+<li>Realizarea paginii grafice "labs8_01"
+<li>Implementarea si verificarea functionalitatii pagini grafice "labs8_01"
+<li>Realizarea paginii grafice "labs8_02"
+<li>Implementarea si verificarea functionalitatii pagini grafice "labs8_02"
+</td></tr></table>
+</ul>
+
+<br><br><font color= "Blue" size=5> Derularea activitatilor </font>
+<ul>
+<table  border=1>
+<tr><td bgcolor="whitesmoke">
+<li>Se creaza nou proiect "Labs"
+<li>Daca nu se reuseste crearea unui nou proiect valid, se poate utiliza proiectul <b> "Sch_el_start" </b> proiect in care au fost parcursi toti pasii 
+pentru crearea unui nou proiect.
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Proiectul se poate descarca de pe www.science.upm.ro/~traian
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Dupa ce s-a download-at acest fisier, din Citect Explorer->Restore se incarca acest proiect si i se atribuie numele 
+<b> "Labs" </b>.
+<li>Se realizeaza pagina grafica "labs8_01"
+<li>Se introduc elementele de functionalitate pentru implementarea unui SRA-PID.
+<li>Se realizeaza pagina grafica "labs8_02" in care se foloseste un "Faceplat - SRA".
+<li>Se introduc elementele de functionalitate  pentru implementarea unui SRA-PI.
+</td></tr></table>
+</ul>
+
+<br><br><font color= "Blue" size=5>Prezentarea rezultatelor </font>
+<ul>
+<Table border=1>
+<tr>
+ <td colspan="3" bgcolor="yellow"><center> Punctarea activitatilor (total 6 puncte) </center></td>
+</tr> 
+<tr>
+<td align="center"><b> Nr </b>  </td>
+  <td align="center"><b> Denumire activitate </b>  </td>
+  <td align="center"><b> Punctaj </b> </td>
+</tr>
+<tr>
+  <td> 1 </td>
+  <td> Se verifica aspectul grafic al pagini grafice "labs8_01" </td>
+  <td><center> 1 </center></td>
+</tr> 
+<tr>
+  <td> 2 </td>
+  <td> Se verifica functionalitatea pagini grafice "labs8_01" </td>
+  <td><center> 1 </center></td>
+</tr>
+<tr>
+  <td> 3 </td>
+  <td> Se verifica aspectul grafic al pagini grafice "labs8_02" </td>
+  <td><center> 2 </center></td>
+</tr> 
+<tr>
+  <td> 4 </td>
+  <td> Se verifica functionalitatea pagini grafice "labs8_02" </td>
+  <td><center> 2 </center></td>
+</tr>
+</table>
+</ul>  
+<br><br> 
+</body>
+</html>
