@@ -1,0 +1,1330 @@
+<html>
+<title> Aplicatii SCADA care contin sisteme de reglare automata </title>
+<body>
+<table width="100%">
+<tr><td height="50" background="../../Images/imm_s.bmp"><center><font color= "red" size=6> Aplicatii SCADA care contin sisteme de reglare automata </Center></TD></TR>
+</table>
+
+<font color= "Black" size=4><li><b>Obiective </b> </font>
+<ul>
+<table  border=1>
+<tr><td bgcolor="whitesmoke">
+<li>Prezentarea unui sistem de reglare automata
+<li>Prezentarea unui sistem SCADA care contine sisteme de reglare automata
+<li>Prezentarea unui sistem SCADA pentru controlul debitului
+<li>Prezentarea unui sistem SCADA pentru controlul temperaturii
+</td></tr></table>
+</ul>
+
+<font color= "Black" size=4><li><b>Organizarea sarcinilor de lucru </b> </font>
+<ul>
+<table  border=1>
+<tr><td bgcolor="whitesmoke">
+<li> Parcurgeti cele patru capitole ale cursului.
+<li> In cadrul fiecarui capitol urmariti exemplele ilustrative si incercati sa le realizati in medul de dezvoltare "Citect".
+<li> Fixati principalele idei ale cursului, prezentate în rezumat.
+<li> Completati testul de autoevaluare. 
+<li> Timpul de lucru pentru parcurgerea testului de autoevaluare este de 15 minute.
+</td></tr></table>
+</ul>
+<br><br><a name="sra"></a>
+<table width="100%">
+<tr><td height="50" background="../../Images/imm_s.bmp"><center><font color= "blue" size=5> 1. Prezentarea unui sistem de reglare automata </Center></TD></TR>
+</table>
+<br><br>&nbsp;&nbsp;&nbsp;&nbsp;SRA - Sistemele de Reglre Automata sunt sisteme cu bucla de reactie (loop control) care functioneaza pe baza analizei in 
+permanenta a valorii de iesire (marimii reglate), preluata prin intermediul reactiei negative. Diferenta dintre valoarea de iesire si valoarea de referinta, numita "eroare",  
+este folosita de SRA pentru eliminarea acesteia sau mentinerea ei in anumite intervale prestabilite. 
+<br><br><center><img src="im_citect701.gif"></center>
+<br>&nbsp;&nbsp;&nbsp;&nbsp; Un SRA se compune din urmatoarele elemente:
+<ul>
+	<li> RA - Regulator automat;
+	<li> PF - Partea fixata(Procesul condus);
+</ul>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Marimile definite:
+<ul>
+	<li> r - Referinta;
+	<li> e - Eroarea;
+	<li> u - Comanda;
+	<li> v - Perturbatia;
+	<li> y - Variabila de proces(Marimea reglata, iesirea);
+</ul>
+
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Daca definim  H<sub>r</sub>(s) functia de transfer a regulatorului si  H<sub>f</sub>(s) functia de transfer a 
+partii fixate, Schema unui SRA devine:
+<br><br><center><img src="im_citect703.gif"></center>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;
+
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Partea fixata(PF) contine procesul tehnologic(PT) asupra caruia actioneaza regulatorul automat(RA).
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Procesul tehnologic(PT) este comandat de catre regulatorul automat(RA) prin intermediul elementelor de executie(EE). 
+Citirea marimii reglate(y - variabila de proces) se face prin intermediul traductorilor(T) care ofera marimea x proportionla cu marimea y adica x=k*y. 
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Putem deci reprezenta un SRA sub forma: 
+<br><br><center><img src="im_citect702.gif"></center>
+<br>&nbsp;&nbsp;&nbsp;&nbsp; Unde:
+<ul>
+	<li> RA - Regulator automat;
+	<li> PT - Procesul tehnologic;
+	<li> EE - Element de Executie;
+	<li> T  - Traductor;
+</ul>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Marimile definite:
+<ul>
+	<li> r - Referinta;
+	<li> e - Eroarea;
+	<li> u - Comanda;
+	<li> m - Executia;
+	<li> v - Perturbatia;
+	<li> y - Variabila de proces(Marimea reglata, iesirea);
+	<li> x - Reactia;
+
+</ul>
+
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Mult mai fireasca ar fi reprezentarea in care procesul tehnologic(PT) ar fi reprezentat separat, la care se adauga in 
+mod firesc dispozitivul de automatizare. Aceasta reprezentare ar corespunde dezvoltarii firesti a sistemelor tehnologice in care initial se realizeaza 
+un proces tehnologic dupa care se automatizeaza. 
+<br><br><center><img src="im_citect704.gif"></center>
+
+<br><br><a name="a_sra"></a>
+<table width="100%">
+<tr><td height="50" background="../../Images/imm_s.bmp"><center><font color= "blue" size=5> 2. Aplicatii SCADA care contin un sisteme de reglare automata</Center></TD></TR>
+</table>
+<br>&nbsp;&nbsp;&nbsp;&nbsp; Un SRA de ti PID mentine valoarea iesirii y in jurul valorii de referinta r prin intermediul comenzii u. Comanda u este generata de
+SRA prin intermedul unei functii de transfer caracterizata de trei constante: kp,ki,kd si Ti.
+<ul>
+	<li> kp este constanta - Proportionala (cu valori intre 0-4)
+	<li> ki este constanta - Integrativa (cu valori intre 0-5)
+	<li> kd este constanta - Derivativa (cu valori intre 0.2-2)
+	<li> Te este timpul de esantionare (250 ms adica timpul de Refresh al HMI)
+</ul>
+<!------------------------------------------------------------------->
+<html>
+
+&nbsp;&nbsp;&nbsp;&nbsp;In imaginea de jos este reprezentata comanda u (cu rosu) si iesirea y(cu verde).<br><br>
+<center><table bgcolor="WhiteSmoke" border =0>
+<tr><td align="center">
+	<center>Sistem de Reglare Automata PID</center>
+</td></tr>
+<tr><td>
+<canvas id="desen06" width="480" height="470" style="background-color:#ffffff;border:1px solid #c3c3c3; ">
+	Your browser does not support the HTML5 canvas tag.
+</canvas>
+</td></tr>
+<tr><td align="center">
+ <table border="0">
+  <tr>
+	<td width="25">r:</td>
+	<td width="150"><input type="range" value="375" id="r_id" min="0" max="500"  onchange="set_r()"/></td>   
+	<td width="50"><span id="r_t"></span></td>
+	<td width="25">kp:</td>
+	<td width="150"><input type="range" value="75" id="kp_id" min="0" max="250"  onchange="set_kp()"/></td>   
+	<td width="50"><span id="kp_t"></span></td>
+  </tr><tr>
+	<td width="25">ki:</td>
+	<td width="150"><input type="range" value="120" id="ki_id" min="0" max="200"  onchange="set_ki()"/></td>   
+	<td width="50"><span id="ki_t"></span></td>
+	<td width="25">kd:</td>
+	<td width="150"><input type="range" value="0" id="kd_id" min="0" max="50"  onchange="set_kd()"/></td>   
+	<td width="50"><span id="kd_t"></span></td>
+  </tr>
+ </table>
+</td></tr>
+</table></center>
+<script type="text/javascript">
+var r,kp,ki,kd;
+var ctx6=desen06.getContext("2d");
+ctx6.lineWidth = .5; 
+w=desen06.width ;
+h=desen06.height-20;
+val_max=1000;
+valls_0 = [];
+valls_1 = [];
+nrv=400;
+ht=400;
+for(i=0;i<nrv;i++){	
+	valls_0[i]=0;
+	valls_1[i]=0;
+}
+			
+function afisor_xt(c,pozx, pozy, n_maxx, n_maxy,v_max)
+	{
+		this.cnvs=c; // canvas
+		this.x0 = pozx;// pozitia pe x
+                this.y0 = pozy;// pozitia pe y
+                this.w = n_maxx; // latimea
+                this.h = n_maxy;// inaltimea
+                this.nr_max = n_maxx; // numarul de puncte pe x
+                this.val_max = v_max; // valoarea maxima
+	}
+afisor_xt.prototype = {
+	constructor: afisor_xt,
+	deseneaza:function (vls_0,vls_1, nv)  {
+	var val_v, val ,i ,j;
+	
+	// sterg continut
+	
+	this.cnvs.beginPath();
+	this.cnvs.fillStyle = "#FFFFFF";
+	this.cnvs.fillRect(this.x0-30,this.y0-10,this.x0+this.w,this.y0+this.h+30);
+	this.cnvs.stroke();	
+	
+	//chenar
+	
+	this.cnvs.beginPath();
+	this.cnvs.moveTo(this.x0,this.y0); 
+	this.cnvs.strokeStyle = "rgb(0,0,255)";
+	this.cnvs.lineTo(this.x0+this.w,this.y0);
+	this.cnvs.lineTo(this.x0+this.w,this.y0+this.h);
+	this.cnvs.lineTo(this.x0,this.y0+this.h);
+	this.cnvs.lineTo(this.x0,this.y0);
+	this.cnvs.stroke();
+    	val_v = vls_0[1] * this.h / this.val_max;
+
+	// grid orizontal minor
+			
+	this.cnvs.beginPath();
+    	this.cnvs.strokeStyle = "rgb(200,200,200)";
+	this.cnvs.font = "10px Arial";
+	for (j = this.h-10; j >=0; j -= 10)
+	{
+		this.cnvs.moveTo(this.x0,this.y0+j); 
+		this.cnvs.lineTo(this.x0 + this.w, this.y0 + j);
+    	}
+	
+	// grid vertical minor
+	
+	for (j = 10; j<=this.w-10; j += 10)
+    	{
+		this.cnvs.moveTo(this.x0+j,this.y0+1); 
+		this.cnvs.lineTo(this.x0 + j ,this.y0+ this.h+1);
+    	}
+	this.cnvs.stroke();
+
+	// grid vertical major
+			
+	this.cnvs.beginPath();
+    	this.cnvs.strokeStyle = "rgb(150,150,150)";
+    	for (j = 0; j <=this.h; j += 50)
+    	{
+		this.cnvs.moveTo(this.x0,this.y0+j); 
+		this.cnvs.lineTo(this.x0 + this.w ,this.y0 + j);
+		this.cnvs.strokeText(Math.round(this.val_max*j/this.h),this.x0-20,this.y0+this.h - j);
+   	}
+
+	// grid orizontal major
+	 
+    	for (j = 0; j<=this.w; j += 50)
+    	{
+		this.cnvs.moveTo(this.x0+j,this.y0); 
+		this.cnvs.lineTo(this.x0 + j ,this.y0+ this.h-1);	
+		this.cnvs.strokeText(j,this.x0 + j,this.y0 + this.h+10);
+   	 }
+	this.cnvs.stroke();
+	
+	// trasez graficul cnal 0
+
+	this.cnvs.beginPath();
+	this.cnvs.strokeStyle = "rgb(0,240,0)";
+	this.cnvs.moveTo(this.x0,this.y0+val_v); 
+	for (i = 0; i<=nrv; i +=1){
+		val = vls_0[i] * this.h / this.val_max; //scalare
+		this.cnvs.lineTo(this.x0 + i ,this.y0+ this.h-val);
+	}
+	this.cnvs.stroke();
+
+	// trasez graficul cnal 1
+
+	this.cnvs.beginPath();
+	this.cnvs.strokeStyle = "rgb(240,0,0)";
+	this.cnvs.moveTo(this.x0,this.y0+val_v); 
+	for (i = 0; i<=nrv; i +=1){
+		val = vls_1[i] * this.h / this.val_max; //scalare
+		this.cnvs.lineTo(this.x0 + i ,this.y0+ this.h-val);
+	}
+	this.cnvs.stroke();
+ }
+}
+oscil = new afisor_xt(ctx6,50,20,nrv,ht,val_max);
+function grafic(){
+var er=0,er_v=0;
+var y=0,y_v=0,inte=0,deriv=0,er=0,e_v=0;
+//kp=0.5;
+//kd=0.2;
+var Te=0.1;
+
+            for (i = 1; i <= nrv; i++)
+            {
+                er = r - y;           
+                inte = inte + er * Te;
+                deriv= (er - e_v) / Te;
+                u = (kp/100) * er + (ki/100) * inte + (kd/100) * deriv;
+                y = (u * Te + 5 * y_v) / (5 + Te);
+                valls_0[i] = y;
+		valls_1[i] = u;
+                e_v = er;
+                y_v = y;
+            }
+	
+	oscil.deseneaza(valls_0,valls_1,nrv);
+	set_r();
+	set_kp();
+	set_ki();
+	set_kd();
+	setTimeout("grafic()",100);
+}
+function set_r(){
+  r = document.getElementById('r_id').value;
+  r_t.innerHTML=r;
+}
+function set_kp(){
+  kp = document.getElementById('kp_id').value;
+  kp_t.innerHTML=kp/100;
+}
+function set_ki(){
+  ki = document.getElementById('ki_id').value;
+  ki_t.innerHTML=ki/100;
+}
+function set_kd(){
+  kd = document.getElementById('kd_id').value;
+  kd_t.innerHTML=kd/100;
+}
+set_r();
+set_kp();
+set_ki();
+set_kd();
+grafic();
+</script>
+
+<!------------------------------------------------------------------->
+
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Pentru implementarea regulatorului PID se va folosi metoda “Velocity”. Conform acesti metode, comanda u  
+din momentul k depinde de referinta r, de iesirea y si de  e_v (e, din momentul k-1). Intervalul de timp dintre momentul k si momentul k-1 
+este Te(Timpul de esantionare). 
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Comanda u se obtine prin insumarea elementului proportional, integrativ (inte)  si derivativ(deriv) astfel:
+<br><br><!------------------------------------------------------------------->
+<table width="100%" border=1><tr><td bgcolor="WhiteSmoke">
+<font size="3" color="DarkBlue"><pre>
+    e = r - y;
+    inte = inte + e * Te;
+    deriv = (e - e_v) / Te;
+    u = kp * e + ki * inte + kd * deriv;
+    e_v = e;
+
+</pre> </font>
+</td></tr></table>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;In care:
+<ul>
+	<li> y este iesirea din pasul curent
+	<li> r este valoareareferinta
+	<li> e este eroarea calculata (r-y) din pasul curent
+	<li> e_v este valoarea calculata pentru e in pasul anterior
+	<li> u este valoarea calculata pentru comanda din pasul curent
+	<li> kp este constanta - Proportionala (cu valori intre 0-4)
+	<li> ki este constanta - Integrativa (cu valori intre 0-5)
+	<li> kd este constanta - Derivativa (cu valori intre 0.2-2)
+	<li> Te este timpul de esantionare (250 ms adica timpul de Refresh al HMI)
+</ul>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Variabila de proces adica iesirea y reprezentand totodata marimea reglata ar trebui sa provina din procesul tehnologic(PT) prin
+plasarea unui traductor. Folosind de exemplu functia de transfer a unui sistem de ordinul 5 si anume:  H<sub>f</sub>(s)=1/(5s+1). Dupa discretizare 
+obtinem relatia:
+<br><br><center><b> y = (u*Te + 5 * y_v) / (5 + Te);</b> </center>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;In care:
+<ul>
+	<li> y este valoarea calculata pentru iesire din pasul curent
+	<li> y_v este valoarea calculata pentru y in pasul anterior
+	<li> u este valoarea calculata pentru comanda din pasul curent
+	<li> Te este timpul de esantionare (250 ms adica timpul de Refresh al HMI)
+</ul>
+&nbsp;&nbsp;&nbsp;&nbsp;Dupa cum se observa ea depinde de de y_v(y din pasul anterior), comanda u din pasul curent si de timpul de esantionare Te. 
+
+<br><br><a name="t_sra"></a>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;<font color= "blue" size=4> <b>Trending marimi SRA</font></b>
+<br><br>&nbsp;&nbsp;&nbsp;&nbsp;Pe baza ecuatiilor descrise mai sus, folosind obiectul "Trend" vom realiza proiectul SCADA 
+<a href="../downloads/aplicatii/Sist_regl.ctz"><b> <font color="red"> Sist_regl</font></b></a> pagina grafica <b>sra_pid</b> unde vom afisa grafic evolutia in timp a marimilor u,y,r.
+<br>&nbsp;&nbsp;&nbsp;&nbsp;
+<br><br><center><img src="im_citect707.gif"></center>
+
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Pentru realizarea aplicatiei, avem nevoie deci de urmatoarele TAG-uri:
+<br><br><center>
+<Table border=1> 
+<tr>
+ <td colspan="6" bgcolor="yellow"><center> Tag-uri aferente </center></td>
+</tr> 
+<tr>
+  <td align="center"><b> Nume </b>  </td>
+  <td align="center"><b> Tip </b> </td>
+  <td align="center"><b> Domeniu </b></td>
+  <td align="center"><b> Um </b> </td>
+  <td align="center"><b> Array Size </b> </td>
+  <td align="center"><b> Comentariu </b> </td>
+</tr> 
+<tr>
+  <td> init_sra </td>
+  <td> DIGITAL </td>
+  <td> - </td>
+  <td> - </td>
+  <td> - </td>
+  <td> Variabila pentu initializare </b> </td>    
+</tr> 
+<tr>
+  <td> y </td>
+  <td> REAL </td>
+  <td> 250 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA- y - Iesirea, Process variable </b> </td>    
+</tr> 
+
+<tr>
+  <td> y_v </td>
+  <td> REAL </td>
+  <td> 250 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA- y_v - Iesirea_v, Process variable_v </b> </td>       
+</tr>
+
+<tr>
+  <td> u </td>
+  <td> REAL </td>
+  <td> 250 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA - u - Comanda  Output </b> </td>       
+</tr>
+
+<tr>
+  <td> r </td>
+  <td> REAL </td>
+  <td> 250 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA - r - Referinta, Set Point </b> </td>       
+</tr>
+
+<tr>
+  <td> e </td>
+  <td> REAL </td>
+  <td> 250 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA - e - Eroarea Error </b> </td>       
+</tr>
+
+<tr>
+  <td> e_v </td>
+  <td> REAL </td>
+  <td> 250 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA - e_v - Eroarea_v Error_v </b> </td>       
+</tr>
+<tr>
+  <td> v </td>
+  <td> REAL </td>
+  <td> 250 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA - v - Perturbatia </b> </td>       
+</tr>
+
+<tr>
+  <td> kp </td>
+  <td> REAL </td>
+  <td> 10 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA - kp - coeficient roportional </b> </td>       
+</tr>
+<tr>
+  <td> ki </td>
+  <td> REAL </td>
+  <td> 5 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA - ki - coeficient integrativ </b> </td>       
+</tr>
+<tr>
+  <td> kd </td>
+  <td> REAL </td>
+  <td> 2 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA - kd - coeficient derivativ </b> </td>  
+<tr>
+  <td> Te </td>
+  <td> REAL </td>
+  <td> 5 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA - Te - Timp de esantionare </b> </td>       
+</tr>
+<tr>
+  <td> inte </td>
+  <td> REAL </td>
+  <td> 5 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA - inte - Element integrativ </b> </td>       
+</tr>
+<tr>
+  <td> deriv </td>
+  <td> REAL </td>
+  <td> 5 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA - deriv - Element derivativ </b> </td>       
+</tr>
+</tr>
+</table></center>
+
+<br><br>&nbsp;&nbsp;&nbsp;&nbsp;Pentru a afisa graficele, de pe HMI s-a plasat pe ecran functia ini_sra(); Plot_pid():
+<br><br><!------------------------------------------------------------------->
+<table width="100%" border=1><tr><td bgcolor="WhiteSmoke">
+<font size="3" color="DarkBlue"><pre>
+FUNCTION ini_sra()
+  IF init_sra=0 THEN 
+	kp=0.5;
+  	ki=2.5;
+  	kd=0.01;
+  	r=125;
+  	y=50;
+  	Te=0.250;
+  	init_sra=1;
+  END
+END
+
+
+REAL Buf3[100];
+REAL Buf4[100];
+REAL Buf5[100];
+INT hPlot;
+FUNCTION Plot_pid(INT hAn,INT iGridCol= Yellow,INT iFrameCol= Black,INT iFillCol=Black)
+	INT i=1;
+	e=0;
+	e_v=0;
+	y=0;
+	y_v=0;
+	inte=0;
+	deriv=0;
+	u=0;
+	FOR i=0 TO 99 DO
+		e=r-y;
+		inte = inte + e * Te;
+        	deriv = (e - e_v) / Te;
+        	u = kp * e + ki * inte + kd * deriv;
+   		y = (u * Te + 5 * y_v) / (5 + Te);
+		e_v = e;
+		y_v = y;
+		Buf3[i] = y;
+		Buf4[i] = u;
+		Buf5[i] = r;
+	END
+	INT FrameWidth=10;
+	hPlot=PlotOpen(hAn,"Display",65);
+	PlotGrid(hPlot,100,0,0,400,220,5,iGridCol,9,iGridCol,FrameWidth,iFrameCol,iFillCol,0);
+	PlotScaleMarker(hPlot,-10,210, 6, 1, Black, 1);
+	PlotLine(hPlot, 0, Light_Green, 2, 0, Light_Red , 1, 100, Buf3[0], -400,900,1);
+	PlotLine(hPlot, 0, Light_Red, 2, 0, Light_Red , 1, 100, Buf4[0], -400,900,1);
+	PlotLine(hPlot, 0, Light_Blue, 2, 0, Light_Red , 1, 100, Buf5[0], -400,900,1);
+	PlotClose(hPlot);
+END
+
+</pre> </font>
+</td></tr></table>
+<br><br><a name="a_pid"></a>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;<font color= "blue" size=4> <b>Aplicatie SCADA care contine un sistem de reglare automata PID</font></b>
+
+<br><br>&nbsp;&nbsp;&nbsp;&nbsp;</b> Pagina grafica <b>loop_ctrl_00 </b> din cadrul proiectului SCADA 
+<a href="../downloads/aplicatii/Sist_regl.ctz"><b> <font color="red"> Sist_regl</font></b></a> contine un SRA 
+(sistem de reglare automata) de tip PID (proportional-integrativ-derivativ) discret. 
+<br><br><center><img src="im_citect700_pid0.gif"></center>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Avem nevoie de asemenea de doua variabile de tip Trand TAG pentru a afisa evolutia in timp a comenzii si a
+iesirii(valorii reglate).
+<br><br><center><img src="im_citect706.gif"></center>
+
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Pentru realizarea aplicatiei, trebuie sa mai adaugam urmatoarele TAG-uri:
+<br><br><center>
+<Table border=1> 
+<tr>
+ <td colspan="6" bgcolor="yellow"><center> Tag-uri aferente </center></td>
+</tr> 
+<tr>
+  <td align="center"><b> Nume </b>  </td>
+  <td align="center"><b> Tip </b> </td>
+  <td align="center"><b> Domeniu </b></td>
+  <td align="center"><b> Um </b> </td>
+  <td align="center"><b> Array Size </b> </td>
+  <td align="center"><b> Comentariu </b> </td>
+</tr> 
+<tr>
+  <td> init_00 </td>
+  <td> DIGITAL </td>
+  <td> - </td>
+  <td> - </td>
+  <td> - </td>
+  <td> Variabila pentu initializare </b> </td>    
+</tr> 
+
+<tr>
+  <td> mod_f</td>
+  <td> DIGITAL </td>
+  <td> - </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA Mod de functionare(Automat/Manual) </b> </td>    
+</tr> 
+</table></center>
+
+<br><br>&nbsp;&nbsp;&nbsp;&nbsp;Pentru a actualiza elementele grafice de pe HMI s-a plasat pe ecran functia ini_00(); reglare_00():
+<br><br><!------------------------------------------------------------------->
+<table width="100%" border=1><tr><td bgcolor="WhiteSmoke">
+<font size="3" color="DarkBlue"><pre>
+FUNCTION ini_00()
+  IF init_00=0 THEN 
+	kp=0.5;
+  	ki=2.5;
+  	kd=0.2;
+  	r=100;
+  	y=50;
+  	Te=0.250;
+  	mod_f=1;
+  	init_00=1;
+  END
+END
+FUNCTION reglare_00()
+	IF mod_f=1 THEN
+		IF v>0 THEN 
+  			y=r-v;
+  			IF y<0 THEN 
+  				y=0;
+  			END
+  			y_v=y;
+   			v=0;
+		END
+		e=r-y;
+		inte = inte + e * Te;
+        deriv = (e - e_v) / Te;
+        u = kp * e + ki * inte + kd * deriv;
+		y = (u * Te + 5 * y_v) / (5 + Te);
+		e_v = e;
+		y_v = y;
+	END		
+END
+</pre> </font>
+</td></tr></table>
+<br><br>&nbsp;&nbsp;&nbsp;&nbsp; Pentru a introduce un element perturbativ in sistem, s-a introdus un slider cu care se poate seta valoarea v.
+<br>&nbsp;&nbsp;&nbsp;&nbsp; In functia reglare_00() se forteaza iesirea  y la valoarea y-v daca v>0; 
+</pre> </font>
+</td></tr></table>
+<br><a name="f_pid"></a>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;<font color= "blue" size=4> <b>Utilizare Genie Faceplate intr-un sistem de reglare automata PID</font></b>
+<br><br>&nbsp;&nbsp;&nbsp;&nbsp;Putem adauga aplicatiei un Genie Faceplate realizand astfel pagina grafica <b>loop_ctrl_01 </b>. 
+<br><br><center><img src="im_citect700_pid1.gif"></center>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Genie Faceplate necesita o serie de TAG-uri cu nume predefinite pentru a putea fi  folosit cum ar fi: 
+LOOP_1_OPM, LOOP_1_PV, LOOP_1_OP, LOOP_1_SP.
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Nu vom folosi deci variabilele consacrate unui SRA (mod_f,r,u,y), vom defini: 
+<ul>
+	<li>LOOP_1_OPM pentru mod_f
+	<li>LOOP_1_PV pentru y
+	<li>LOOP_1_OP pentru u
+	<li>LOOP_1_PS pentru r
+</ul>
+
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Pentru realizarea aplicatiei, adaugam urmatoarele TAG-uri:
+<br><br><center>
+<Table border=1> 
+<tr>
+ <td colspan="6" bgcolor="yellow"><center> Tag-uri aferente </center></td>
+</tr> 
+<tr>
+  <td align="center"><b> Nume </b>  </td>
+  <td align="center"><b> Tip </b> </td>
+  <td align="center"><b> Domeniu </b></td>
+  <td align="center"><b> Um </b> </td>
+  <td align="center"><b> Array Size </b> </td>
+  <td align="center"><b> Comentariu </b> </td>
+</tr> 
+<tr>
+  <td> init_01 </td>
+  <td> DIGITAL </td>
+  <td> - </td>
+  <td> - </td>
+  <td> - </td>
+  <td> Variabila pentu initializare </b> </td>    
+</tr> 
+
+<tr>
+  <td> LOOP_1_OPM </td>
+  <td> DIGITAL </td>
+  <td> - </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA Output mode </b> </td>    
+</tr> 
+
+<tr>
+  <td> LOOP_1_PV </td>
+  <td> REAL </td>
+  <td> 250 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA- y -  Process variable </b> </td>    
+</tr> 
+
+<tr>
+  <td> LOOP_1_OP </td>
+  <td> REAL </td>
+  <td> 250 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA - u - comanda  Output </b> </td>       
+</tr>
+
+<tr>
+  <td> LOOP_1_SP </td>
+  <td> REAL </td>
+  <td> 250 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA - r - Set Point </b> </td>       
+</tr>
+</table></center>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Avem nevoie de asemenea de doua variabile de tip Trand TAG pentru a afisa evolutia in timp a comenzii si a
+iesirii(valorii reglate).
+<br><br><center><img src="im_citect705.gif"></center>
+
+<br><br>&nbsp;&nbsp;&nbsp;&nbsp;Pentru a actualiza elementele grafice de pe HMI s-a plasat pe ecran functia ini_01(); reglare_01():
+<br><br><!------------------------------------------------------------------->
+<table width="100%" border=1><tr><td bgcolor="WhiteSmoke">
+<font size="3" color="DarkBlue"><pre>
+FUNCTION ini_01()
+  IF init_01=0 THEN 
+	kp=0.5;
+  	ki=2.5;
+  	kd=0.2;
+  	LOOP_1_SP=75;
+  	LOOP_1_PV=50;
+  	Te=0.250;
+  	LOOP_1_OPM=1
+  	init_01=1;
+  END
+END
+FUNCTION reglare_01()
+	IF LOOP_1_OPM=1 THEN
+		IF v>0 THEN 
+  			LOOP_1_PV=r-v;
+  			IF LOOP_1_PV<0 THEN 
+  				LOOP_1_PV=0;
+  			END
+  			y_v=LOOP_1_PV;
+   			v=0;
+		END
+		// e=r-y
+		e = LOOP_1_SP -	LOOP_1_PV
+		inte = inte + e * Te;
+        deriv = (e - e_v) / Te;
+        //u = kp * e + ki * inte + kd * deriv;
+        LOOP_1_OP = kp * e + ki * inte + kd * deriv;
+        // y = (u*Te + 5 * y_v) / (5 + Te);
+		LOOP_1_PV = (LOOP_1_OP*Te + 5 * y_v) / (5 + Te);
+		e_v=e;
+		// y_v = y;
+		y_v=LOOP_1_PV
+	END		
+END
+</pre> </font>
+</td></tr></table>
+
+<br><a name="a_pi"></a>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;<font color= "blue" size=4> <b>Sistem de reglare automata PI</font></b>
+
+<br><br>&nbsp;&nbsp;&nbsp;&nbsp;Urmatoarea pagina grafica <b>loop_ctrl_03</b> face parte din proiectul SCADA 
+<a href="../downloads/aplicatii/Sist_regl.ctz"><b> <font color="red"> Sist_regl</font></b></a> contine un 
+sistem de reglare automata SRA generic de tip PI (proportional-integrativ) discret.
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Se foloseste metoda “Velocity PI” sau “incrementala” pentru un sistem avand functia de transfer  H<sub>f</sub>(s)=1/(5s+1)
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Dupa discretizare, se obtine relatia pentru comanda u:
+<br><br><Center><b> u = u_v + e*(kp+ (ki*(Te/2))) + e_v*((ki*(Te / 2)) - kp);</b></center>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;In care:
+<ul>
+	<li> u este valoarea calculata pentru comanda din pasul curent
+	<li> u_v este valoarea calculata pentru u in pasul anterior
+	<li> e este eroarea calculata (r-y) din pasul curent
+	<li> e_v este valoarea calculata pentru e in pasul anterior
+	<li> kp este constanta - Proportionala (cu valori intre 0-4)
+	<li> ki este constanta - Integrativa (cu valori intre 0-5)
+	<li> Te este timpul de esantionare (250 ms adica timpul de Refresh al HMI)
+</ul>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Variabila de proces adica iesirea y reprezentand totodata marimea reglata ar trebui sa provina din procesul tehnologic(PT) prin
+plasarea unui traductor. Aplicatia fiind o simulare, vom simula y cu relatia:
+<br><br><center><b> y = (u*Te + 5 * y_v) / (5 + Te);</b> </center>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;In care:
+<ul>
+	<li> u este valoarea calculata pentru comanda din pasul curent
+	<li> y este valoarea calculata pentru iesire din pasul curent
+	<li> y_v este valoarea calculata pentru y in pasul anterior
+	<li> Te este timpul de esantionare (250 ms adica timpul de Refresh al HMI)
+</ul>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Dupa cum se observa ea depinde de de y_v(y din pasul anterior), comanda u din pasul curent si de timpul de esantionare Te 
+<br><br><center><img src="im_citect708.gif"></center>
+
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Pentru realizarea aplicatiei, avem nevoie deci de urmatoarele TAG-uri:
+<br><br><center>
+<Table border=1> 
+<tr>
+ <td colspan="6" bgcolor="yellow"><center> Tag-uri aferente </center></td>
+</tr> 
+<tr>
+  <td align="center"><b> Nume </b>  </td>
+  <td align="center"><b> Tip </b> </td>
+  <td align="center"><b> Domeniu </b></td>
+  <td align="center"><b> Um </b> </td>
+  <td align="center"><b> Array Size </b> </td>
+  <td align="center"><b> Comentariu </b> </td>
+</tr> 
+<tr>
+  <td> init_03 </td>
+  <td> DIGITAL </td>
+  <td> - </td>
+  <td> - </td>
+  <td> - </td>
+  <td> Variabila pentu initializare </b> </td>    
+</tr>
+<tr>
+  <td> mod_f</td>
+  <td> DIGITAL </td>
+  <td> - </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA Mod de functionare(Automat/Manual) </b> </td>    
+</tr> 
+ 
+<tr>
+  <td> y </td>
+  <td> REAL </td>
+  <td> 250 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA- y - Iesirea, Process variable </b> </td>    
+</tr> 
+
+<tr>
+  <td> y_v </td>
+  <td> REAL </td>
+  <td> 250 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA- y_v - Iesirea_v, Process variable_v </b> </td>       
+</tr>
+
+<tr>
+  <td> u </td>
+  <td> REAL </td>
+  <td> 250 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA - u - Comanda  Output </b> </td>       
+</tr>
+
+<tr>
+  <td> r </td>
+  <td> REAL </td>
+  <td> 250 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA - r - Referinta, Set Point </b> </td>       
+</tr>
+
+<tr>
+  <td> e </td>
+  <td> REAL </td>
+  <td> 250 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA - e - Eroarea Error </b> </td>       
+</tr>
+
+<tr>
+  <td> e_v </td>
+  <td> REAL </td>
+  <td> 250 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA - e_v - Eroarea_v Error_v </b> </td>       
+</tr>
+<tr>
+  <td> v </td>
+  <td> REAL </td>
+  <td> 250 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA - v - Perturbatia </b> </td>       
+</tr>
+
+<tr>
+  <td> kp </td>
+  <td> REAL </td>
+  <td> 10 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA - kp - coeficient roportional </b> </td>       
+</tr>
+<tr>
+  <td> ki </td>
+  <td> REAL </td>
+  <td> 5 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA - ki - coeficient integrativ </b> </td>       
+</tr>
+<tr>
+  <td> Te </td>
+  <td> REAL </td>
+  <td> 5 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA - Te - Timp de esantionare </b> </td>       
+</tr>
+<tr>
+  <td> inte </td>
+  <td> REAL </td>
+  <td> 5 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA - inte - Element integrativ </b> </td>       
+</tr>
+</tr>
+</table></center>
+
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Avem nevoie de asemenea de doua variabile de tip Trand TAG pentru a afisa evolutia in timp a comenzii si a
+iesirii(valorii reglate).
+<br><br><center><img src="im_citect706.gif"></center>
+
+<br><br>&nbsp;&nbsp;&nbsp;&nbsp;Pentru a afisa graficele, de pe HMI s-a plasat pe ecran functia ini_03(); regl_03():
+<br><br><!------------------------------------------------------------------->
+<table width="100%" border=1><tr><td bgcolor="WhiteSmoke">
+<font size="3" color="DarkBlue"><pre>
+FUNCTION ini_03()
+  IF init_03=0 THEN 
+	kp=0.5;
+  	ki=2.5;
+  	r=125;
+  	y=50;
+  	Te=0.250;
+  	mod_f=1;
+  	init_03=1;
+  END
+END
+FUNCTION reglare_03()
+	IF mod_f=1 THEN
+			IF v>0 THEN 
+  			y=r-v;
+  			IF y<0 THEN 
+  				y=0;
+  			END
+  			y_v=y;
+   			v=0;
+		END
+		e=r-y;
+		u = u_v + e*(kp+ (ki*(Te/2))) + e_v*((ki*(Te / 2)) - kp);
+		y = (u*Te + 5 * y_v) / (5 + Te);
+		e_v = e;
+		y_v = y;
+		u_v = u;
+	END
+END
+</pre> </font>
+</td></tr></table>
+
+
+<br><a name="f_pi"></a>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;<font color= "blue" size=4> <b>Utilizare Genie Faceplate intr-un sistem de reglare automata PI</font></b>
+
+<br><br>&nbsp;&nbsp;&nbsp;&nbsp;Urmatoarea pagina grafica <b>loop_ctrl_02</b> face parte din proiectul SCADA 
+<a href="../downloads/aplicatii/Sist_regl.ctz"><b> <font color="red"> Sist_regl</font></b></a>  contine un 
+sistem de reglare automata SRA generic de tip PI (proportional-integrativ) discret.
+
+<br><br><center><img src="im_citect700.gif"></center>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Pentru realizarea aplicatiei, avem nevoie deci de urmatoarele TAG-uri:
+<br><br><center>
+<Table border=1> 
+<tr>
+ <td colspan="6" bgcolor="yellow"><center> Tag-uri aferente </center></td>
+</tr> 
+<tr>
+  <td align="center"><b> Nume </b>  </td>
+  <td align="center"><b> Tip </b> </td>
+  <td align="center"><b> Domeniu </b></td>
+  <td align="center"><b> Um </b> </td>
+  <td align="center"><b> Array Size </b> </td>
+  <td align="center"><b> Comentariu </b> </td>
+</tr> 
+<tr>
+  <td> init_02 </td>
+  <td> DIGITAL </td>
+  <td> - </td>
+  <td> - </td>
+  <td> - </td>
+  <td> Variabila pentu initializare </b> </td>    
+</tr> 
+
+<tr>
+  <td> LOOP_1_OPM </td>
+  <td> DIGITAL </td>
+  <td> - </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA Output mode </b> </td>    
+</tr> 
+
+<tr>
+  <td> LOOP_1_PV </td>
+  <td> REAL </td>
+  <td> 250 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA- y - Ierirea, Process variable </b> </td>    
+</tr>
+ 
+</tr>
+  <td> y_v </td>
+  <td> REAL </td>
+  <td> 250 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA- y_v -  Process variable_v </b> </td>       
+</tr>
+
+<tr>
+  <td> LOOP_1_OP </td>
+  <td> REAL </td>
+  <td> 250 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA - u - Comanda, Output </b> </td>       
+</tr>
+
+<tr>
+  <td> u_v </td>
+  <td> REAL </td>
+  <td> 250 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA - u_v - Comanda_v, Output_v </b> </td>       
+</tr>
+
+<tr>
+  <td> LOOP_1_SP </td>
+  <td> REAL </td>
+  <td> 250 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA - r - Refereinta, Set Point </b> </td>       
+
+<tr>
+  <td> e </td>
+  <td> REAL </td>
+  <td> 250 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA - e -Eroarea, Error </b> </td>       
+</tr>
+
+<tr>
+  <td> e_v </td>
+  <td> REAL </td>
+  <td> 250 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA - e_v - Error_v </b> </td>       
+</tr>
+<tr>
+  <td> v </td>
+  <td> REAL </td>
+  <td> 250 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA - v - Perturbatia </b> </td>       
+</tr>
+
+<tr>
+  <td> kp </td>
+  <td> REAL </td>
+  <td> 10 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA - kp - Coeficient Proportional </b> </td>       
+</tr>
+<tr>
+  <td> ki </td>
+  <td> REAL </td>
+  <td> 5 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA - ki - Coeficient Integrativ </b> </td>       
+</tr>
+<tr>
+  <td> Te </td>
+  <td> REAL </td>
+  <td> 5 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA - Te - Timp de esantionare </b> </td>       
+</tr>
+</table></center>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Avem nevoie de asemenea de doua variabile de tip Trand TAG pentru a afisa evolutia in timp a comenzii si a
+iesirii(valorii reglate).
+<br><br><center><img src="im_citect705.gif"></center>
+
+<br><br>&nbsp;&nbsp;&nbsp;&nbsp;Pentru a actualiza elementele grafice de pe HMI s-a plasat pe ecran functia ini_02; reglare_02:
+<br><br><!------------------------------------------------------------------->
+<table width="100%" border=1><tr><td bgcolor="WhiteSmoke">
+<font size="3" color="DarkBlue"><pre>
+FUNCTION ini_02()
+  IF init_02=0 THEN 
+	kp=0.5;
+  	ki=2.5;
+  	LOOP_1_SP=175;
+  	LOOP_1_PV=50;
+  	Te=0.250;
+  	LOOP_1_OPM=1
+  	init_02=1;
+  END
+END
+FUNCTION reglare_02()
+	IF LOOP_1_OPM=1 THEN
+		IF v>0 THEN 
+  			LOOP_1_PV=r-v;
+  			IF LOOP_1_PV<0 THEN 
+  				LOOP_1_PV=0;
+  			END
+  			y_v=LOOP_1_PV;
+   			v=0;
+		END	
+		// e=r-y
+		e = LOOP_1_SP -	LOOP_1_PV
+		// u = u_v + e*(kp+ (ki*(Te/2))) + e_v*((ki*(Te / 2)) - kp);
+		LOOP_1_OP=u_v+e*(kp+(ki*(Te/2)))+e_v*((ki*(Te/2))-kp);
+		// y = (u*Te + 5 * y_v) / (5 + Te);
+		LOOP_1_PV=(LOOP_1_OP*Te+5*y_v)/(5+Te);
+		e_v = e;
+		//e_v=LOOP_1_E;
+		// y_v = y;
+		y_v=LOOP_1_PV
+		// u_v = u;
+		u_v=LOOP_1_OP;
+	END		
+END
+</pre> </font>
+</td></tr></table>
+
+<br><a name="niv"></a>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;<font color= "blue" size=4> <b> Sistem SCADA pentru controlul nivelului unui lichid intr-un rezervor</b></font>
+<br><br>&nbsp;&nbsp;&nbsp;&nbsp; Vom realiza o noua pagina grafica numita <b> "sra_niv" </b> in cadrul proiectului 
+<a href="../downloads/aplicatii/Sist_regl.ctz"><b> <font color="red"> Sist_regl</font></b></a>.
+<br><br><center><img src="im_citect709.gif"></center>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Pentru realizarea aplicatiei, avem nevoie deci de urmatoarele TAG-uri:
+<br><br><center>
+<Table border=1> 
+<tr>
+ <td colspan="6" bgcolor="yellow"><center> Tag-uri aferente </center></td>
+</tr> 
+<tr>
+  <td align="center"><b> Nume </b>  </td>
+  <td align="center"><b> Tip </b> </td>
+  <td align="center"><b> Domeniu </b></td>
+  <td align="center"><b> Um </b> </td>
+  <td align="center"><b> Array Size </b> </td>
+  <td align="center"><b> Comentariu </b> </td>
+</tr> 
+<tr>
+  <td> init_04 </td>
+  <td> DIGITAL </td>
+  <td> - </td>
+  <td> - </td>
+  <td> - </td>
+  <td> Variabila pentu initializare </b> </td>    
+</tr>
+<tr>
+  <td> mod_f</td>
+  <td> DIGITAL </td>
+  <td> - </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA Mod de functionare(Automat/Manual) </b> </td>    
+</tr> 
+ 
+<tr>
+  <td> y </td>
+  <td> REAL </td>
+  <td> 250 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA- y - Iesirea, Process variable </b> </td>    
+</tr> 
+
+<tr>
+  <td> y_v </td>
+  <td> REAL </td>
+  <td> 250 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA- y_v - Iesirea_v, Process variable_v </b> </td>       
+</tr>
+
+<tr>
+  <td> u </td>
+  <td> REAL </td>
+  <td> 250 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA - u - Comanda  Output </b> </td>       
+</tr>
+
+<tr>
+  <td> r </td>
+  <td> REAL </td>
+  <td> 250 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA - r - Referinta, Set Point </b> </td>       
+</tr>
+
+<tr>
+  <td> e </td>
+  <td> REAL </td>
+  <td> 250 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA - e - Eroarea Error </b> </td>       
+</tr>
+
+<tr>
+  <td> e_v </td>
+  <td> REAL </td>
+  <td> 250 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA - e_v - Eroarea_v Error_v </b> </td>       
+</tr>
+<tr>
+  <td> v </td>
+  <td> REAL </td>
+  <td> 250 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA - v - Perturbatia </b> </td>       
+</tr>
+
+<tr>
+  <td> kp </td>
+  <td> REAL </td>
+  <td> 10 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA - kp - coeficient roportional </b> </td>       
+</tr>
+<tr>
+  <td> ki </td>
+  <td> REAL </td>
+  <td> 5 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA - ki - coeficient integrativ </b> </td>       
+</tr>
+<tr>
+  <td> Te </td>
+  <td> REAL </td>
+  <td> 5 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA - Te - Timp de esantionare </b> </td>       
+</tr>
+<tr>
+  <td> inte </td>
+  <td> REAL </td>
+  <td> 5 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> RA - inte - Element integrativ </b> </td>       
+</tr>
+<tr>
+  <td> depl_d </td>
+  <td> INT </td>
+  <td> 10 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> Deplasare sageti alimentare </b> </td>       
+</tr>
+<tr>
+  <td> depl_c </td>
+  <td> INT </td>
+  <td> 10 </td>
+  <td> - </td>
+  <td> - </td>
+  <td> Deplasare sageti consum </b> </td>       
+</tr>
+<tr>
+  <td> pmp </td>
+  <td> DIGITAL </td>
+  <td> - </td>
+  <td> - </td>
+  <td> - </td>
+  <td> Comanda pompa </b> </td>    
+</tr>
+</table></center>
+
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Avem nevoie de asemenea de doua variabile de tip Trand TAG pentru a afisa evolutia in timp a comenzii si a
+iesirii(valorii reglate).
+<br><br><center><img src="im_citect706.gif"></center>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;
+<br><br><!------------------------------------------------------------------->
+<table width="100%" border=1><tr><td bgcolor="WhiteSmoke">
+<font size="3" color="DarkBlue"><pre>
+FUNCTION ini_04()
+  IF init_04=0 THEN 
+	kp=1.25;
+  	ki=2.5;
+  	r=75;
+  	Te=0.250;
+  	mod_f=1;
+  	init_04=1;
+  END
+END
+FUNCTION reglare_04()
+	IF mod_f=1 THEN
+		IF v>0 THEN 
+  			y=r-v;
+  			IF y<0 THEN 
+  				y=0;
+  			END
+  			y_v=y;
+   			v=0;
+		END
+		e=r-y
+		u = u_v + e*(kp+ (ki*(Te/2))) + e_v*((ki*(Te / 2)) - kp);
+		y = (u*Te + 5 * y_v) / (5 + Te);
+		e_v = e;
+		y_v = y;
+		u_v = u;
+	END
+	IF u>0 THEN 
+		pmp=1;
+	ELSE
+		pmp=0;
+	END
+	IF pmp=1 THEN
+		depl_d=depl_d+1
+	END
+	IF depl_d>10 THEN
+		depl_d=0
+	END
+	depl_c=depl_c+1
+	IF depl_c>10 THEN
+		depl_c=0
+	END
+END
+
+</pre> </font>
+</td></tr></table>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;
+</body>
+</html>
