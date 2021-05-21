@@ -1,0 +1,75 @@
+body  {
+	font: 100% Verdana, Arial, Helvetica, sans-serif;
+	margin: 0; 
+	padding: 10;
+	text-align: center; 
+	color: Blue;
+	background-color: WhiteSmoke;
+}
+.pag_centr #continut {
+	width: 1150px;
+	margin: 0 auto; 
+	border: 1px solid #000000;
+	text-align: left; 
+	background-color: White;
+} 
+
+.pag_centr #continut_p {
+	position:relative;
+	top:0px;
+	left0px;
+	width:925px;
+	padding:0px;
+	background-color:White;
+}
+.pag_centr #zona_jos {
+	padding: 0 0px;
+	background-color:White;
+}
+.pag_centr #Reclama {
+	position:relative;
+	top:0px;
+	left:0px;
+	width:320px;
+	padding:0 0 px;
+	background-color:#White;
+	line-height:0px;
+}
+.pag_centr #Menu {
+	position:relative;
+	top:0px;
+	left:0px;
+	width:200px;
+	padding:0px;
+}
+/* Miscellaneous classes for reuse */
+/* Diferite resurse */
+.fltrt { 
+	float: right;
+	margin-left: 8px;
+}
+.fltlft { 
+	float: left;
+	margin-right: 8px;
+}
+.clearfloat { 
+	clear:both;
+    height:0;
+    font-size: 1px;
+    line-height: 0px;
+}
+ a {
+	color:#09c;
+	font-size:12px;
+	text-decoration:none;
+	font-weight:400;
+	font-family:verdana, arial, helvetica, sans-serif;
+	}
+    A:link {color: #000fff; font-size: 8pt; font-family: arial, helvetica, sans-serif; text-decoration:none;}
+    A:visited {color: #0000ff; font-size: 8pt; font-family: arial, helvetica, sans-serif; text-decoration:none;}
+    A:hover{color: #ff0000; font-size: 8pt; font-family: arial, helvetica, sans-serif; text-decoration:underline;}
+table.tcoll 
+{
+border-collapse: collapse
+}
+		
