@@ -2,180 +2,31 @@
 <html xmlns:t="urn:schemas-microsoft-com:time">
 <HTML> 
 <HEAD> 
-  	<?import namespace="t" implementation="#default#time2">
-	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
-	<title>Cursuri informatica</title>
-	<style type="text/css">
-    table.tclps {
-     border-collapse: collapse
-     }
+<?import namespace="t" implementation="#default#time2">
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+<title>Cursuri informatica</title>
+<style type="text/css">
+   	table.tclps {
+     		border-collapse: collapse
+     	}
      </style> 
 </HEAD> 
 
 <SCRIPT LANGUAGE="JavaScript">
  <!-- 
- 
-function af(){
-//document.sgs1.src=sgs.src;
-//document.sgs2.src=sgs.src;
-//document.sgs3.src=sgs.src;
-//document.sgs4.src=sgs.src;
-//document.sgs5.src=sgs.src;
-//document.sgs6.src=sgs.src;
-//document.sgs7.src=sgs.src;
-
-document.b1.src=bsus.src;
-document.b2.src=bsus.src;
-document.b3.src=bsus.src;
-document.b4.src=bsus.src;
-document.b5.src=bsus.src;
-document.b6.src=bsus.src;
-
-}
- 
-function Activate (img){ 
-	if (cool) { 
-		document[img].src=eval(img+'on.src'); 
-		} 
-	} 
-function Inactivate(img) { 
-	if(cool) { 
-		document[img].src=eval(img+'off.src');
- 		}
- 	} 
-
-function frm1(){
-	document.b1.src=bjos.src;
-	document.b2.src=bsus.src;
-	document.b3.src=bsus.src;
-	document.b4.src=bsus.src;
-	document.b5.src=bsus.src;
-	document.b6.src=bsus.src;
-	instr=1;
-	clearInterval(delay);
-	clearInterval(timer_instr2);
-	clearInterval(timer_instr3);
-	clearInterval(timer_instr4);
-	clearInterval(timer_instr5);
-	clearInterval(timer_instr6);
-	document.animation.src="../web_curs/Act_curs/rating/meter_r.php?id=2&sid="+Math.random();
-	//Reclama.innerHTML='<img src="./Images/facult/im01.jpg">';
-}
-
-function frm2(){
-	document.b1.src=bsus.src;
-	document.b2.src=bjos.src;
-	document.b3.src=bsus.src;
-	document.b4.src=bsus.src;
-	document.b5.src=bsus.src;
-	document.b6.src=bsus.src;
-	instr=1;
-	clearInterval(delay);
-	clearInterval(timer_instr1);
-	clearInterval(timer_instr3);
-	clearInterval(timer_instr4);
-	clearInterval(timer_instr5);
-	clearInterval(timer_instr6);
-	document.animation.src="../web_apl/instruments/vumetru.php"+"?sid="+Math.random();
-	//Reclama.innerHTML = '<img src="./Images/facult/im02.jpg">';
-}	
-
-function frm3(){
-	document.b1.src=bsus.src;
-	document.b2.src=bsus.src;
-	document.b3.src=bjos.src;
-	document.b4.src=bsus.src;
-	document.b5.src=bsus.src;
-	document.b6.src=bsus.src;
-	instr=1;
-	clearInterval(delay);
-	clearInterval(timer_instr1);
-	clearInterval(timer_instr2);
-	clearInterval(timer_instr4);
-	clearInterval(timer_instr5);
-	clearInterval(timer_instr6);
-	document.animation.src="../web_apl/instruments/voltm.php"+"?sid="+Math.random();
-	//Reclama.innerHTML = '<img src="./Images/facult/im03.jpg">';
-}
-function frm4(){
-	document.b1.src=bsus.src;
-	document.b2.src=bsus.src;
-	document.b3.src=bsus.src;
-	document.b4.src=bjos.src;
-	document.b5.src=bsus.src;
-	document.b6.src=bsus.src;
-	instr=1;
-	clearInterval(delay);
-	clearInterval(timer_instr1);
-	clearInterval(timer_instr2);
-	clearInterval(timer_instr3);
-	clearInterval(timer_instr5);
-	clearInterval(timer_instr6);
-	document.animation.src="../web_apl/instruments/amperm.php"+"?sid="+Math.random();
-	//Reclama.innerHTML = '<img src="./Images/facult/im04.jpg">';
-}
-function frm5(){
-	document.b1.src=bsus.src;
-	document.b2.src=bsus.src;
-	document.b3.src=bsus.src;
-	document.b4.src=bsus.src;
-	document.b5.src=bjos.src;
-	document.b6.src=bsus.src;
-	instr=1;
-	clearInterval(delay);
-	clearInterval(timer_instr1);
-	clearInterval(timer_instr2);
-	clearInterval(timer_instr3);
-	clearInterval(timer_instr4);
-	clearInterval(timer_instr6);
-	document.animation.src="../web_apl/instruments/ceas.php"+"?sid="+Math.random();
-	//document.animation.src="../web_apl/instruments/sinus_v2.php"+"?sid="+Math.random();
-	/*Reclama.innerHTML = '<iframe src ="./Images/video/honoris.html" width="325" height="245" marginheight="0" marginwidth="0" frameborder=0 > </iframe>&nbsp';*/
-}
-
-function frm6(){
-	document.b1.src=bsus.src;
-	document.b2.src=bsus.src;
-	document.b3.src=bsus.src;
-	document.b4.src=bsus.src;
-	document.b5.src=bsus.src;
-	document.b6.src=bjos.src;
-	instr=1;
-	clearInterval(delay);
-	clearInterval(timer_instr1);
-	clearInterval(timer_instr2);
-	clearInterval(timer_instr3);
-	clearInterval(timer_instr4);
-	clearInterval(timer_instr5);
-	document.animation.src="../web_apl/instruments/sin_cos.php"+"?sid="+Math.random();
-	/*Reclama.innerHTML = '<iframe src ="./Images/video/marea.mpg" width="325" height="245"  marginheight="0" marginwidth="0" frameborder=0 > </iframe>&nbsp';*/
-
-
-}
-function frm7(){
-	forum.innerHTML = '<iframe src ="./Forum/forum_curs/list_impr.php" width="348" height="395"  marginheight="0" marginwidth="0" frameborder=0 > </iframe>&nbsp';
-}
-
 function animate() {   
-if(instr==0){
-document.animation.src = theImages[imageNum].src 
-  imageNum++
-  if(imageNum > 10) {
-      imageNum = 1  
+   if(instr==0){
+	document.animation.src = theImages[imageNum].src 
+  	imageNum++
+  	if(imageNum > 5) {
+      		imageNum = 1  
+   	}
    }
-}
 }
 instr=0;
 cool=1;
 semafor=1; 
 delay = 2000;
-timer_instr1=1000;
-timer_instr2=1000;
-timer_instr3=1000;
-timer_instr4=1000;
-timer_instr5=1000;
-timer_instr6=1000;
-
 imageNum = 1;
 
 var todayIs=new Date();
@@ -189,80 +40,16 @@ var luna=an.getMonth()+1;
 var zi=an.getDate();
 
 /*preload images */ 
-mn1_on=new Image();
-mn1_on.src="./Images/butoane/sg_dr_on.gif"
-mn1_off=new Image();
-mn1_off.src="./Images/butoane/sg_dr_off.gif"
-
-mn2_on=new Image();
-mn2_on.src="./Images/butoane/sg_dr_on.gif"
-mn2_off=new Image();
-mn2_off.src="./Images/butoane/sg_dr_off.gif"
-
-mn3_on=new Image();
-mn3_on.src="./Images/butoane/sg_dr_on.gif"
-mn3_off=new Image();
-mn3_off.src="./Images/butoane/sg_dr_off.gif"
-
-mn4_on=new Image();
-mn4_on.src="./Images/butoane/sg_dr_on.gif"
-mn4_off=new Image();
-mn4_off.src="./Images/butoane/sg_dr_off.gif"
-
-mn5_on=new Image();
-mn5_on.src="./Images/butoane/sg_dr_on.gif"
-mn5_off=new Image();
-mn5_off.src="./Images/butoane/sg_dr_off.gif"
-
-mn6_on=new Image();
-mn6_on.src="./Images/butoane/sg_dr_on.gif"
-mn6_off=new Image();
-mn6_off.src="./Images/butoane/sg_dr_off.gif"
-
-br=new Image(); 
-br.src="./Images/butoane/but_r.gif";
-
-bv=new Image(); 
-bv.src="./Images/butoane/but_v.gif";
-
-sgs=new Image(); 
-sgs.src="./Images/butoane/sg_s.jpg";
-
-sgj=new Image(); 
-sgj.src="./Images/butoane/sg_j.jpg";
-
-bsus=new Image(); 
-bsus.src="./Images/butoane/but_s.jpg";
-
-bjos=new Image(); 
-bjos.src="./Images/butoane/but_j.jpg";
-
-
-p1=new Image();
-p1.src="./Images/luni/l"+luna+"/im"+zi+".jpg"; 
-p2=new Image();
-p2.src="./Images/luni/l"+luna+"/im"+(zi+1)+".jpg"; 
-p3=new Image();
-p3.src="./Images/luni/l"+luna+"/im"+(zi+2)+".jpg"; 
-p4=new Image();
-p4.src="./Images/luni/l"+luna+"/im"+(zi+3)+".jpg"; 
-p5=new Image();
-p5.src="./Images/luni/l"+luna+"/im"+(zi+4)+".jpg"; 
-p6=new Image();
-p6.src="./Images/luni/l"+luna+"/im"+(zi+5)+".jpg"; 
-p7=new Image();
-p7.src="./Images/luni/l"+luna+"/im"+(zi+6)+".jpg"; 
 
 theImages = new Array()
 
-for(i = 1; i < 11; i++) {   
-nri=i+zi-1;
+for(i = 1; i < 6; i++) {   
 theImages[i] = new Image() 
-theImages[i].src = "./Images/facult/anim"+luna+"/im" +nri + ".jpg" 
+theImages[i].src = "./Images/facult/im0" +i + ".jpg" 
 }
 //--> 
 </script>  
-<body onLoad="af()"> 
+<body> 
 <script type="text/javascript">
     var d=new Date();
     var an=d.getFullYear();
@@ -278,20 +65,10 @@ theImages[i].src = "./Images/facult/anim"+luna+"/im" +nri + ".jpg"
    var lna=azi.getMonth();
    var zii=azi.getDate();
 </script>
-<table width=100% border=0>
+<center><table width=100% border=0>
  <tr>
   <td>
    <table border=0>
-    <tr>
-     <td>
-	<a href="#" onclick=frm1();timer_instr1=setInterval("frm1()",1000)><img name="b1".src=bsus.src></a>
-	<a href="#" onclick=frm2();timer_instr2=setInterval("frm2()",1000)><img name="b2".src=bsus.src></a>
-	<a href="#" onclick=frm3();timer_instr3=setInterval("frm3()",1000)><img name="b3".src=bsus.src></a>
-	<a href="#" onclick=frm4();timer_instr4=setInterval("frm4()",1000)><img name="b4".src=bsus.src></a>
-	<a href="#" onclick=frm5();timer_instr5=setInterval("frm5()",1000)><img name="b5".src=bsus.src></a>
-	<a href="#" onclick=frm6();timer_instr6=setInterval("frm6()",1000)><img name="b6".src=bsus.src></a>
-      </td>
-     </tr>
      <tr><td align="center">	
   	<div id="Reclama">
 		<img name="animation" SRC="./Images/facult/upm.gif" alt="[Animation]" onLoad="setTimeout('animate()', delay) " align="center">
@@ -317,28 +94,6 @@ theImages[i].src = "./Images/facult/anim"+luna+"/im" +nri + ".jpg"
  					<li>medii grafice de programare
  					<li>tehnologii WEB
  					<li>sisteme SCADA
-
-				<center>
-              				<script type="text/javascript">
-  					var im=0;
- 					if ((lna==11)&&(zii>=22)){
-    						//document.write('<br><img src="./Images/brad_9.jpg"><br>');
-						document.write('<marquee><font color="red" size="3">Craciun fericit!</font></marquee>');
-    						im=1;   
- 					}
- 					if ((lna==0)&&(zii<20)){
-    						document.write('<img src="./Images/urare.gif" width=200 height=50><br>'); 
-    						im=1;  
- 					}
- 					if (((lna==1)&& (zii<15))||(lna==5)){
-    						document.write('<img src="./Images/sesiune.gif" width=200 height=50><br>');
-    						im=1;   
- 					}
-					if(im!=1){
-						//document.write('<marquee><font color="red" size="3">Anunt!</font></marquee>');
-					}
-					</script>
-				</center>
 			      </ul>
 	     		 </td></tr>
 			</table>
@@ -375,6 +130,6 @@ theImages[i].src = "./Images/facult/anim"+luna+"/im" +nri + ".jpg"
     </td>
    </tr>
   </table>
- </td></tr></table>
+</td></tr></table></center>
 </BODY> 
 </HTML> 
