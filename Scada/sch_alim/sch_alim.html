@@ -1,0 +1,865 @@
+<html>
+<title> Aplicatii in energetica </title>
+<body>
+<table width="100%">
+<tr><td height="50" background="../../Images/imm_s.bmp"><center><font color= "red" size=6> SCADA in energetica - productia si distributia energiei electrice</Center></TD></TR>
+</table>
+
+<font color= "Black" size=4><li><b>Obiective </b> </font>
+<ul>
+<table  border=1>
+<tr><td bgcolor="whitesmoke">
+<li>Realizarea de aplicatii SCADA in energetica.
+<li>Definirea simbolurilor grafice necesare dezvoltarii de aplicati SCADA destinate sectorului energetic.
+<li>Aplicatii SCADA pentru monitorizarea alimentarii cu energie a serviciilor proprii intr-o centrala electrica.
+<li>Aplicatii SCADA pentru sisteme energetice care se reconfigureaza automat la aparitia unor avarii.
+<li>Aplicatii SCADA pentru distributia energiei electrice.  
+<li>Aplicatii SCADA pentru monitorizarea alimentarii cu energie a unui oras.  
+</td></tr></table>
+</ul>
+
+<font color= "Black" size=4><li><b>Organizarea sarcinilor de lucru </b> </font>
+<ul>
+<table  border=1>
+<tr><td bgcolor="whitesmoke">
+<li> Parcurgeti cele trei capitole ale cursului.
+<li> In cadrul fiecarui capitol urmariti exemplele ilustrative si incercati sa le realizati in medul de dezvoltare "Citect".
+<li> Fixati principalele idei ale cursului, prezentate în rezumat.
+<li> Completati testul de autoevaluare. 
+<li> Timpul de lucru pentru parcurgerea testului de autoevaluare este de 15 minute.
+</td></tr></table>
+</ul>
+
+
+<br><br><a name="serv_pr"></a>
+<table width="100%">
+<tr><td height="50" background="../../Images/imm_s.bmp"><center><font color= "blue" size=5> 1. Generarea energiei electrice  </Center></TD></TR>
+</table>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Sectorul energetic este unul din sectoarele vitale ale societatii. Functionarea lui este asigurata de sisteme de  
+sisteme SCADA atat la nivelul generarii energiei electrice cat si la nivelul distributiei acesteia.
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Vom realiza in proiectul &nbsp;<a href="../downloads/aplicatii/Sch_alim.ctz"><font color="red"><b>Sch_alim</b></font></a> &nbsp; 
+diverse aplicatii SCADA in domeniul de generarii si distributiei energiei electrice. 
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Pornim de la proiectul &nbsp;<a href="../downloads/aplicatii/Sch_el_start.ctz">Sch_el_start</a>&nbsp;&nbsp;, in care sunt realizate o serie de 
+de simboluri, pentru: separatoare, intreruptoare, transformatoare etc.
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Dupa ce s-a download-at acest fisier, din Citect Explorer->Restore se incarca acest proiect si i se atribuie numele "Sch_alim". 
+<br><br><a name="centr_el"></a>
+
+<font color= "Blue" size=4><b>Centrale electrice </b></font>
+
+<br><br>&nbsp;&nbsp;&nbsp;&nbsp;Generarea energiei electrice se realizeaza prin intermediul centralelor electrice. Exista o gama larga de centrale electrice. 
+Cele mai raspindite sunt termocentralele, hidrocentralele, centrale nucleare, centrale eoliene si parcuri solare.
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Vom realiza cateva aplicatii din domeniul generararii energiei electrice pornind de la o schema minimalista a unei centrale nucleare.
+<br><br><center><img src="centr_nucl.gif"></center>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Centrala nucleara schitata mai sus poate fi reprezentata sub forma unei scheme monofilare astfel:
+<br><br><center><img src="centr_nucl_sch.gif"></center>
+
+<br><br><a name="serv_pr"></a>
+<font color= "Blue" size=4><b>Alimentarea cu energie a serviciilor proprii </b></font>
+
+<br><br><a name="ancl_rez"></a>
+<font color= "Blue" size=4>Anclansarea rezervei </font>
+<br><br>&nbsp;&nbsp;&nbsp;&nbsp;In centralele electrice exista o serie de servicii auxiliare care trebuiesc alimentate cu energie. De obicei energia 
+pentru alimentarea serviciilor auxiliare este furnizata de catre centrala electrica. In cazul in care centrala este oprita din anumite motive, trebuie sa
+existe o sursa auxiliara pentru aceste servicii. In caz contrar, centrala electrica nu va mai putea fi pornita. De asemenea daca se produce un 
+incident la centrala electrica, trebuie sa se declanseze automat alimentarea de rezerva. Sistemul de cuplare automata a rezervei poarta numele de AAR.
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Sistemul AAR poate fi declansat manual, sau automat cand un anumit parametru atinge o anumita valoare. De obicei sistemele 
+SCADA nu iau decizia actionarii AAR, acestea doar constata activarea AAR si eventual iau decizii privind reconfigurarea automata a intregului sistem 
+la avarii. 
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Urmatoarea pagina grafica numita <b> "Ancl_rez_v0" </b>  afiseaza o schema de anclansare automata a rezervei pentru alimentarea serviciilor proprii intr-o 
+centrala electrica
+<br><br><center><img src="serv_pr.gif"></center>
+<br><br>&nbsp;&nbsp;&nbsp;&nbsp;In momentul cand se apasa butonul AAR se lanseaza functia "toggle(aar)" care schimba starea tagului aar introdus 
+special pentru aceaasta aplicatie. De data aceasta, toate comutatoarele au fost realizate folosind corespunzator obiectul "Simbol set" cu proprietatea 
+"On symbol when" setata cu "aar", atat pentru comutatoarele normal deschise cat si pentru comutatoarele normal deschise.
+<br><br><a name="sch_av"></a>
+<font color= "Blue" size=4>Anclansarea rezervei si reconfigurare automata la avarii </font>
+<br><br>&nbsp;&nbsp;&nbsp;&nbsp;Urmatoarea  pagina grafica numita <b> "Ancl_rez_v1" </b>  afiseaza o schema de anclansare automata a rezervei pentru 
+alimentarea serviciilor proprii intr-o centrala electrica precum si reconfigurarea schemei in caz de avarii in diverse puncte. 
+Simularea avariilor se face prin "click" pe elementul care intra sau iese din avarie
+<br><br><center><img src="sch_av.gif"></center>
+<br><br>&nbsp;&nbsp;&nbsp;&nbsp;Avariile pot fi simulate la fiecare din cele 4 transformatoare T1-T4 si la generatorul G1, pentru ele, s-au introdus 
+patru variabile locale t1-t4 si o variabila g1 pentru generatorul G1. Pentru transformatoare si G1 s-au folosit simboluri special create si pentru 
+fiecare a fost setata proprietatea "Input"-Action Up-cu comenzi diferite pentru fiecare transformator astfel:
+<br><br>&nbsp;&nbsp;&nbsp;&nbsp;
+<br><br><!------------------------------------------------------------------->
+<table width="100%" border=1><tr><td bgcolor="WhiteSmoke">
+<font size="3" color="DarkBlue"><pre>
+// Pentru transformatorul T1
+aar=1;
+IF t1 =0 
+THEN
+  t1 = 1;
+ELSE
+  t1=0;
+END
+
+// Pentru transformatorul T2
+
+aar=0;
+IF t2 =0 
+THEN
+  t2 = 1;
+ELSE
+  t2=0;
+END
+
+// Pentru transformatorul T3
+
+IF t3 =0 
+THEN
+  t3 = 1;
+ELSE
+  t3=0;
+END
+
+// Pentru transformatorul T4
+
+IF t4 =0 
+THEN
+  t4 = 1;
+ELSE
+  t4=0;
+END
+
+//Pentru generatorul G1
+
+IF g1 =0 
+THEN
+  g1 = 1;
+  aar=1;
+ELSE
+  g1=0;
+END
+
+//Pentru comutatoare, s-a setat "On simbol when" astfel:
+
+// Pentru comutatorul K1
+
+NOT( aar OR g1 OR t1)
+
+// Pentru comutatorul K2
+
+aar AND  NOT(t2)
+
+// Ppentru comutatorul K4
+
+NOT(aar)
+
+// Pentru comutatorul K3 si K5
+
+aar
+
+</pre> </font>
+</td></tr></table>
+<!------------------------------------------------------------------->
+<a name="rec_av"></a>
+<br><br><a name="rec_aut"></a>
+<font color= "Blue" size=4>Reconfigurare automata servicii proprii la avarii</font>
+<br><br>&nbsp;&nbsp;&nbsp;&nbsp;Urmatoarea  pagina grafica numita <b> "Ancl_rez_v2" </b> afiseaza o schema de alimentare cu energie care se 
+reconfigureaza automat la aparitia unor avarii in diverse puncte. 
+<br>&nbsp;&nbsp;&nbsp;&nbsp;S-a observat in schema anterioara ca pe masura cresterii numarului de componente, relatiile logige pentru fiecare 
+comutator sunt destul de greu de analizat si vom incerca in aceasta aplicatie sa scriem o functie care sa trateze tot ansamblu de comutatoare si 
+sa gandim in ansamblu intreaga schema. 
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Vom introduce variabile locale pentru fiecare comutator, astfel vor f introduse variabilele k1-k5 care 
+controleaza modul de afisare al fiecarui comutator.
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Va trebui sa scriem o functie care sa refaca starea fiecarui comutator la fiecare inprospatare a imaginii pe ecran. 
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Vom plasa un obiect f(x)cu proprietatea numele functiei care va fi lansata de fiecare data cand se reinprospateaza 
+informatia de pe ecran. Sa denumim aceasta functie comut() si sa fosim CicodEditor pentru a o scrie.
+<br><br><!------------------------------------------------------------------->
+<table width="100%" border=1><tr><td bgcolor="WhiteSmoke">
+<font size="3" color="DarkBlue"><pre>
+FUNCTION comut()
+
+	IF (g1=0) AND (t1=0) THEN
+		k1= 1;
+		k2= 0;
+		k3= 0;
+		k4= 1;
+		k5= 0;
+	ELSE
+		k1= 0 ;
+		k2= 1 ;
+		k3= 1 ;
+		k4= 0 ;
+		k5= 1 ;
+	END
+	
+	IF T2 =1 THEN
+		k2=0;
+	END
+
+	IF T3 =1 THEN
+		k3=0;
+		k4=1
+	END
+	
+	IF (T4 =1) AND (K1=1) THEN
+		k2=0;
+		k5=1;
+		k4=0;
+		k3=1;
+	END
+	IF (T3 =1) AND (K2=1) THEN
+		k3=0;
+		k4=1;
+	END
+	
+END
+
+</pre> </font>
+</td></tr></table>
+<!------------------------------------------------------------------->
+<br><br><center><img src="sch_aut.gif"></center>
+
+
+
+
+<br><br><a name="st_tr"></a>
+<table width="100%">
+<tr><td height="50" background="../../Images/imm_s.bmp"><center><font color= "Blue" size=5> 2. Distributia energiei electrice </Center></TD></TR>
+</table>
+<a name="st_trf"></a>
+<br><br><font color= "Red" size=4><b> Statii electrice de transformare </b> </font>
+
+<br><br>&nbsp;&nbsp;&nbsp;&nbsp;Bibliografie: <a href="https://www.academia.edu/25952537/Partea_electrica_a_centralelor_si_statiilor" target="xx"> 
+https://www.academia.edu/25952537/Partea_electrica_a_centralelor_si_statiilor</a> -Partea electrica a centralelor si statiilor
+<br><br>&nbsp;&nbsp;&nbsp;&nbsp;Vom dezvolta in continuare o serie de aplicatii SCADA pentru monitorizarea si controlul statiilor de transformre 
+in cadrul proiectului &nbsp;<a href="../downloads/aplicatii/St_trafo.ctz"><font color="red"><b>St_trafo</b> </font> </a>&nbsp; 
+<br>&nbsp;&nbsp;&nbsp;&nbsp;In general statiile electrice de transformare contin bare colectoare la care sunt racordate circuitele de linie si 
+circuitele de transformator.
+
+<br><br><font color= "Blue" size=4> Statii electrice de transformare cu o singura bara colectoare </font>
+
+<br><br>&nbsp;&nbsp;&nbsp;&nbsp;Sunt folosite pentru toate treptele de tensiune din retelele de distributie, atunci când aparatajul electric este fiabil.
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Urmatoarea aplicatie SCADA <b>sch_st_10</b> </a>&nbsp;isi propune 
+comanda si monitorizarea unei statii electrice de transformare care contine o singura bara colectoare.
+<br><br><center> <img src="sch_st_10.gif"> </center>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Statiile electrice de transformare cu o singura bara colectoare au dezavantajul ca defectele(sau reviziile) la sistemul 
+de bare sau elementele de comutare duc la scoaterea intregii statii din functiune. 
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Prin sectionare longitudinala a sistemului de bare, cresterea siguranta în functionare a schemelor cu un sisteme de 
+bare colectoare.
+
+<br><br><font color= "Blue" size=4> Statii electrice de transformare cu doua bare colectoare </font>
+
+<br><br>&nbsp;&nbsp;&nbsp;&nbsp;Urmatoarea aplicatie SCADA <b>sch_st_11</b> </a>&nbsp;isi propune 
+comanda si monitorizarea unei statii electrice de transformare care contine doua bare colectoare si separatoare de ocolire.
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Aplicatia are doua configuratii de baza. Prima configuratie se obtine alimentand bara I prin apasarea 
+butonului "Bara I".
+<br><br><center> <img src="sch_st_11.gif"> </center>
+<br><br>&nbsp;&nbsp;&nbsp;&nbsp;La apasarea butonului "Bara I" se lanseaza functia <i> alim_1()</i>:
+<br><br><!------------------------------------------------------------------->
+<table width="100%" border=1><tr><td bgcolor="WhiteSmoke">
+<font size="3" color="DarkBlue"><pre>
+FUNCTION alim_1()
+	sep[1]=1 // SL1=on
+	intr[1]=1 // IL=on
+	sep[2]=1 // SL2=on
+	sep[3]=0 // SL3=off	
+	sep[4]=0 // SL0=off	
+	
+	sep[8]=0 // ST0=off
+	sep[7]=1 // ST1=on
+	intr[2]=1 // IT=on
+	sep[5]=0 // ST2=off
+	sep[6]=1 // ST3=on	
+END
+</pre> </font>
+</td></tr></table>
+<!------------------------------------------------------------------->
+
+<br>&nbsp;&nbsp;&nbsp;&nbsp;A doua configuratie se obtine prin alimentarea barei II prin apasarea butonului "Bara II".
+<br><br><center> <img src="sch_st_11_2.gif"> </center>
+
+&nbsp;&nbsp;&nbsp;&nbsp;<br><br>&nbsp;&nbsp;&nbsp;&nbsp;La apasarea butonului "Bara II" se lanseaza functia <i> alim_2()</i>:
+<br><br><!------------------------------------------------------------------->
+<table width="100%" border=1><tr><td bgcolor="WhiteSmoke">
+<font size="3" color="DarkBlue"><pre>
+FUNCTION alim_2()
+	sep[1]=1 // SL1=on
+	intr[1]=1 // IL=on
+	sep[2]=0 // SL2=off
+	sep[3]=1 // SL3=on	
+	sep[4]=0 // SL0=off
+		
+	sep[8]=0 // ST0=off
+	sep[7]=1 // ST1=on
+	intr[2]=1 // IT=on
+	sep[5]=1 // ST2=on
+	sep[6]=0 // ST3=off
+		
+END
+</pre> </font>
+</td></tr></table>
+<!------------------------------------------------------------------->
+
+<br><br>&nbsp;&nbsp;&nbsp;&nbsp;Colorarea corespunzatoare a liniilor se face prin utilizarea optiunii "Fill Color" in functie de tag-urile b1,b2,l1
+calculate de functia <i>ecran_11()</i> declansata de refresh-area ecranului.
+<br><br><!------------------------------------------------------------------->
+<table width="100%" border=1><tr><td bgcolor="WhiteSmoke">
+<font size="3" color="DarkBlue"><pre>
+FUNCTION ecran_11()
+
+	IF (sep[1] AND sep[2] AND intr[1]) OR (sep[4]) THEN
+		b1=1
+		b2=0
+	ELSE
+		b1=0
+	END
+	
+	IF sep[1] AND sep[3] AND intr[1] THEN
+		b1=0
+		b2=1
+	ELSE
+		b2=0
+	END
+	IF (b1 AND sep[6] AND intr[2] AND sep[7]) OR (b2 AND sep[5] AND intr[2] AND sep[7]) OR (b1 AND sep[8]) THEN
+		l1=1
+	ELSE
+		l1=0
+	END
+END
+
+</pre> </font>
+</td></tr></table>
+<!------------------------------------------------------------------->
+
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Aplicatia trebuie sa permita si actionarea separatoarelor respectiv a intreruptoarelor pentru diverse manevre dar 
+cu respectarea conditiilor:
+<ul>
+	<li> Sa permita actionarea separatoarele numai in gol
+	<li> Sa permita manevre pentru comutarea de pe o bara pe alta
+	<li> Sa nu permita actionarea intreruptorului IL daca e cuplat separatorul SL0
+	<li> Sa nu permita actionarea intreruptorului IT daca e cuplat separatorul ST0
+	<li> Sa nu permita actionarea SL0 daca este cuplat IL sau IT sau ST0 pentru a evita cuplarea in sarcina
+	<li> Sa nu permita actionarea ST0 daca bara I este alimentata
+	<li> Sa nu permita conectarea ambelor separatoare SL2 si SL3
+	<li> Sa nu permita conectarea ambelor separatoare ST2 si ST3
+	<li> Sa permita manevre de ocolire a intreruptorului IT sau IL
+</ul>
+<br><br>&nbsp;&nbsp;&nbsp;&nbsp;Aceste cerinte au fost implementate printr-o serie de functii declansate pe evenimentele imput astfel:
+<br><br><!------------------------------------------------------------------->
+<table width="100%" border=1><tr><td bgcolor="WhiteSmoke">
+<font size="3" color="DarkBlue"><pre>
+
+// Pentru IL
+
+IF NOT sep[4] THEN
+   toggle(intr[1]);
+     Prompt("  ");
+ELSE
+     Prompt(" Este conectat SL0 ");
+END
+
+// Pentru SL0
+
+IF NOT( intr[1] OR  intr[2] OR sep[8])THEN
+      toggle(sep[4])
+      Prompt(" ");
+ELSE
+      Prompt("Este conectat IT IL sau ST0");
+END
+
+// Pentru SL1
+
+IF NOT intr[1] THEN
+      toggle(sep[1])
+      Prompt(" ");
+ELSE
+      Prompt(" Este conectat IL ");
+END
+
+// Pentru SL2
+
+IF NOT( intr[1] OR sep[3]) THEN
+     toggle(sep[2])
+     Prompt("  ");
+ELSE
+     Prompt(" Este conectat IL sau SL3 ");
+END
+
+// Pentru SL3
+
+IF NOT( intr[1] OR sep[2]) THEN
+     toggle(sep[3])
+     Prompt("  ");
+ELSE
+     Prompt(" Este conectat IL sau SL2 ");
+END
+
+// Pentru IT
+
+IF NOT sep[8] THEN
+   toggle(intr[2]);
+     Prompt("  ");
+ELSE
+     Prompt(" Este conectat ST0 ");
+END
+
+
+// Pentru ST0
+
+IF NOT b1 THEN
+     toggle(sep[8])
+     Prompt("  ");
+ELSE
+     Prompt(" Este tensiune pe B I ");
+END
+
+// Pentru ST1
+
+IF NOT intr[2] THEN
+    toggle(sep[7])
+END
+
+// Pentru ST2
+
+IF NOT( intr[2] OR sep[6])THEN
+    toggle(sep[5])
+     Prompt("  ");
+ELSE
+     Prompt(" Este conectat IT sau ST3 ");
+END
+
+// Pentru ST3
+
+IF NOT( intr[2] OR sep[5])THEN
+      toggle(sep[6])
+     Prompt("  ");
+ELSE
+     Prompt(" Este conectat IT sau ST2 ");
+END
+
+</pre> </font>
+</td></tr></table>
+<!------------------------------------------------------------------->
+
+<br><br><font color= "Blue" size=4> Statii electrice de transformare cu o singura bara colectoare sectionata longitudinal </font>
+
+<br><br>&nbsp;&nbsp;&nbsp;&nbsp;Vom realiza urmatoarea aplicatie SCADA <b>sch_statie</b> </a>&nbsp;pentru
+comanda si monitorizarea unei statii electrice de transformare care contine o singura bara colectoare sectionata longitudinal.
+
+<br><br><center> <img src="st_trafo.jpg"> </center>
+
+
+<br><br><font color= "Blue" size=4> Statii electrice de transformare cu mai multe bare colectoare cu sectionare longitudinala</font>
+
+<br><br>&nbsp;&nbsp;&nbsp;&nbsp;Statiile electrice de transformare care contin doua bare colectoare cu sectionare longitudinala, sunt realizate
+in una din configuratiile de mai jos:
+<br><br><center> <img src="st_electrica.jpg"> </center>
+
+<br><br><a name="alim_en"></a>
+<font color= "Red" size=4><b> Dispecerate pentru distributia energiei electrice </b> </font>
+
+<br><br>&nbsp;&nbsp;&nbsp;&nbsp;Vom dezvolta in continuare in cadrul proiectului &nbsp;<a href="../downloads/aplicatii/Sch_alim.ctz"><font color="red">
+<b>Sch_alim</b></font></a>&nbsp; cateva aplicatii din domeniul distributiei si alimentarii cu energie electrica.
+<br><br><a name="alim_or"></a>
+
+<font color= "Blue" size=4>Alimentarea unui oras cu energie</font>
+<br><br>&nbsp;&nbsp;&nbsp;&nbsp;Alimentarea unui oras cu energie presupune existenta unor sisteme SCADA care sa monitorizeze in permanenta 
+alimentarea cu energie, starea liniilor de alimentare, posibilitarea alimentarii diverselor obiective din mai multe surse, reconfigurarea intregului 
+sistem la diverse avarii, asigurarea alimentarii dupa diverse scheme de prioritate in functie de importanta obiectivelor alimentate.
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Pagina grafica numita <b> "Sch_alim" </b>  mimeaza alimentarea cu energie a diferitelor utilitati dintr-un oras. 
+In cazul deconectarii de la sursa principala de energie, se cupleaza automat alimentarea din sursele secundare.
+<br><br><center><img src="sch_alim.gif"></center>
+<br><br>&nbsp;&nbsp;&nbsp;&nbsp;In cadrul acestei scheme s-au utilizat o serie de comutatoare, realizate in diferite moduri. Cea mai simpla metoda este 
+metoda folosita in aplicatia anterioara pentru comutatorul de alimentare si anume folosirea unui "Simbol set". Aceasta metoda este folosita pentru 
+"Comut_alim" si comutatorul K1.
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Pentru comutatorul K5 s-a folosit aceeasi metoda ca si pentru "Comut_alim" dar cu simbolurile inversate, tinand cont ca 
+acesta trebuie sa fie complementar lui "Comut_alim".
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Pentru comutatorul K2 si K8 s-a folosit un "Genie" din libraria "pwrdist" caruia i-a fost setat "Tag Status" cu comul_alim.
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Comutatorul K6 este independent de restul schemei de alimentare deci pentru el a fost introdus un nou tag numit "comut_1" 
+si a fost realizat folosind un "Simbol set" cu proprietatea " Input" -Action down, "Down command" = <b>toggle(comut_1)</b>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Comutoarele K3 si K4 au fost realizate din doua simboluri suprapuse in care s-a folosit proprietatea "Vizibility"-> hidden 
+when setata cu comut_alim=0 pentru primul simbol iar pentru cel de al doilea simbol comut_alim=1
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Pentru consumatorii de dupa K6 s-au editat simboluri noi folosind metodele de editare noi simboluri.
+
+<br><br><a name="monit_param"></a>
+<font color= "Red" size=4><b> Monitorizarea parametrilor energiei electrice </b> </font>
+<br><br>&nbsp;&nbsp;&nbsp;&nbsp Monitorizeaza parametrilor energiei electrice presupune afisarea instantanee a diversilor parametri precum si fisarea 
+evolutiei in timp a acestora.
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Vom realiza acum o  pagina grafica numita <b> "Monit_u_alim" </b> care monitorizeaza parametrii energiei electrice livrate.
+<br><br><center><img src="monit_param.gif"></center>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Sistemele SCADA presupun afisarea unor paramerii de interes general. Variatia acestor parametrii este in general destul de lenta
+astfel incat variatia acestora, nu depaseste viteza cu care este refresh-at ecranul. Pentru parametrii cu viteza mare de variatie sunt necesare echipamente 
+speciale care fac prelucrarea acestora si transmit datele prelucrate spre sistemele SCADA. 
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Daca dorim de exemplu sa verificam calitatea energiei furnizate, acesata presupune analiza spectrala pentru detectarea 
+principalelor armonici care apar in cazul in care forma sinusoidale ale curentului si tensiunii sunt deformate.
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Imaginea de jos afiseaza o astfel de analiza spectrala.
+<br><br><center><img src="analiza_f.gif"></center>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Datele preluate de la analizor, vor fi afisate in pagina grafica <b> "Monit_u_alim_v1" </b>
+<br><br><center><img src="monit_param_01.gif"></center>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Intregul proiect poate fi descarcat  aici :<a href="../downloads/aplicatii/Sch_alim.ctz"> Download - "Sch_alim" </a> 
+
+
+<br><br><a name="autoev"></a>
+<table width="100%">
+<tr><td height="50" background="../../Images/imm_s.bmp"><center><font color= "Blue" size=5>Test de autoevaluare  </Center></TD></TR>
+</table>
+<ul>
+<table width="70%" border=1><tr><td bgcolor="WhiteSmoke">
+<font size="3" color="DarkBlue">
+<li>-Marcati raspunsurile corecte la intrebarile urmatoare.
+<li>-ATENTIE: pot exista unul, niciunul sau mai multe raspunsuri corecte la aceeasi intrebare.
+<li>-Timp de lucru: 10 minute
+</font>
+</td></tr></table>
+</ul>
+
+<ul>
+<script type="text/javascript">
+function nr_ck1() {  
+  
+     if ((Form_ck1.ck_1.checked==false)&(Form_ck1.ck_2.checked==true)&(Form_ck1.ck_3.checked==true)&(Form_ck1.ck_4.checked==false))  
+		document.Form_ck1.af_mes.value ='corect !';
+	else
+		document.Form_ck1.af_mes.value ='gresit !';
+ }
+</script>
+<Form name="Form_ck1">
+	<I> 1.Cum se procedeaza in cazul in care nu dispunem de un simbol adecvat in biblioteca standard de simboluri ?  </I><br><br>
+	<INPUT TYPE = "CHECKBOX" NAME="ck_1" VALUE = „a” onClick=nr_ck1()>
+	a. Se importa o alta biblioteca de simboluri<br>
+	<INPUT TYPE = "CHECKBOX" NAME="ck_2" VALUE = „b” onClick=nr_ck1()>
+	b.Se editeaza un simbol existent  <br>
+	<INPUT TYPE = "CHECKBOX" NAME="ck_3" VALUE = „c” onClick=nr_ck1()> 
+	c. Se adauga un nou simbol  <br>
+	<INPUT TYPE = "CHECKBOX" NAME="ck_4" VALUE = „d” onClick=nr_ck1()> 
+	d. Se descchide un nou proiect <br>
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;Raspuns: <INPUT type="text" name="af_mes" size=10 value=" ">
+ </form>
+</ul>
+
+<ul>
+<script type="text/javascript">
+function nr_ck2() {  
+  
+     if ((Form_ck2.ck_1.checked==true)&(Form_ck2.ck_2.checked==true)&(Form_ck2.ck_3.checked==true)&(Form_ck2.ck_4.checked==false))  
+		document.Form_ck2.af_mes.value ='corect !';
+	else
+		document.Form_ck2.af_mes.value ='gresit !';
+ }
+</script>
+<Form name="Form_ck2">
+	<I> 2. Prin ce metode se poate simula in aplicatiile SCADA un comutator de alimentare  ?  </I><br><br>
+	<INPUT TYPE = "CHECKBOX" NAME="ck_1" VALUE = „a” onClick=nr_ck2()>
+	a. Folosirea unui "Simbol set"<br>
+	<INPUT TYPE = "CHECKBOX" NAME="ck_2" VALUE = „b” onClick=nr_ck2()>
+	b. Folosirea unui "Genie" <br>
+	<INPUT TYPE = "CHECKBOX" NAME="ck_3" VALUE = „c” onClick=nr_ck2()> 
+	c. Folosirea a doua simboluri suprapuse  <br>
+	<INPUT TYPE = "CHECKBOX" NAME="ck_4" VALUE = „d” onClick=nr_ck2()> 
+	d. Eeditarea si utilizarea unui nou simbol   <br>
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;Raspuns: <INPUT type="text" name="af_mes" size=10 value=" ">
+ </form>
+</ul>
+
+<ul>
+<script type="text/javascript">
+function nr_ck3() {  
+  
+     if ((Form_ck3.ck_1.checked==true)&(Form_ck3.ck_2.checked==true)&(Form_ck3.ck_3.checked==false)&(Form_ck3.ck_4.checked==false))  
+		document.Form_ck3.af_mes.value ='corect !';
+	else
+		document.Form_ck3.af_mes.value ='gresit !';
+ }
+</script>
+<Form name="Form_ck3">
+	<I> 3. Monitorizeaza parametrilor energiei electrice presupune: </I><br><br>
+	<INPUT TYPE = "CHECKBOX" NAME="ck_1" VALUE = „a” onClick=nr_ck3()>
+	a. Afisarea instantanee a diversilor parametri <br>
+	<INPUT TYPE = "CHECKBOX" NAME="ck_2" VALUE = „b” onClick=nr_ck3()>
+	b. Afisarea evolutiei in timp a diversilor parametri  <br>
+	<INPUT TYPE = "CHECKBOX" NAME="ck_3" VALUE = „c” onClick=nr_ck3()> 
+	c. Avertizarea depasirii anumitor limite ale diversilor parametri<br>
+	<INPUT TYPE = "CHECKBOX" NAME="ck_4" VALUE = „d” onClick=nr_ck3()> 
+	d. Realizarea unor liste de evenimente<br>
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;Raspuns: <INPUT type="text" name="af_mes" size=10 value=" ">
+ </form>
+</ul>
+
+<ul>
+<script type="text/javascript">
+function nr_ck4() {  
+  
+     if ((Form_ck4.ck_1.checked==true)&(Form_ck4.ck_2.checked==true)&(Form_ck4.ck_3.checked==true)&(Form_ck4.ck_4.checked==true))  
+		document.Form_ck4.af_mes.value ='corect !';
+	else
+		document.Form_ck4.af_mes.value ='gresit !';
+ }
+</script>
+<Form name="Form_ck4">
+	<I> 4. Anclansarea automata a rezervei poate fi initiata de : </I><br><br>
+	<INPUT TYPE = "CHECKBOX" NAME="ck_1" VALUE = „a” onClick=nr_ck4()>
+	a. Apasarea manuala a unui buton de comutare a alimentarii de rezerva <br>
+	<INPUT TYPE = "CHECKBOX" NAME="ck_2" VALUE = „b” onClick=nr_ck4()>
+	b. Atingerea unui prag de catre un anumit parametru <br>
+	<INPUT TYPE = "CHECKBOX" NAME="ck_3" VALUE = „c” onClick=nr_ck4()> 
+	c. Comanda alimentarii de rezerva de catre sistemul SCADA  <br>
+	<INPUT TYPE = "CHECKBOX" NAME="ck_4" VALUE = „d” onClick=nr_ck4()> 
+	d. Aparitia unui incident <br>
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;Raspuns: <INPUT type="text" name="af_mes" size=10 value=" ">
+ </form>
+</ul>
+
+<ul>
+<script type="text/javascript">
+function nr_ck5() {  
+  
+     if ((Form_ck5.ck_1.checked==true)&(Form_ck5.ck_2.checked==true)&(Form_ck5.ck_3.checked==false)&(Form_ck5.ck_4.checked==false))  
+		document.Form_ck5.af_mes.value ='corect !';
+	else
+		document.Form_ck5.af_mes.value ='gresit !';
+ }
+</script>
+<Form name="Form_ck5">
+	<I> 5. Implementarea algoritmului de declansare AAR se face utilizand:</I><br><br>
+	<INPUT TYPE = "CHECKBOX" NAME="ck_1" VALUE = „a” onClick=nr_ck5()>
+	a. Relatii logice atribuite diverselor elemente <br>
+	<INPUT TYPE = "CHECKBOX" NAME="ck_2" VALUE = „b” onClick=nr_ck5()>
+	b. Functii definite de utilizator  <br>
+	<INPUT TYPE = "CHECKBOX" NAME="ck_3" VALUE = „c” onClick=nr_ck5()> 
+	c. Aplicatii specifice  <br>
+	<INPUT TYPE = "CHECKBOX" NAME="ck_4" VALUE = „d” onClick=nr_ck5()> 
+	d. Functii predefinite  <br>
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;Raspuns: <INPUT type="text" name="af_mes" size=10 value=" ">
+ </form>
+</ul>
+
+<br><br><a name="rez"></a>
+<table width="100%">
+<tr><td height="50" background="../../Images/imm_s.bmp"><center><font color= "Blue" size=5>Rezumat  </Center></TD></TR>
+</table>
+
+<br><br><b>Aplicatii SCADA in energetica</b>
+<br><br>&nbsp;&nbsp;&nbsp;&nbsp;Sectorul energetic este unul din sectoarele care necesita control si monitorizare la diverse nivele.
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Pentru a realiza scheme de alimentare, avem nevoie de o serie de simboluri cum ar fi simboluri pentru: separatoare, 
+intreruptoare, transformatoare etc. 
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Simbolutile specifice domeniului energetic pot fi luate din bibliotecile proprii sau se pot edita noi simboluri
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Domeniile care se preteaza a fi monitorizate prin intermediul sistemelor SCADA sunt:
+<ul> 
+	<li> Producerea energiei electrice
+	<li> Distribuirea energiei electrice
+	<li> Controlul calitati energiei electrice
+</ul>
+&nbsp;&nbsp;&nbsp;&nbsp;In domeniul producerii energiei electrice problematica anclansarii automate a rezervei(AAR) poate fi reflectata 
+in sisteme SCADA. Sistemul AAR poate fi declansat manual, sau automat cand un anumit parametru atinge o anumita valoare. 
+<br>&nbsp;&nbsp;&nbsp;&nbsp; De obicei sistemele SCADA nu iau decizia actionarii AAR, acestea doar constata activarea AAR si eventual iau decizii 
+privind reconfigurarea automata a intregului sistem la avarii.
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Alimentarea unui oras cu energie presupune existenta unor sisteme SCADA care sa monitorizeze in permanenta 
+alimentarea cu energie, starea liniilor de alimentare, posibilitarea alimentarii diverselor obiective din mai multe surse, reconfigurarea intregului 
+sistem la diverse avarii, asigurarea alimentarii dupa diverse scheme de prioritate in functie de importanta obiectivelor alimentate.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp Controlul calitati energiei electrice presupune monitorizeaza permanenta a parametrilor acesteia prin afisarea instantanee 
+a diversilor parametri precum si fisarea evolutiei in timp a acestora  <br>
+
+ <br><br><a name="astept"></a>
+<font color= "Blue" size=4><li><b>Rezultate asteptate </b></font>
+<ul>
+Dupa studierea acestui modul, ar trebui sa stiti:<br><br>
+<table  border=1>
+<tr><td bgcolor="whitesmoke">
+
+<li>Sa utilizati si sa creati simboluri specifice sistemelor energetice.
+<li>Sa analizati si sa simulati diverse scheme electrice.
+<li>Sa implementati diversi algoritmi de functionare in cadrul unui aplicatiilor SCADA
+<li>Sa realizati aplicatii SCADA in care sa includeti scheme de reconfigurare automata.
+</table>
+</ul>
+
+<a name="term"></a>
+<font color= "Blue" size=4> <li> <b>Termeni esentiali</b></font><br>
+<ul>
+<Table border=1 width="90%">
+
+<tr>
+  <td align="center"><b> Termen </b>  </td>
+  <td align="center"><b> Descriere </b>  </td>
+</tr>
+<tr>
+  <td> SCADA </td>
+  <td> Supervisory Control And Data Aquisition </td>    
+</tr>
+<tr>
+  <td> Tag </td>
+  <td> Nume generic pentru elementele din procesul monitorizat codificate prin intermediul variabilelor</td>    
+</tr>
+<tr>
+  <td> HMI  </td>
+  <td> Human Machine Interface -Interfata dintre aplicatie si utilizator </td>    
+</tr>
+<tr>
+  <td> AAR </td>
+  <td> Anclansarea automata a rezervei </td>    
+</tr>
+</table>
+</ul>
+ 
+<br><br><a name="bibl"></a>
+<font color= "Blue" size=4><li><b>Recomandari bibliografice </b></font>
+<ul>
+<table  width="90%" border=1>
+<tr><td bgcolor="whitesmoke">
+<li> [1] Traian Turc, Elemente de programare C++ utile in ingineria electrica, Ed.Matrixrom, Bucuresti,2010
+<li> [2] Traian Turc, Programare avansata C++ pentru ingineria electrica, Ed.Matrixrom, Bucuresti,2010
+<li> [3] Traian Turc, Programarea in limbaje de asamblare, uz intern, Univ."Petru Maior" ,Tg.Mures,2009
+<li> [4] Traian Tur,Brevet de inventie nr:11863 "Sistem pentru automatizarea si monitorizarea proceselor industriale", OSIM, 2003
+<li> [5] Jeff Kent, C++ fara mistere,Ed.Rosetti Educational 2004 .
+<li> [6] Boldur Barbat - Informatica industriala - Programarea în timp real  – Institutul Central pentru Conducere si informatica 1984 
+<li> [7] Ioan Babuita – Conducerea automata a proceselor – Ed. Facla 1985
+<li> [8] Ghercioiu-National în struments - Orizonturi  în instrumentatie 1995
+</td></tr></table>
+</ul>
+<br><br><a name="link"></a>
+<font color= "Blue" size=4><li><b>Link-uri utile </b></font>
+<ol>
+<table  width="90%" border=1>
+<tr><td bgcolor="whitesmoke">
+<li><a href="https://www.academia.edu/25952537/Partea_electrica_a_centralelor_si_statiilor" target="xx"> 
+https://www.academia.edu/25952537/Partea_electrica_a_centralelor_si_statiilor</a> -Partea electrica a centralelor si statiilor - -2021
+<li><a href="http://www.free-scada.org/"  target="xx"> http://www.free-scada.org/</a> - Free SCADA - 2009.
+<li><a href="http://www.7t.dk/igss/default.asp"  target="xx"> http://www.7t.dk/igss/default.asp</a> - IGSS SCADA System - 2009
+<li><a href="http://www.7t.dk/igss/default.asp?showid=374" target="xx"> http://www.7t.dk/igss/default.asp?showid=374</a> - IGSS Online SCADA Training - 2009 
+<li><a href="http://www.7t.dk/free-scada-software/index.html" target="xx"> http://www.7t.dk/free-scada-software/index.html</a>-  IGSS Free SCADA Software -2009
+<li><a href="http://www.indusoft.com/index.asp" target="xx"> http://www.indusoft.com/index.asp</a> - INDUSOFT SCADA - 2009
+<li><a href="http://www.genlogic.com/" target="xx"> http://www.genlogic.com/</a> - Dynamic Graphics, Data Visualization, Human-Machine Interface (HMI) - 2010 
+<li><a href="http://www.genlogic.com/demos.html" target="xx"> http://www.genlogic.com/demos.html</a> - On-Line Java and AJAX Demos - 2010 
+</td></tr></table>
+</ul>
+
+<br><br><a name="eval"></a>
+
+<table width="100%">
+<tr><td height="50" background="../../Images/imm_s.bmp"><center><font color= "Blue" size=5>Test de evaluare  </Center></TD></TR>
+</table>
+<ul>
+<table width="70%" border=1><tr><td bgcolor="WhiteSmoke">
+<font size="3" color="DarkBlue">
+<li>-Marcati raspunsurile corecte la intrebarile urmatoare.
+<li>-ATENTIE: pot exista unul, niciunul sau mai multe raspunsuri corecte la aceeasi intrebare.
+<li>-Timp de lucru: 10 minute
+</font>
+</td></tr></table>
+</ul>
+
+<ul>
+<script type="text/javascript">
+function nr_ck6() {  
+  
+     if ((Form_ck6.ck_1.checked==false)&(Form_ck6.ck_2.checked==true)&(Form_ck6.ck_3.checked==true)&(Form_ck6.ck_4.checked==false))  
+		document.Form_ck6.af_mes.value ='corect !';
+	else
+		document.Form_ck6.af_mes.value ='gresit !';
+ }
+</script>
+<Form name="Form_ck6">
+	<I> 1. Un simbol nou creat are valabilitate:</I><br><br>
+	<INPUT TYPE = "CHECKBOX" NAME="ck_1" VALUE = „a” onClick=nr_ck6()>
+	a. Numai in cadrul paginii grafice curente <br>
+	<INPUT TYPE = "CHECKBOX" NAME="ck_2" VALUE = „b” onClick=nr_ck6()>
+	b. In toate paginile din cadrul proiectului  <br>
+	<INPUT TYPE = "CHECKBOX" NAME="ck_3" VALUE = „c” onClick=nr_ck6()> 
+	c. In cadrul proiectului curent <br>
+	<INPUT TYPE = "CHECKBOX" NAME="ck_4" VALUE = „d” onClick=nr_ck6()> 
+	d. In toate proiectele create dupa adaugarea noului simbol <br>
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;Raspuns: <INPUT type="text" name="af_mes" size=10 value=" ">
+ </form>
+</ul>
+  
+<ul>
+<script type="text/javascript">
+function nr_ck7() {  
+  
+     if ((Form_ck7.ck_1.checked==false)&(Form_ck7.ck_2.checked==false)&(Form_ck7.ck_3.checked==false)&(Form_ck7.ck_4.checked==true))  
+		document.Form_ck7.af_mes.value ='corect !';
+	else
+		document.Form_ck7.af_mes.value ='gresit !';
+ }
+</script>
+<Form name="Form_ck7">
+	<I> 2. Folosirea a doua simboluri suprapuse pentru a simboliza un comutator presupune:</I><br><br>
+	<INPUT TYPE = "CHECKBOX" NAME="ck_1" VALUE = „a” onClick=nr_ck7()>
+	a. Setarea proprietatii  "disable when" <br>
+	<INPUT TYPE = "CHECKBOX" NAME="ck_2" VALUE = „b” onClick=nr_ck7()>
+	b. Setarea proprietatii  "enable when" <br>
+	<INPUT TYPE = "CHECKBOX" NAME="ck_3" VALUE = „c” onClick=nr_ck7()> 
+	c. Setarea proprietatii  "display when" <br>
+	<INPUT TYPE = "CHECKBOX" NAME="ck_4" VALUE = „d” onClick=nr_ck7()> 
+	d. Setarea proprietatii  "hidden when"  <br>
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;Raspuns: <INPUT type="text" name="af_mes" size=10 value=" ">
+ </form>
+</ul>
+
+<ul>
+<script type="text/javascript">
+function nr_ck8() {  
+  
+     if ((Form_ck8.ck_1.checked==true)&(Form_ck8.ck_2.checked==false)&(Form_ck8.ck_3.checked==false)&(Form_ck8.ck_4.checked==true))  
+		document.Form_ck8.af_mes.value ='corect !';
+	else
+		document.Form_ck8.af_mes.value ='gresit !';
+ }
+</script>
+<Form name="Form_ck8">
+	<I> 3. Folosirea unui"Symbol Set" pentru a simboliza un comutator presupune: </I><br><br>
+	<INPUT TYPE = "CHECKBOX" NAME="ck_1" VALUE = „a” onClick=nr_ck8()>
+	a. Setarea proprietatii  "Appearence" <br>
+	<INPUT TYPE = "CHECKBOX" NAME="ck_2" VALUE = „b” onClick=nr_ck8()>
+	b. Setarea proprietatii  "Access" <br>
+	<INPUT TYPE = "CHECKBOX" NAME="ck_3" VALUE = „c” onClick=nr_ck8()> 
+	c. Setarea proprietatii  "Movement" <br>
+	<INPUT TYPE = "CHECKBOX" NAME="ck_4" VALUE = „d” onClick=nr_ck8()> 
+	d. Setarea proprietatii  "Input" <br>
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;Raspuns: <INPUT type="text" name="af_mes" size=10 value=" ">
+ </form>
+</ul>
+
+<ul>
+<script type="text/javascript">
+function nr_ck9() {  
+  
+     if ((Form_ck9.ck_1.checked==false)&(Form_ck9.ck_2.checked==true)&(Form_ck9.ck_3.checked==false)&(Form_ck9.ck_4.checked==false))  
+		document.Form_ck9.af_mes.value ='corect !';
+	else
+		document.Form_ck9.af_mes.value ='gresit !';
+ }
+</script>
+<Form name="Form_ck9">
+	<I> 4. Anclansarea automata a rezervei poate fi implementata folosind </I><br><br>
+	<INPUT TYPE = "CHECKBOX" NAME="ck_1" VALUE = „a” onClick=nr_ck9()>
+	a. O functie declansata de actionarea unui buton <br>
+	<INPUT TYPE = "CHECKBOX" NAME="ck_2" VALUE = „b” onClick=nr_ck9()>
+	b. O functie declansata de evenimentul "refresh" al paginii grafice  <br>
+	<INPUT TYPE = "CHECKBOX" NAME="ck_3" VALUE = „c” onClick=nr_ck9()> 
+	c. Un timmer <br>
+	<INPUT TYPE = "CHECKBOX" NAME="ck_4" VALUE = „d” onClick=nr_ck9()> 
+	d. Un eveniment oarecare <br>
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;Raspuns: <INPUT type="text" name="af_mes" size=10 value=" ">
+ </form>
+</ul>
+
+<ul>
+<script type="text/javascript">
+function nr_ck10() {  
+  
+     if ((Form_ck10.ck_1.checked==true)&(Form_ck10.ck_2.checked==true)&(Form_ck10.ck_3.checked==true)&(Form_ck10.ck_4.checked==false))  
+		document.Form_ck10.af_mes.value ='corect !';
+	else
+		document.Form_ck10.af_mes.value ='gresit !';
+ }
+</script>
+<Form name="Form_ck10">
+	<I> 5. Simularea defectului unui element este necesar pentru: </I><br><br>
+	<INPUT TYPE = "CHECKBOX" NAME="ck_1" VALUE = „a” onClick=nr_ck10()>
+	a. Punerea la punct a aplicatiei SCADA <br>
+	<INPUT TYPE = "CHECKBOX" NAME="ck_2" VALUE = „b” onClick=nr_ck10()>
+	b. Crearea unor scenarii in caz de avarii <br>
+	<INPUT TYPE = "CHECKBOX" NAME="ck_3" VALUE = „c” onClick=nr_ck10()> 
+	c. Simularea functionarii unei sistem <br>
+	<INPUT TYPE = "CHECKBOX" NAME="ck_4" VALUE = „d” onClick=nr_ck10()> 
+	d. Implementarea functiei de control a unei aplicatii SCADA  <br>
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;Raspuns: <INPUT type="text" name="af_mes" size=10 value=" ">
+ </form>
+</ul>
+
+ 
+</body>
+</html>
