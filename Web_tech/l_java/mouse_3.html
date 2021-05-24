@@ -1,0 +1,22 @@
+<html>
+<img src="im1.jpg" onmousemove="coord_mouse(event)" onmouseout="mouse_out()" onclick="coord_click(event)">
+<p id="af_00">Coordonate mouse in imagine:</p>
+<p id="af_01">Coordonate mouse:</p>
+<p id="af_02">Coordonate click:</p>
+<script>
+	
+	function coord_mouse(e) {
+		var x = event.clientX;
+		var y = event.clientY;
+		document.getElementById("af_01").innerHTML = "Coordonate mouse: (" + x + "," + y + ")";
+	}
+	function coord_click(e) {
+		var x = event.clientX;
+		var y = event.clientY;
+		document.getElementById("af_02").innerHTML = "Coordonate click: (" + x + "," + y + ")";
+	}
+	function mouse_out() {
+		document.getElementById("af_01").innerHTML = "Coordonate mouse: ( , )";
+	}
+</script>
+</html>
