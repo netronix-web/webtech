@@ -1,0 +1,72 @@
+<html>
+<title> Elemente de programare orientata obiect - realizarea claselor </title>
+<body>
+
+<table width="100%">
+<tr><td height="50" background="../../Images/imm_s.bmp"><center><font color= "white" size=5> Elemente de programare orientata obiect - realizarea claselor </Center></TD></TR>
+</table>
+<a name="start"></a>
+<font color= "Blue" size=5> Teme program  </font>
+<ol>
+<li> Creati o clasa denumita "ochi" dupa care realizati doua obiecte prin instantierea clasei ochi
+<br><br><center><img src="im_cpp135.jpg"></center><br>
+<li> Creati o clasa denumita "ventil" dupa care realizati un obiect prin instantierea clasei ventil
+ <br><br><center><img src="im_cpp122.jpg"></center><br>
+<li> Creati o clasa denumita "ventil" dupa care realizati mai multe obiecte prin instantierea clasei ventil
+<br><br><center><img src="im_cpp123.jpg"></center><br>
+<li> Creati o clasa denumita "piston" dupa care realizati patru obiecte prin instantierea clasei piston, de forma
+<br><br><center><img src="im_cpp125.jpg"></center><br>
+<li> Creati o clasa denumita "bird" care imita zborul unei pasari dupa care realizati trei obiecte prin instantierea clasei bird, de forma
+<br><br><center><img src="im_cpp127.jpg"></center><br>
+<li> Creati o clasa denumita "egg" dupa care realizati trei obiecte prin instantierea clasei egg, de forma
+<br><br><center><img src="im_cpp134.jpg"></center><br>
+<li> Creati o clasa denumita "snow" care imita un fulg de zapada. Creati un vector de obiecte snow dupa care realizati o aplicatie care imita ninsoarea
+<br><br><center><img src="im_cpp143.jpg"></center><br>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Clasa piston
+<br><br><!------------------------------------------------------------------->
+<table width="100%" border=1><tr><td bgcolor="WhiteSmoke">
+<font size="3" color="DarkBlue"><pre>
+       public class piston
+        {
+            int x0;
+            int y0;
+            int w;
+            int h;
+
+            public void setval(System.Drawing.Graphics zona_des, System.Drawing.Pen creion, 
+				System.Drawing.SolidBrush radiera, System.Drawing.SolidBrush p_blu, int alfa_gr)
+            {
+                // alfa_gr unghiul in grade
+                int xc = x0 + w / 2;
+                int yc = y0 + w / 2;
+                int raza = w / 2;
+                int yl;
+                zona_des.FillRectangle(radiera, x0, y0, w, 3*w);
+
+                double alfa_r = 2 * System.Math.PI * (alfa_gr) / 360;// unghiul in radiani
+                int x = System.Convert.ToInt16(xc + raza * System.Math.Cos(alfa_r));
+                int y = System.Convert.ToInt16(yc - raza * System.Math.Sin(alfa_r));
+                yl = System.Convert.ToInt16(raza*System.Math.Sin(alfa_r));
+                zona_des.DrawEllipse(creion, xc - raza, yc - raza, 2 * raza, 2*raza);
+                zona_des.DrawLine(creion, x, y, xc, y0 + 2*w - yl);
+                zona_des.DrawLine(creion, x, y, xc, yc);
+                zona_des.FillRectangle(p_blu, x0, y0 + 2 * w - yl, w, raza);
+                zona_des.DrawRectangle(creion, x0, y0 +w+raza, w, 2*w-raza/2);
+              
+            }
+
+            public void init_piston(int pozx, int pozy, int lat, int inalt)
+            {
+                x0 = pozx;
+                y0 = pozy;
+                w = lat;
+                h = inalt;
+            }
+        } 
+</pre> </font>
+</td></tr></table>
+<!------------------------------------------------------------------->
+
+</ol>
+</body>
+</html>

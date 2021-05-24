@@ -1,0 +1,75 @@
+        public class voltm
+        {
+            int x0;
+            int y0;
+            int w;
+            double vm;
+            System.Drawing.Pen creion= new System.Drawing.Pen(System.Drawing.Color.Red);
+            System.Drawing.Font font_ni = new System.Drawing.Font("Nina", 8);
+            System.Drawing.SolidBrush pens_blu = new System.Drawing.SolidBrush(System.Drawing.Color.Blue);
+            System.Drawing.SolidBrush radiera = new System.Drawing.SolidBrush(System.Drawing.Color.White);
+
+            public void desen_voltm(System.Drawing.Graphics zona_des)
+            {
+                int lt = 15;
+                int lg = 22;
+                int x1, x2, xt, y1, y2, yt;
+                int xc = x0 + w / 2;
+                int yc = y0 + w / 2;
+                int raza = w / 2;
+                int nrd;
+                int val_a=0;
+                // alfa_gr unghiul in grade
+                double alfa_gr = 140;
+                nrd = 0;
+                while (alfa_gr >=40)
+                {
+                    double alfa_r = 2 * System.Math.PI * (alfa_gr) / 360;// unghiul in radiani
+                    if (nrd % 5 == 0)
+                    {
+                        x1 = System.Convert.ToInt16(xc + (raza-lt) * System.Math.Cos(alfa_r));
+                        y1 = System.Convert.ToInt16(yc - (raza-lt) * System.Math.Sin(alfa_r));
+                        xt = System.Convert.ToInt16(xc-5 + raza * System.Math.Cos(alfa_r));
+                        yt = System.Convert.ToInt16(yc - raza * System.Math.Sin(alfa_r));
+                        zona_des.DrawString(System.Convert.ToString(val_a), font_ni, pens_blu, xt, yt);
+                        val_a = val_a + System.Convert.ToInt16(vm /10);
+
+                    }
+                    else
+                    {
+                        x1 = System.Convert.ToInt16(xc + (raza - lg) * System.Math.Cos(alfa_r));
+                        y1 = System.Convert.ToInt16(yc - (raza - lg) * System.Math.Sin(alfa_r));
+                    }
+                    x2 = System.Convert.ToInt16(xc + (raza - 2 * lt) * System.Math.Cos(alfa_r));
+                    y2 = System.Convert.ToInt16(yc - (raza - 2 * lt) * System.Math.Sin(alfa_r));
+                    zona_des.DrawLine(creion, x1, y1, x2, y2);
+                    alfa_gr -= 2;
+                    nrd++;
+                }
+                zona_des.DrawRectangle(creion, xc - raza, yc - raza - 2, 2 * raza, 5 * raza / 4);
+            }
+            public void setval(System.Drawing.Graphics zona_des, double val)
+            {
+                int alfa_gr = 140 - System.Convert.ToInt16(100 * val / vm); ;//unghiul in grade
+
+                int lg = 17;
+                int xc = x0 + w / 2;
+                int yc = y0 + w / 2;
+                int raza = w / 2;
+                zona_des.FillPie(radiera, x0 + 2 * lg - 1, y0 + 2 * lg - 1, w - 4 * lg + 2, w - 4 * lg + 2, 215, 110);
+                double alfa_r = 2 * System.Math.PI * (alfa_gr) / 360;// unghiul in radiani
+                int x = System.Convert.ToInt16(xc + (raza - 2 * lg) * System.Math.Cos(alfa_r));
+                int y = System.Convert.ToInt16(yc - (raza - 2 * lg) * System.Math.Sin(alfa_r));
+                zona_des.DrawLine(creion, x, y, xc, yc);
+                alfa_gr = 40;
+                zona_des.DrawRectangle(creion, xc - raza, yc - raza - 2, 2 * raza, 5 * raza / 4);
+            }
+
+            public voltm(int pozx, int pozy, int lat, double val_max)
+            {
+                x0 = pozx;
+                y0 = pozy;
+                w = lat;
+                vm = val_max;
+            }
+        } 
