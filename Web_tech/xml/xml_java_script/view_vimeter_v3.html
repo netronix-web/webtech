@@ -1,0 +1,38 @@
+<html>
+<body>
+<script type="text/javascript">
+if (window.XMLHttpRequest)
+  {
+  xhttp=new XMLHttpRequest();
+  }
+else // Internet Explorer 5/6
+  {
+  xhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xhttp.open("GET","vimeter_v2.xml",false);
+xhttp.send("");
+xmlDoc=xhttp.responseXML; 
+
+document.write("<center><table border='1'>");
+document.write("<tr bgcolor='yellow'><td>Instrument virtual</td><td>Mod</td><td>Unit_mas</td><td>Val_n</td><td>Val_max</td></tr>");
+
+var x=xmlDoc.getElementsByTagName("displ");
+for (i=0;i<x.length;i++)
+  { 
+  document.write("<tr><td>");
+  document.write(x[i].getElementsByTagName("caption")[0].childNodes[0].nodeValue);
+  document.write("</td><td>");
+  document.write(x[i].getElementsByTagName("mod")[0].childNodes[0].nodeValue);
+  document.write("</td><td>");
+  document.write(x[i].getElementsByTagName("unit")[0].childNodes[0].nodeValue);
+  document.write("</td><td>");
+  document.write(x[i].getElementsByTagName("val")[0].childNodes[0].nodeValue);
+  document.write("</td><td>");
+  document.write(x[i].getElementsByTagName("maxval")[0].childNodes[0].nodeValue);
+  document.write("</td></tr>");
+  }
+document.write("</table></center>");
+</script>
+</body>
+</html>
+

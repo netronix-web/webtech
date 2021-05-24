@@ -1,0 +1,28 @@
+<html>
+<body>
+<h2>Preluare date din XML</h3>
+<p><b>Instrument virtual:</b> <span id="caption"></span><br />
+<b>Mod</b> <span id="mod"></span><br />
+<b>Valoare:</b> <span id="val"></span>
+
+<script type="text/javascript">
+if (window.XMLHttpRequest)
+  {
+  xhttp=new XMLHttpRequest()
+  }
+else
+  {
+  xhttp=new ActiveXObject("Microsoft.XMLHTTP")
+  }
+xhttp.open("GET","vimeter_v1.xml",false);
+xhttp.send("");
+xmlDoc=xhttp.responseXML;
+
+document.getElementById("caption").innerHTML=xmlDoc.getElementsByTagName("caption")[0].childNodes[0].nodeValue;
+document.getElementById("mod").innerHTML=xmlDoc.getElementsByTagName("mod")[0].childNodes[0].nodeValue;
+document.getElementById("val").innerHTML=xmlDoc.getElementsByTagName("val")[0].childNodes[0].nodeValue;
+</script>
+
+</body>
+</html>
+

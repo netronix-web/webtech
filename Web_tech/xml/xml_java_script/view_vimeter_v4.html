@@ -1,0 +1,67 @@
+<html>
+<head>
+
+<script type="text/javascript">
+var xmlDoc;
+if (window.XMLHttpRequest)
+  {
+  xhttp=new XMLHttpRequest();
+  }
+else // Internet Explorer 5/6
+  {
+  xhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xhttp.open("GET","vimeter_v2.xml",false);
+xhttp.send("");
+xmlDoc=xhttp.responseXML;
+
+var x=xmlDoc.getElementsByTagName("displ");
+i=0;
+
+function next()
+{
+if (i<x.length-1)
+  {
+  i++;
+  display();
+  }
+}
+
+function previous()
+{
+if (i>0)
+  {
+  i--;
+  display();
+  }
+}
+
+function display()
+{
+caption=(x[i].getElementsByTagName("caption")[0].childNodes[0].nodeValue);
+mod=(x[i].getElementsByTagName("mod")[0].childNodes[0].nodeValue);
+unit=(x[i].getElementsByTagName("unit")[0].childNodes[0].nodeValue);
+val=(x[i].getElementsByTagName("val")[0].childNodes[0].nodeValue);
+document.getElementById("show").innerHTML=" <table width='350' border=1> <tr><td>Instrument virtual: </td><td><b>" + caption + "</b></td></tr><tr><td>Mod afisare:</td><td> " + mod + "</td></tr><tr><td>Unitate de masura: </td><td>"+ unit+ "</td></tr><tr><td>Valoare nominala: </td><td>" + val +"</td></tr></table><br>";
+}
+</script>
+</head>
+
+<body onload="display()">
+<center>
+<table border=1 width="400" bgcolor="whitesmoke"><tr><td><br>
+<center>
+<div id='show'></div>
+</center>
+</td></tr>
+<tr><td>
+<center>
+<input type="button" onclick="previous()" value="previous" />
+<input type="button" onclick="next()" value="next" /><br>
+</center>
+</td></tr>
+</table>
+</center>
+</body>
+</html>
+

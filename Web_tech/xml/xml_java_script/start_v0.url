@@ -1,0 +1,9 @@
+[DEFAULT]
+BASEURL=http://localhost/Web_curs/Web_tech/start.html
+[InternetShortcut]
+URL=http://127.0.0.1:8888/Web_curs/Web_tech/xml/xml_java_script/view_vimeter_v0.html
+Modified=30A2C38A3F9CCA01C5
+IDList=
+HotKey=0
+[{000214A0-0000-0000-C000-000000000046}]
+Prop3=19,2

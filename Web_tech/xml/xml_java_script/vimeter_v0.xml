@@ -1,0 +1,15 @@
+<vimeter>
+	<caption> Voltmetru </caption>	
+	<code> VA-220 </code>
+	<mod> analog </mod>
+	<aspect> bar markmax="1" </aspect>
+	<backcolor> blue </backcolor>
+	<forecolor> white </forecolor>
+	<width> 150 </width>
+	<height> 100 </height>
+	<poz> vertical </poz>
+	<unit> volt </unit>
+	<val> 220 </val>
+	<minval> 50 </minval>
+	<maxval> 250 </maxval>
+</vimeter>
