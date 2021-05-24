@@ -1,0 +1,749 @@
+<html>
+<title> Laborator java-Script </title>
+<head>
+<script type="text/javascript" src="../l_java/wz_jsgraphics.js"></script>
+</head>
+<body>
+
+<table width="100%">
+<tr><td height="50" background="../../Images/imm_s.bmp"><center><font color= "white" size=5> Laborator java - Script </Center></TD></TR>
+</table>
+<br><br><a name="start"></a>
+<center><font color= "Blue" size=5> Programare obiect  </font></center>
+
+<ul>
+ <li> <font color= "Black" size=4> Clasa wind </font>
+</ul>
+
+<ol>
+	<li> Realizarea clasei wind 
+	<li> Adaugarea metodei set_val()
+	<li> Afisare dinamica
+</ol>
+
+<form name="f25_00">  
+<textarea width="100%" height="600px" style="width:100%;height:2450px" name="code" wrap="logical" rows="12" cols="42">
+<center><canvas id="desen00" width="300" height="300" style="border:1px solid #d3d3d3;">
+Browser-ul d-voastra nu suporta marcatorul CANVAS.</canvas></center>
+<script>
+var d = document.getElementById("desen00");
+var ctx = d.getContext("2d");
+function wind (c,x,y,r,vm) {
+	this.cnvs=c;	// canvas
+	this.x1 = x;	// position x
+	this.y1 = y;	// position y
+	this.raza = r;	// radius
+	this.vmax = vm; // maximum value
+}
+wind.prototype = {
+	constructor: wind,
+	draw:function ()  {
+
+		// draw gradatii
+
+		var xm,ym,xg,yg,xt,yt;
+		var lt = 10;
+		var lg = 17;
+		var r_text=this.raza+20;
+		crd = new Array("E","NE","N","NW","W","SW","S","SE")
+		this.cnvs.beginPath();
+		this.cnvs.lineWidth = 1;
+		this.cnvs.strokeStyle = "rgb(0,0,150)";
+		var nrd=0;
+		var val_a=0;
+		var alfa_r=0;		
+		var alfa_gr = 0;//  unghiul in grade
+		while (alfa_gr <360)
+		{
+		alfa_r = 2 * Math.PI * (alfa_gr) / 360;// unghiul in radiani
+		
+		if (nrd % 9 == 0)
+		{
+			xm = this.x1 + (r_text-lt) * Math.cos(alfa_r);
+			ym = this.y1 - (r_text-lt) * Math.sin(alfa_r);
+			xt = this.x1-5 + r_text * Math.cos(alfa_r);
+			yt = this.y1 - r_text * Math.sin(alfa_r);
+			//this.cnvs.strokeText(Math.floor(val_a),xt,yt);
+			this.cnvs.strokeText(crd[Math.floor(nrd/9)],xt,yt);
+			val_a =val_a + 18*(this.vmax/360);
+		}
+		else
+		{
+			xm = this.x1 + (r_text - lg) * Math.cos(alfa_r);
+			ym = this.y1 - (r_text - lg) * Math.sin(alfa_r);
+		}
+		xg = this.x1 + (r_text - 2 * lt) * Math.cos(alfa_r);
+		yg = this.y1 - (r_text - 2 * lt) * Math.sin(alfa_r);
+		this.cnvs.moveTo(xm,ym);
+		this.cnvs.lineTo(xg,yg);
+		alfa_gr += 5;
+		nrd++;
+		}
+		this.cnvs.stroke();
+	},
+	set_val:function (v,a)  {
+		
+		this.val = v;
+		this.alfa_v = a // unghiul manunchiului
+		
+		// sterg interiorul
+		
+		this.cnvs.beginPath();
+		this.cnvs.fillStyle = "white";
+		this.cnvs.arc(this.x1, this.y1, this.raza,0, 2*Math.PI);
+		this.cnvs.fill();
+
+		
+		// draw cercuri concentrice
+		
+		this.cnvs.beginPath();
+		this.cnvs.strokeStyle = "rgb(200,200,200)";
+		this.cnvs.lineWidth = 1;
+		this.cnvs.moveTo(this.x1,this.y1);
+		rx=this.raza
+		while (rx > 0 )
+		{
+			this.cnvs.arc(this.x1,this.y1,rx,0,2*Math.PI);
+			rx-=36;
+		}
+		
+		// draw raze
+		
+		alfa_gr=18
+		while (alfa_gr < 360)
+		{
+				alfa_r = 2 * Math.PI * (alfa_gr) / 360
+				xg = this.x1 + this.raza * Math.cos(alfa_r);
+				yg = this.y1 - this.raza * Math.sin(alfa_r);
+				this.cnvs.moveTo(this.x1,this.y1);
+				this.cnvs.lineTo(xg,yg);
+				alfa_gr=alfa_gr+18
+		}
+		
+		// draw manunchi de raze 
+
+		alfa_vi=this.alfa_v-10
+		alfa_vf=this.alfa_v+10
+		for(i=0;i<7;i++)
+		{
+				alfa_r = (2 * Math.PI * alfa_vi) / 360
+				xg = this.x1 + this.raza * Math.cos(alfa_r);
+				yg = this.y1 - this.raza * Math.sin(alfa_r);
+				this.cnvs.moveTo(this.x1,this.y1);
+				this.cnvs.lineTo(xg,yg);
+				alfa_vi=alfa_vi+3
+		}
+		this.cnvs.stroke();
+
+		// draw manunchi de raze de lungime val
+		
+		this.cnvs.beginPath();
+		this.cnvs.strokeStyle = '#ff0000';
+		alfa_vi=this.alfa_v-10
+		alfa_vf=this.alfa_v+10
+		rz=this.raza*v/this.vmax
+		for(i=0;i<7;i++)
+		{
+				alfa_r = 2 * Math.PI * alfa_vi / 360
+				xg = this.x1 + rz * Math.cos(alfa_r);
+				yg = this.y1 - rz * Math.sin(alfa_r);
+				this.cnvs.moveTo(this.x1,this.y1);
+				this.cnvs.lineTo(xg,yg);
+				alfa_vi=alfa_vi+3
+		}
+		this.cnvs.stroke();
+		
+		// sterg valori
+		
+		this.cnvs.beginPath();
+		this.cnvs.fillStyle = "#FFFFFF";
+		this.cnvs.fillRect(this.x1-this.raza-15,this.y1-this.raza-40,90,40);
+		this.cnvs.stroke();
+		
+		// scriu valori
+		
+		this.cnvs.beginPath();
+		this.cnvs.lineWidth = 1;
+		this.cnvs.strokeStyle = '#ff0000';
+		this.cnvs.font = "14px Arial";
+		this.cnvs.strokeText("V="+this.val+" Km/h",this.x1 - this.raza-15,this.y1 - this.raza-25);
+		this.cnvs.strokeText("U="+this.alfa_v+" °",this.x1 - this.raza-15,this.y1 - this.raza-10);
+		this.cnvs.stroke();
+      }
+}
+function set_v(){
+	vm=150;
+	wind_1.set_val(Math.round(Math.random()*vm),Math.round(Math.random()*360));
+  	setTimeout("set_v()",1500);
+}
+wind_1 = new wind(ctx,150,150,90,360);
+wind_1.draw();
+set_v();
+</script>
+
+</textarea>
+</form>
+<script>document.write(f25_00.code.value);</script>
+
+<ul>
+ <li> <font color= "Black" size=4> Clasa instrument virtual </font>
+</ul>
+
+<ol>
+	<li> Realizarea clasei instrument virtual
+	<li> Adaugarea metodei set_val()
+	<li> Afisare dinamica
+	<li> Afisare diverse forme de unda cu "afisor_xt" aflata in biblioteca <a href="afisor_xt.js">afisor_xt.js</a>
+</ol>
+<form name="f25_0">  
+<textarea width="100%" height="600px" style="width:100%;height:600px" name="code" wrap="logical" rows="12" cols="42">
+<center><canvas id="desen0" width="300" height="300" style="border:1px solid #d3d3d3;">
+Browser-ul d-voastra nu suporta marcatorul CANVAS.</canvas></center>
+<script>
+var d = document.getElementById("desen0");
+var ctx = d.getContext("2d");
+function instr0 (x,y,r,a_f,a_s,c) {
+    this.x1 = x;
+    this.y1 = y;
+	this.raza=r;
+    this.alfa_f = a_f+Math.PI/2; // unghiul final
+    this.alfa_s = a_s+Math.PI/2; // ungiul de la care se porneste
+	this.cnvs=c;
+}
+instr0.prototype = {
+    constructor: instr0,
+    desenez:function ()  {
+		this.cnvs.beginPath();
+		this.cnvs.strokeStyle = "rgb(230,230,230)";
+		this.cnvs.lineWidth = 22;
+		this.cnvs.arc(this.x1,this.y1,this.raza,2*Math.PI,0);
+		this.cnvs.stroke();
+		this.cnvs.beginPath();
+		this.cnvs.lineWidth = 20;
+		this.cnvs.arc(this.x1,this.y1,this.raza,this.alfa_f,this.alfa_s);
+		this.cnvs.strokeStyle = '#ff0000';
+		this.cnvs.stroke();
+    }
+}
+instr0_1 = new instr0(95,70,40,0,Math.PI,ctx); 
+instr0_1.desenez();
+instr0_2 = new instr0(95,190,50,0,Math.PI/2,ctx); 
+instr0_2.desenez();
+instr0_3 = new instr0(230,170,50,0,Math.PI/3,ctx); 
+instr0_3.desenez();
+</script>
+
+</textarea>
+</form>
+<script>document.write(f25_0.code.value);</script>
+<br>
+<br>
+
+<ul>
+ <li> <font color= "Black" size=4> Clasa instrument virtual 1 </font>
+</ul>
+
+<form name="f25_1">  
+<textarea width="100%" height="400px" style="width:100%;height:1500px" name="code" wrap="logical" rows="12" cols="42">
+<center><canvas id="desen1" width="800" height="350" style="border:1px solid #d3d3d3;"></center>
+Browser-ul d-voastra nu suporta marcatorul CANVAS.</canvas>
+<script>
+var d = document.getElementById("desen1");
+var ctx = d.getContext("2d");
+function instr1 (x,y,r,c,vm) {
+    	this.x1 = x;
+    	this.y1 = y;
+	this.raza=r;
+	this.cnvs=c;
+	this.vmax=vm;
+
+}
+instr1.prototype = {
+    constructor: instr1,
+    desenez:function ()  {
+
+		// desenez gradatii
+
+		var xm,ym,xg,yg,xt,yt;
+		var lt = 15;
+		var lg = 22;
+		var r_text=this.raza+35;
+		this.cnvs.beginPath();
+		this.cnvs.lineWidth = 1;
+		this.cnvs.strokeStyle = "rgb(120,120,120)";
+		this.cnvs.font = "10px Arial";
+		this.cnvs.strokeText("Max="+this.vmax,this.x1 - r_text,this.y1 - r_text);
+		var nrd=0;
+		var val_a=0;
+		var alfa_r=90;		
+		var alfa_gr = 270;//  unghiul in grade
+		while (alfa_gr >-90)
+		{
+		alfa_r = 2 * Math.PI * (alfa_gr) / 360;// unghiul in radiani
+		
+		if (nrd % 6 == 0)
+
+		{
+			xm = this.x1 + (r_text-lt) * Math.cos(alfa_r);
+			ym = this.y1 - (r_text-lt) * Math.sin(alfa_r);
+			xt = this.x1-5 + r_text * Math.cos(alfa_r);
+			yt = this.y1 - r_text * Math.sin(alfa_r);
+			this.cnvs.strokeText(Math.floor(val_a),xt,yt);
+			val_a =val_a + 18*(this.vmax/360);
+		}
+		else
+		{
+			xm = this.x1 + (r_text - lg) * Math.cos(alfa_r);
+			ym = this.y1 - (r_text - lg) * Math.sin(alfa_r);
+		}
+		xg = this.x1 + (r_text - 2 * lt) * Math.cos(alfa_r);
+		yg = this.y1 - (r_text - 2 * lt) * Math.sin(alfa_r);
+		this.cnvs.moveTo(xm,ym);
+		this.cnvs.lineTo(xg,yg)
+		alfa_gr -= 3;
+		nrd++;
+		}
+		this.cnvs.stroke(); 
+	},
+    set_val:function (v)  {
+		var a1,a2;
+		this.val = v;
+		a1=Math.PI/2; // unghiul initial
+		a2=Math.PI/2+2*Math.PI*this.val/this.vmax; // unghiul final
+		this.cnvs.beginPath();
+		this.cnvs.fillStyle = "#FFFFFF";
+		this.cnvs.fillRect(this.x1-20,this.y1-20,80,40);
+		this.cnvs.stroke();
+		this.cnvs.beginPath();
+		this.cnvs.lineWidth = 1;
+		this.cnvs.font = "16px Arial";
+		this.cnvs.strokeText(this.val,this.x1-10,this.y1);
+		this.cnvs.strokeStyle = "rgb(230,230,230)";
+		this.cnvs.lineWidth = 22;
+		this.cnvs.arc(this.x1,this.y1,this.raza,2*Math.PI,0);
+		this.cnvs.stroke();
+		this.cnvs.beginPath();
+		this.cnvs.lineWidth = 20;
+		this.cnvs.arc(this.x1,this.y1,this.raza,a1,a2);
+		this.cnvs.strokeStyle = '#ff0000';
+		this.cnvs.stroke();
+    }
+
+}
+instr1_1 = new instr1(110,120,70,ctx,100);
+instr1_1.desenez();
+instr1_1.set_val(50);
+instr1_2 = new instr1(350,190,50,ctx,100);
+instr1_2.desenez(); 
+instr1_2.set_val(25);
+instr1_3 = new instr1(600,170,60,ctx,100);
+instr1_3.desenez();  
+instr1_3.set_val(16);
+</script>
+
+</textarea>
+</form>
+<script>document.write(f25_1.code.value);</script>
+<br>
+<br>
+
+<ul>
+ <li> <font color= "Black" size=4> Clasa instrument virtual 2 </font>
+</ul>
+
+<form name="f25_2">  
+<textarea width="100%" height="400px" style="width:100%;height:830px" name="code" wrap="logical" rows="12" cols="42">
+
+<center><canvas id="desen2" width="900" height="250" style="border:1px solid #d3d3d3;">
+Browser-ul d-voastra nu suporta marcatorul CANVAS.</canvas></center>
+<script>
+var sem=1;
+var val4=0,val5=0,val6=0,alfa6=0;
+var d1 = document.getElementById("desen2");
+var ctx2 = d1.getContext("2d");
+instr1_4 = new instr1(120,120,70,ctx2,360);
+instr1_4.desenez();
+instr1_5 = new instr1(400,120,70,ctx2,400);
+instr1_5.desenez(); 
+instr1_6 = new instr1(680,120,70,ctx2,600);
+instr1_6.desenez();
+  
+function set_v4(){
+	vm4=360;
+	instr1_4.set_val(Math.round(Math.random()*vm4));
+  	setTimeout("set_v4()",500);
+}
+function set_v5(){
+	vm5=400;
+	if(sem==1){ 
+		val5+=10;
+		if(val5>=vm5){ 
+				val5=vm5; 
+				sem=0; 
+		}
+	} 
+	else{
+		val5-=10;
+		if(val5<=0){ 
+			val5=0; 
+			sem=1; 
+		}
+	}
+	instr1_5.set_val(val5);
+	setTimeout("set_v5()",100);
+}
+function set_v6(){
+	vm6=600;
+	val6=Math.round((1+Math.sin(alfa6))*vm6/2);
+	instr1_6.set_val(val6);
+	alfa6+=0.1;
+  	setTimeout("set_v6()",100);
+}
+set_v4();
+set_v5();
+set_v6();
+</script>
+</textarea>
+</form>
+<script>document.write(f25_2.code.value);</script>
+
+</script>
+
+<ul>
+ <li> <font color= "Black" size=4> Clasa instrument virtual 3 </font>
+</ul>
+
+<form name="f25_3">  
+<textarea width="100%" height="400px" style="width:100%;height:4000px" name="code" wrap="logical" rows="12" cols="42">
+<center><table bgcolor="WhiteSmoke" border=0 width="220"><tr><td align="center" colspan="3">
+<center> Generator de semnal <br></center> 
+<center><canvas id="desen07" width="325" height="280" style="background-color:#ffffff;border:1px solid #c3c3c3; ">
+Your browser does not support the HTML5 canvas tag.
+</canvas></center>
+<Form name="Form_rd">
+	<INPUT TYPE = "radio" NAME="rd1" onclick="val_rd(this.value)"  VALUE = "1" checked="checked"> Triunghi
+	<INPUT TYPE = "radio" NAME="rd1" onclick="val_rd(this.value)"  VALUE = "2"> Dinti fierastrau
+	<INPUT TYPE = "radio" NAME="rd1" onclick="val_rd(this.value)"  VALUE = "3"> Dreptunghi <br>
+	<INPUT TYPE = "radio" NAME="rd1" onclick="val_rd(this.value)"  VALUE = "4"> Sinus
+	<INPUT TYPE = "radio" NAME="rd1" onclick="val_rd(this.value)"  VALUE = "5"> Aleator continuu
+	<INPUT TYPE = "radio" NAME="rd1" onclick="val_rd(this.value)"  VALUE = "6"> Aleator discontinuu
+	<INPUT TYPE = "radio" NAME="rd1" onclick="val_rd(this.value)"  VALUE = "7"> Total Aleator
+ </form>
+</td></tr><tr>
+	<td width="25">Frecventa:</td>
+	<td width="150"><input type="range" value="2" id="fr_id" min="1" max="5"  onchange="set_fr()"/></td>   
+	<td width="50"><span id="fr_t"></span></td>
+</td></tr></table></center>
+<script type="text/javascript">
+var fel=1;
+var fr;
+var ctx7=desen07.getContext("2d");
+ctx7.lineWidth = .5; 
+w=desen07.width ;
+h=desen07.height/2-20;
+vals = [];
+nrv=300;
+ht=250;
+for(i=0;i<nrv;i++){
+	// total aleator
+	// vals[i]=Math.round(ht*Math.random());
+	// continuu
+
+	 vals[i]=Math.round(ht/2);
+
+}
+function afisor_xt(pozx, pozy, n_maxx, n_maxy,c)
+            {
+                this.x0 = pozx;// pozitia pe x
+                this.y0 = pozy;// pozitia pe y
+                this.w = n_maxx; // latimea
+                this.h = n_maxy;// inaltimea
+                this.nr_max = n_maxx; // numarul de puncte pe x
+                this.val_max = n_maxy; // valoarea maxima
+				this.cnvs=c; // canvas
+            }
+afisor_xt.prototype = {
+	constructor: afisor_xt,
+	deseneaza:function (vls, nv)  {
+	var val_v, val ,i ,j;
+	
+	// sterg continut
+	
+	this.cnvs.beginPath();
+	this.cnvs.fillStyle = "#FFFFFF";
+	this.cnvs.fillRect(this.x0-30,this.y0-10,this.x0+this.w+10,this.y0+this.h+30);
+	this.cnvs.stroke();	
+	
+	//chenar
+	
+	
+	this.cnvs.beginPath();
+	this.cnvs.moveTo(this.x0,this.y0); 
+	this.cnvs.strokeStyle = "rgb(0,0,255)";
+	this.cnvs.lineTo(this.x0+this.w,this.y0);
+	this.cnvs.lineTo(this.x0+this.w,this.y0+this.h);
+	this.cnvs.lineTo(this.x0,this.y0+this.h);
+	this.cnvs.lineTo(this.x0,this.y0);
+	this.cnvs.stroke();
+    	val_v = vls[1] * this.h / this.val_max;
+
+	// grid orizontal minor
+			
+	this.cnvs.beginPath();
+    	this.cnvs.strokeStyle = "rgb(200,200,200)";
+	this.cnvs.font = "10px Arial";
+	for (j = this.h-10; j >=0; j -= 10)
+	{
+		this.cnvs.moveTo(this.x0,this.y0+j); 
+		this.cnvs.lineTo(this.x0 + this.w, this.y0 + j);
+    	}
+	
+	// grid vertical minor
+	
+	for (j = 10; j<=this.w-10; j += 10)
+    	{
+		this.cnvs.moveTo(this.x0+j,this.y0+1); 
+		this.cnvs.lineTo(this.x0 + j ,this.y0+ this.h+1);
+    	}
+	this.cnvs.stroke();
+
+	
+	// grid orizontal major
+			
+	this.cnvs.beginPath();
+   	this.cnvs.strokeStyle = "rgb(150,150,150)";
+	
+    	for (j = this.h; j >=0; j -= 50)
+    	{
+		this.cnvs.moveTo(this.x0,this.y0+j); 
+		this.cnvs.lineTo(this.x0 + this.w ,this.y0 + j);
+		this.cnvs.strokeText(this.h-j,this.x0-20,this.y0 + j);
+    	}
+
+	// grid vertical major
+	 
+    	for (j = 0; j<=this.w; j += 50)
+    	{
+		this.cnvs.moveTo(this.x0+j,this.y0); 
+		this.cnvs.lineTo(this.x0 + j ,this.y0+ this.h-1);	
+		this.cnvs.strokeText(j,this.x0 + j,this.y0 + this.h+10);
+    	}
+	this.cnvs.stroke();
+	
+	// trasez graficul
+	this.cnvs.beginPath();
+	this.cnvs.strokeStyle = "rgb(240,0,0)";
+	this.cnvs.moveTo(this.x0,this.y0+val_v); 
+	 for (i = 0; i<=nrv; i +=1){
+		val = vls[i] * this.h / this.val_max; //scalare
+		this.cnvs.lineTo(this.x0 + i ,this.y0+ this.h-val);
+	 }
+	this.cnvs.stroke();
+}
+}
+function set_fr(){
+  fr = document.getElementById('fr_id').value;
+  fr_t.innerHTML=fr;
+}
+function val_rd(rd1) {
+	fel= rd1;
+}
+function graf() {
+
+ if(fel==1){
+	// triunghi
+	smf=1;
+	vl=100;
+	vh=200;
+	//val=vl+Math.round((30)*Math.random());
+	val=vl;
+	for(i=0;i<nrv;i++){
+		if(smf==1){ 
+			val+=Math.round(fr);
+			if(val>=vh){ 
+				val=vh; 
+				smf=0; 
+			}
+		} 
+		else{
+			val-=Math.round(fr);
+			if(val<=vl){ 
+				val=vl; 
+				smf=1; 
+			}
+		}
+	vals[i]=val;
+	}
+ }
+
+ if(fel==2){
+	// dinti fierastrau
+	vl=100;
+	vh=200;
+	//val=vl+Math.round((20)*Math.random());
+	val=vl;
+	for(i=0;i<nrv;i++){ 
+		val+=Math.round(fr);
+		if(val>=vh){ 
+			val=vl; 
+		} 
+		vals[i]=val;
+	}
+ }
+
+ if(fel==3){
+	// dreptunghi
+	sem=1;
+	vl=100;
+	vh=200;
+	//k=vl/3+Math.round((30)*Math.random());
+	k=vl;
+	for(i=0;i<nrv;i++){
+		if(sem==1){ 
+			k+=Math.round(fr);
+			if(k>=vh){ 
+				val=vh; 
+				sem=0; 
+			}
+		} 
+		else{
+			k-=Math.round(fr);
+			if(k<=vl){ 
+				val=vl; 
+				sem=1; 
+			}
+		}
+	vals[i]=val;
+	}
+ }
+
+ if(fel==4){
+	// sinus
+	vl=100;
+	vh=200;
+	//alfa=Math.random();
+	alfa=0;
+	for(i=0;i<nrv;i++){
+		vals[i]=ht/2+(vh-vl)*(Math.sin(alfa));
+		alfa+=Math.round(fr)*(0.03);
+	}
+ }
+
+ if(fel==5){
+	// aleator continuu
+	for(i=1;i<nrv;i++){
+		vals[i-1]=vals[i];
+	}
+	k=Math.round(4*Math.random());
+	if(k==0)
+		f=1;
+	if(k==1)
+		f=-1;
+	if(k==2)
+		f=10;
+	if(k==3)
+		f=-10;
+
+	vals[nrv-1]=vals[nrv-2]+f*Math.round(fr);
+
+	if(vals[nrv-1]>ht)
+		vals[nrv-1]=ht/2;
+	if(vals[nrv-1]<=0)
+		vals[nrv-1]=ht/2;
+ }
+
+ if(fel==6){
+	//aleator discontinuu
+	for(i=1;i<nrv;i++){
+		vals[i-1]=vals[i];
+	}
+	vals[i-2]=Math.round(ht*Math.random()*Math.round(fr)/5);
+ }
+
+ if(fel==7){
+	// total aleator
+	for(i=0;i<nrv;i++){
+		vals[i]=Math.round(ht*Math.random()*Math.round(fr)/5);
+	}
+ }
+ osci.deseneaza(vals,nrv);
+ set_fr();
+ setTimeout("graf()",100);
+}
+osci = new afisor_xt(25,10,nrv,ht,ctx7);
+graf();
+</script>
+</textarea>
+</form>
+<script>document.write(f25_3.code.value);</script>
+
+<br><br>
+<form name="f25_4">  
+<textarea width="100%" height="400px" style="width:100%;height:25px" name="code" wrap="logical" rows="12" cols="42">
+
+
+</textarea>
+</form>
+<script>document.write(f25_4.code.value);</script>
+
+<br><br>
+<form name="f25_5">  
+<textarea width="100%" height="400px" style="width:100%;height:1330px" name="code" wrap="logical" rows="12" cols="42">
+<center><table bgcolor="Azure" border=0>
+<tr><td><center>
+	<canvas id="desen09" width="50" height="50" style="border:1px solid #d3d3d3;">
+		Browser-ul d-voastra nu suporta marcatorul CANVAS.
+	</canvas>
+</td></tr>
+<tr><td>
+	<form name="Form_rd_ob">
+		<INPUT TYPE = "radio" NAME="rd1" onclick="act1.set_on()" checked  VALUE = "1"> Deschis <br>
+		<INPUT TYPE = "radio" NAME="rd1" onclick="act1.set_off()"  VALUE = "3"> Inchis <br>
+	</form>
+</td></tr>
+</center></table>
+<script>
+var d = document.getElementById("desen09");
+var ctx9 = d.getContext("2d");
+function act (x,y,c) {
+    	this.x1 = x;
+    	this.y1 = y;
+	this.cnvs=c;
+	this.im_on = new Image();
+	this.im_on.src='data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAkACQAAD/2wBDAAIBAQIBAQICAgICAgICAwUDAwMDAwYEBAMFBwYHBwcGBwcICQsJCAgKCAcHCg0KCgsMDAwMBwkODw0MDgsMDAz/2wBDAQICAgMDAwYDAwYMCAcIDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAz/wAARCAAZABkDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD9Ev8AgsL/AME0vF37e3xJ+E+ueHfDPwj8Yaf4F0zX7G+0vx3fzWsIlv5dJeG4g8vT70MyLYTo25UIEwwTlhX5e/Ev9jmb4V/8FLvh7+yvqH7N37Ms3xC+JXh+XxJpmoW+qltGgt401B2SaVtDWZZMabPgLCwy8fzDLbfZf2gfHv7QX7aP/BRvSdP/AGgv2S/D/iPwDoeg+Lrj4a6HbDw/farPYPqehq13qK3msS2a3EMIs42MLod91LsV03GPrf8AhjTwr/0j5/8AKL4A/wDlrX4xnWeeGmYV1jMfmmH5pLRrG8iaTaulGtGL1TV0t003dHyOe+FuVZzi3jcfh6sqlkm41a8FZbe7TqRj87XfU98/4Ja/8EkfG/7GX7aD/EbWvBXwK8DaJ/whWqeG5IPAup3F1dajcXV9pVxE8yvpdkgjjSxmGS7nMwwoBY1+j1fgx4rb48fsYftj+A9W/ZP/AGP/AAf4N8fax4M8SWmqab4kh8O2NrqumC+0F3nU6XqyBpIJhbqBNIMC7bYj/OyfqX/w8T8Vf9Gt/tAf+DLwX/8ANBXt5dx/wHleEp4XD5tho07Nx5sVTldOTu1KdRykubmV7uzTXSy+kyXhmOVYOGX4GlNU4Xsm5zau3J3lNyk9W927LRaJI/PfVfFP7bWi/wDBT+y074j6N8HPA1jovhjxfY+BfEyeH5tStvGGmLq2grPcvYw64ZrWRlTT5UWWVSgmkQrI3zR+9/8ACe/tKf8ARQ/gd/4bDVP/AJoK+Kv+D5z/AJtd/wC5r/8AcLX4A1w1PAngCpGEJ5VSagrLR6K7lbfvJv5nsrNMUtps/pI/ae+Iv7bWn/thfDC4+EOg/Bz4zePl8HeKI/7NTQZvDltY6Y174eNzO7XeuESyectkqBZFKhpMpJndH+hP/DK/7Sn/AEWz4Hf+Ge1T/wCaWvws/wCDKn/lKb4+/wCyVaj/AOnfR6/p+oqeBPAFSMITyqk1BWWj0V3K2/eTfzBZpiltNn//2Q==';
+	this.im_off = new Image();
+	this.im_off.src='data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAkACQAAD/2wBDAAIBAQIBAQICAgICAgICAwUDAwMDAwYEBAMFBwYHBwcGBwcICQsJCAgKCAcHCg0KCgsMDAwMBwkODw0MDgsMDAz/2wBDAQICAgMDAwYDAwYMCAcIDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAz/wAARCAAZABkDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD7o/4LxftAftOfBDxL8IYv2e2+J0Ol6tba63iabwd4Bj8VOs0TaYLFZt1heeQCst6VwE37W5bYAPzX1n/grr+254c+Muk/DnUPiV8drH4ha9aNf6Z4YuPg3YRazqNuolLTQ2jaEJpIwIJyXVCAIZOfkbH0Z8TfE3xj/bs/4KX6bpP7UvwD+HeifDTQfDni+7+GNnqVrYate3tq+q6Ehlv41vr6BbuO3+yqWjEa7p5gpZT8v5W/tN/BzwjoF18bBY+FfDdkNJ8ReLYLIQaZDH9jjh1K+SFI9qjYsaoiqFwFCqBgAV8DmGc4HFYWlmuX4yVSjVkoRlRnCUG7yTaklJOzi07PdNdGf0V4K4KecPE5LHLsHOeHo1MQ6mIp1pTcYuC5PcrQX2ly+7tu2ftZ/wAEUf2nv2wPjF+2hqmj/HKT4xXPw9j8FX95HJ4v+GUfhi1j1RL7TUtxHcLploXkMEl6fL3sCFZtvyAj9Vq/Df4yaD8Tv2E/2x/hzq37FPwJ+D+pePte8GeJrTXdNn0y00i1l0xb7w+5nYx3NkHkjm8lVBkbAnkwhyWX9LP+Hifir/o1v9oD/wAGXgv/AOaCurG8bcNZHNZfm2aUadVK7VatShOz1Tabi7dnbZH4pnWMnm2Nnj6GEhQjK3uUYyVONope6pSm9bczvJ+83stF8EafqX7UX/D0610n9oXwb4H0LwzofhTxhafD/XvDqrB/wltmur6Akt3Lbf2heSW+6NLORYpCjL57KS5U7fy0/ax/4+/j5/2M/jP/ANOmoV9wf8Hzn/Nrv/c1/wDuFr8AaqPA+XYXLKGT5VBYehRnzRjFXS1lJpa6XlJu93r0PtfC/wATp8IZhjMwqUPrDxGHqULc/Jy87g+e/LO9uS3LZXvura/0v/tj+J/2kPCn7YXwpuP2X/h/4V+I/j5/B3iqPUNN8QXUdvbQaYb3w6ZJ1aS8tAZBMLZQPMJxI3yHBZfvL/hlf9pT/otnwO/8M9qn/wA0tfhZ/wAGVP8AylN8ff8AZKtR/wDTvo9f0/V5/EfhTwjn+NeY5zgKdas0lzSTvZbLfofm1HHYilHkpyaR/9k=';
+}
+act.prototype = {
+   	constructor: act,
+    	desenez:function (wd,ht)  {
+	// desenez contur 
+	this.cnvs.beginPath();
+	this.cnvs.lineWidth = 1;
+	this.cnvs.moveTo(this.x1,this.y1); 
+	this.cnvs.strokeStyle = "rgb(255,0,0)";
+	this.cnvs.lineTo(this.x1+wd,this.y1);
+	this.cnvs.lineTo(this.x1+wd,this.y1+ht);
+	this.cnvs.lineTo(this.x1,this.y1+ht);
+	this.cnvs.lineTo(this.x1,this.y1);
+	this.cnvs.stroke();
+    },
+	set_on:function ()  {
+		this.cnvs.drawImage(this.im_on, this.x1+2, this.y1+2);
+    },
+	set_off:function ()  {
+		this.cnvs.drawImage(this.im_off, this.x1+2, this.y1+2);
+    }
+}
+act1 = new act(10,10,ctx9); 
+window.onload = function() {
+	act1.desenez(30,30);
+	act1.set_on();
+}
+</script></textarea>
+</form>
+<script>document.write(f25_5.code.value);</script>
+
+
+</body>
+</html>
