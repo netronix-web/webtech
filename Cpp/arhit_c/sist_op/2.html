@@ -1,0 +1,102 @@
+<html>
+<head>
+<title>
+BIOS-SO-APLICATIE 
+</title>
+</head>
+<BODY BGCOLOR="#ffffff"> 
+ <TABLE BGCOLOR="#bbbbbb" WIDTH="100%"> 
+ <TR>
+  <TD><center><H3>SISTEMUL DE OPERARE DOS</h3> 
+     <HR>
+  </TD> 
+ </TR> 
+ </TABLE>
+
+<a href="..\start.html"><IMG SRC="Index.gif" ALT="Revenire in pagina principala" BORDER=0 ></a>
+<br>
+
+<br>
+ -DOS (Disk Operating System) : sistem de operare destinat gestionarii resurselor hard si soft 
+ale calculatoarelor personale bazat pe procesoarele x86.
+ -Este un sistem de operare in mod caracter, monoutilizator.
+ -Caracteristici:
+<ul>
+ <li> Mecanism de tratare a erorilor
+ <li> Interfata utilizator in mod comanda simpla si usor accesibila
+ <li> Modularitate
+ <li> Structura de fisere eficienta (structura arborescenta)
+ <li> Gestionarea datei si a timpului
+ <li> Recunoaste o mare varietate de dispozitive periferice
+ <li> Diversitate mare de resurse software
+</ul>
+<br> La punerea in functiune BIOSU-ul testeaza componentele hardware ale calculatorului si le initializeaza.
+<br> BIOS-ul preda apoi controlul incarcatorului de sistem, care incarca fisierele sistem IO.SYS si MSDOS.SYS
+<br> Se incarca apoi COMMAND.COM si se lanseaza in executie.
+<br> COMMAND.COM este un interpretor de comenzi fiind interfata intre utilizator si calculator.
+<br> Lansarea sistemului se continua cu operatia de configurare conform datelor din fidsierul
+CONFIG.SYS.
+<br> Daca exista un fisier AUTOEXEC.BAT(fisier de comenzi), comenzile din acest fisier sunt 
+executate dupa carese afiseaza prompterul C:\> si se asteapta comenzi de la utilizator.
+<br><Center> <h3> Organizarea si specificarea fisierelor DOS </Center></h3>
+<br> - Un fisier este o colectie de informatii stocata sub o anumita forma specifica tipului de fisier si 
+poate fi identificat dupa nume si extensie.
+<br> Numele fisier : maxim 8 caractere.
+<br> Extensia- determina tipul fisierului , are 3 caractere fiind separata de numele fisierului
+cu caracterul "." 
+<br> Exemplu : lucrare.doc
+<br> Fisierele sunt organizate arborescent pe directoare si subdirectoare.
+<br><Center> <h4> Specificarea unei cai la un fisier </Center></h4>
+<br><Center> <h3> Specificatorul de fisiere DOS </Center></h3>
+
+<br> Format: <b> [d:][cale]nume_fisie[.ext]</b>
+<br> [d:]unitatea de disk
+<br> [cale] calea catre directorul in care se afla fisierul
+<br> nume_fisier numele fisierului
+<br> [.ext] extensia
+<br> Toate entitatile din cadrul parantezelor drepte pot lipsi
+
+
+<br><Center> <h3> Comenzi dos </Center></h3>
+<br><Center> <h4> Comenzi pentru directoare </Center></h4>
+<br> Exemple
+<br><b> MD[d:]cale</b>-creare de directoare
+<br><b> CD[d:]cale</b>-schimbare director curent
+<br><b> RD[d:]cale</b>-stergere director 
+<br><b> DIR[d:]cale</b>-afisare directoare
+
+<br>
+<Center>
+<img SRC="im2.jpg">
+</Center>
+<br>
+<br><Center> <h4> Comenzi pentru fisiere </Center></h4>
+<br> Exemple
+<br><b> COPY[d:][cale]nume_fisier[.ext][d:][cale]nume_fisier[.ext]</b>-copiere fisiere
+<br>-primul specificator :fisierul sursa
+<br>-primul specificator :fisierul destinatie
+<br><b> EDIT[d:][cale]nume_fisier[.ext]</b>-editare fisiere text
+<br><b> DEL [d:][cale]nume_fisier[.ext]</b>[/P]-stergere fisiere
+<br><b> TYPE[d:][cale]nume_fisier[.ext]</b>-tiparire fisiere
+<br><Center> <h4> Shell-uri DOS </Center></h4>
+<br>
+Shell-uri sunt programe care gestioneaza comenzile DOS si permit lansarea lor
+intr-o forma mai prietenoasa.
+<br>Cel mai popular Shell-DOS este Norton Commander
+<br>
+<Center>
+<img SRC="im3.jpg">
+</Center>
+<br>
+<br>
+
+&nbsp&nbsp&nbsp*
+<br> .  
+<br>
+
+
+<a href="..\start.html"><IMG SRC="Index.gif" ALT="Revenire in pagina principala" BORDER=0 ></a>
+<br>
+
+</body>
+</html>
