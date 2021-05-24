@@ -1,0 +1,38 @@
+        public class binar
+        {
+            int x0;
+            int y0;
+            int w;
+            int h;
+
+
+            public void setval(int nrb, UInt64 n, System.Drawing.Graphics zona_des, System.Drawing.Pen creion, System.Drawing.SolidBrush pens_albastra, System.Drawing.SolidBrush radiera)
+            {
+
+                int wb = w / (3 * nrb);
+                int hb = h / 3;
+                int x = x0 + w - 3 * wb;
+                int y = y0 + hb;
+                int i;
+                zona_des.DrawRectangle(creion, x0, y0, w, h);
+                for (i = nrb - 1; i >= 0; i--)
+                {
+                    System.UInt64 bit = ((n >> (nrb - i-1)) & 1);
+                    zona_des.DrawRectangle(creion, x - 1, y - 1, wb + 1, hb + 1);
+                    if (bit == 1)
+                        zona_des.FillRectangle(pens_albastra, x, y, wb, hb);
+                    else
+                        zona_des.FillRectangle(radiera, x, y, wb, hb);
+
+                    x -= 3 * wb;
+
+                }
+            }
+            public binar(int pozx, int pozy, int lat, int inalt)
+            {
+                x0 = pozx;
+                y0 = pozy;
+                w = lat;
+                h = inalt;
+            }
+        }

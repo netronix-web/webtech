@@ -1,0 +1,89 @@
+        public class anemom
+        {
+            int x0, y0, w, val;
+            int r, rc, ds, d, xm, ym, xv, yv, xc, yc, i, j;
+            double ar, a, ai;
+
+            System.Drawing.Graphics zona_des;
+            System.Drawing.Pen creion_a = new System.Drawing.Pen(System.Drawing.Color.Gray);
+            System.Drawing.Pen creion_r = new System.Drawing.Pen(System.Drawing.Color.Red);
+            System.Drawing.Bitmap img;
+            System.Drawing.Bitmap ims;
+
+            public void setval(int i_vant, int dir_v)
+            {
+                val = i_vant;
+                ai = dir_v;
+                if (w > 0)
+                {
+                    // pun grid
+                    img = new Bitmap(ims);
+
+                    // fascicul de raze
+                    Graphics g = Graphics.FromImage(img);
+                    for (a = ai; a < (ai + 30); a += 360 / 120)
+                    {
+                        ar = a * Math.PI / 180;
+                        xm = System.Convert.ToInt16(xc + r * Math.Sin(ar));
+                        ym = System.Convert.ToInt16(yc - r * Math.Cos(ar));
+                        g.DrawLine(creion_a, xc, yc, xm, ym);
+                        if (val <= w / 2)
+                        {
+                            xv = System.Convert.ToInt16(xc + val * Math.Sin(ar));
+                            yv = System.Convert.ToInt16(yc - val * Math.Cos(ar));
+                            g.DrawLine(creion_r, xc, yc, xv, yv);
+                        }
+                    }
+                }
+                // afisez
+                zona_des.DrawImage(img, x0, y0);
+            }
+            public anemom(System.Drawing.Graphics desen, int pozx, int pozy, int diam)
+            {
+                x0 = pozx;
+                y0 = pozy;
+                w = diam;
+                r = w / 2 - 1;
+                ds = 2 * r / 9; // distanta dintre cercuri
+                xc = r;
+                yc = r;
+                rc = 0;
+                double ar, a;
+                zona_des = desen;
+                img = new Bitmap(w, w, zona_des);
+                if (w > 0)
+                {
+                    ims = new Bitmap(w, w, zona_des);
+                    Graphics g = Graphics.FromImage(ims);
+
+                    // sterg imaginea
+
+                    for (j = 0; j < w; j++)
+                    {
+                        for (i = 0; i < w; i++)
+                        {
+                            ims.SetPixel(i, j, System.Drawing.Color.White);
+                        }
+                    }
+
+                    // cercuri concentrice
+
+                    rc = 0;
+                    for (d = 2 * r; d >= 0; d -= ds)
+                    {
+                        g.DrawEllipse(creion_a, rc, rc, d, d);
+                        rc += ds / 2;
+                    }
+
+                    //raze in cerc
+
+                    for (a = 0; a < 360; a += 360 / 12)
+                    {
+                        ar = a * Math.PI / 180;
+                        xm = System.Convert.ToInt16(xc + r * Math.Sin(ar));
+                        ym = System.Convert.ToInt16(yc - r * Math.Cos(ar));
+                        g.DrawLine(creion_a, xc, yc, xm, ym);
+                    }
+                }
+            }
+        }
