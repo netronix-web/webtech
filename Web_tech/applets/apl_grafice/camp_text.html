@@ -1,0 +1,297 @@
+<html><head>
+<title> Controale Java - campuri text </title>
+</head>
+<body>
+<a name="start"></a>
+<table width="100%">
+<tr><td height="50" background="../../../Images/imm_s.bmp"><center><font color= "white" size=5> Controale Java - campuri text </Center></TD></TR>
+</table>
+<br>
+<a name="butoane"></a>
+<li><font color= "blue" size=4><b>Elemente de tip "TextField"</b></font>
+<br><br>&nbsp;&nbsp;&nbsp;&nbsp;Pentru aplicatii in care trebuie modificat introdus un parametru sau o valoare, se folosesc elemente de tip "TextField". 
+<center><table><tr><td>
+<applet code=Controale.utiliz_c_text_v1.class width="350" height="200" ></applet>
+</td></tr></table></center>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;In cazul ca nu se lanseaza aplicatia de sus, pe calculatorul d-voastra trebuie instalat pachetul JDC versiunea JDK6 sau mai recenta.
+<br><br>&nbsp;&nbsp;&nbsp;&nbsp;Cum se plaseaza elementele de tip button intr-un applet ?
+
+<ul>
+ <li> Se utilizeaza mediul de dezvoltare "Eclipse".
+ <li> Se creaza proiectul "Apl_web" in cadrul caruia se adauga pachetul "Controale" apoi se creaza clasa utiliz_c_text_v1 cu urmatorul continut: 
+</ul>
+<!------------------------------------------------------------------->
+<table width="100%" border=1><tr><td bgcolor="AliceBlue">
+<font size="3" color="Blue"><pre>
+package Controale;
+
+import java.awt.Rectangle;
+import javax.swing.JPanel;
+import javax.swing.JApplet;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+
+public class utiliz_c_text_v2 extends JApplet {
+
+	private static final long serialVersionUID = 1L;
+	private JPanel c_panel_1 = null; 	// panel_1 cu controale plasate
+	private JLabel etich_1 = null;		// eticheta 1
+	private JLabel etich_2 = null;		// eticheta 2
+	private JButton but_1 = null; 		// buton 1
+	private JTextField text_1=null;		// campul text 1
+	/**
+	 * Constructorul implicit pentru "utiliz_c_text_v1"
+	 */
+	
+	public utiliz_c_text_v2() {
+		super();
+	}
+	
+	/**
+	 * Aceasta metoda initializeaza: this
+	 * 
+	 * @returneaza  void
+	 */
+	
+	public void init() {
+		this.setSize(350, 200);
+		this.setContentPane(init_panel_1());
+	}
+
+	/**
+	 * 
+	 * Aceasta metoda creaza butonul: "but_1"	
+	 * Returneaza but_1 de tipul:	javax.swing.JButton
+	 */
+	private JTextField creaza_text_1() {
+		if (text_1 == null) {
+			text_1 = new JTextField();
+			text_1.setText("0.00");
+			text_1.setBounds(new Rectangle(15, 50, 75, 23));
+			text_1.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					calculeaza();
+				}
+			});
+		}
+		return text_1;
+	}
+	
+	private JButton creaza_but_1() {
+		if (but_1 == null) {
+			but_1 = new JButton();
+			but_1.setBounds(new Rectangle(100, 140, 120, 30));
+			but_1.setText("Calculeaza");
+			but_1.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					calculeaza();
+				}
+			});
+		}
+		return but_1;
+	}
+	
+	/**
+	 * Se calculeaza patratul numarului introduas
+	 */
+	private void calculeaza(){
+		etich_1.setText("Ati introdus: "+text_1.getText());
+		Double patr = Double.parseDouble(text_1.getText());
+		patr=patr*patr;
+		etich_2.setText("Patratul numarului fiind: "+patr.toString());
+	}
+	/**
+	 * Aceasta metoda initializeaza panel_1 plasand controalele dorite 
+	 * Returneaza c_panel_1 de tipul: javax.swing.JPanel 
+	 */
+	
+	private JPanel init_panel_1() {
+		if (c_panel_1 == null) {
+			etich_1 = new JLabel();
+			etich_1.setBounds(new Rectangle(15, 10, 300, 10));
+			etich_1.setText("Introduceti un numar si apasati butonul Calculeaza:");
+			etich_2 = new JLabel();
+			etich_2.setBounds(new Rectangle(15, 30, 300, 10));
+			etich_2.setText("");
+			c_panel_1 = new JPanel();
+			c_panel_1.setLayout(null);
+			c_panel_1.add(etich_1, null);
+			c_panel_1.add(etich_2, null);
+			c_panel_1.add(creaza_text_1(), null);
+			c_panel_1.add(creaza_but_1(), null);		
+		}
+		return c_panel_1;
+	}
+}
+</pre> </font>
+</td></tr></table>
+<!------------------------------------------------------------------->
+<ul>
+ <li> Se realizeaza fisierul de tip utiliz_c_text_v1.html cu urmatorul continut:
+</ul>
+<!------------------------------------------------------------------->
+<textarea width="100%" height="400px" style="width:100%;height:210px" name="code" wrap="logical" rows="12" cols="42">
+<html>
+<body>
+<center>
+	<table>
+		<tr><td>
+			&lt;applet code=Contoale.utiliz_c_text_v1.class width="350" height="200" &gt;&lt;/applet&gt;
+		</td></tr>
+	</table>
+</center>
+</body>
+</html>
+</textarea>
+<!------------------------------------------------------------------->
+
+<br><br>&nbsp;&nbsp;&nbsp;&nbsp;Dupa cum se observa in aplicatia de sus, calculul se declanseaza numai la apasarea butonului "Calculeaza".
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Daca dorim sa declansam operatia de calculare si la apasarea tastei "Enter" vom mai introduce un eveniment pe 
+obiectul text_1. S-a definit si procedura calculeaza() pentru a fi invocata pe evenimentul click si pe evenimentul date introduse.
+<br><br>
+<center><table><tr><td>
+<applet code=Controale.utiliz_c_text_v2.class width="350" height="200" ></applet>
+</td></tr></table></center>
+<br><br><!------------------------------------------------------------------->
+<table width="100%" border=1><tr><td bgcolor="AliceBlue">
+<font size="3" color="Blue"><pre>
+package Controale;
+
+import java.awt.Rectangle;
+import javax.swing.JPanel;
+import javax.swing.JApplet;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+
+public class utiliz_c_text_v2 extends JApplet {
+
+	private static final long serialVersionUID = 1L;
+	private JPanel c_panel_1 = null; 	// panel_1 cu controale plasate
+	private JLabel etich_1 = null;		// eticheta 1
+	private JLabel etich_2 = null;		// eticheta 2
+	private JButton but_1 = null; 		// buton 1
+	private JTextField text_1=null;		// campul text 1
+	/**
+	 * Constructorul implicit pentru "utiliz_c_text_v2"
+	 */
+	
+	public utiliz_c_text_v2() {
+		super();
+	}
+	
+	/**
+	 * Aceasta metoda initializeaza: this
+	 * 
+	 * @returneaza  void
+	 */
+	
+	public void init() {
+		this.setSize(350, 200);
+		this.setContentPane(init_panel_1());
+	}
+
+	/**
+	 * 
+	 * Aceasta metoda creaza butonul: "but_1"	
+	 * Returneaza but_1 de tipul:	javax.swing.JButton
+	 */
+	private JTextField creaza_text_1() {
+		if (text_1 == null) {
+			text_1 = new JTextField();
+			text_1.setText("0.00");
+			text_1.setBounds(new Rectangle(15, 50, 75, 23));
+			text_1.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					calculeaza();
+				}
+			});
+		}
+		return text_1;
+	}
+	
+	private JButton creaza_but_1() {
+		if (but_1 == null) {
+			but_1 = new JButton();
+			but_1.setBounds(new Rectangle(100, 140, 120, 30));
+			but_1.setText("Calculeaza");
+			but_1.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					calculeaza();
+				}
+			});
+		}
+		return but_1;
+	}
+	
+	/**
+	 * Se calculeaza patratul numarului introduas
+	 */
+	private void calculeaza(){
+		etich_1.setText("Ati introdus: "+text_1.getText());
+		Double patr = Double.parseDouble(text_1.getText());
+		patr=patr*patr;
+		etich_2.setText("Patratul numarului fiind: "+patr.toString());
+	}
+	/**
+	 * Aceasta metoda initializeaza panel_1 plasand controalele dorite 
+	 * Returneaza c_panel_1 de tipul: javax.swing.JPanel 
+	 */
+	
+	private JPanel init_panel_1() {
+		if (c_panel_1 == null) {
+			etich_1 = new JLabel();
+			etich_1.setBounds(new Rectangle(15, 10, 300, 10));
+			etich_1.setText("Introduceti un numar si apasati butonul Calculeaza:");
+			etich_2 = new JLabel();
+			etich_2.setBounds(new Rectangle(15, 30, 300, 10));
+			etich_2.setText("");
+			c_panel_1 = new JPanel();
+			c_panel_1.setLayout(null);
+			c_panel_1.add(etich_1, null);
+			c_panel_1.add(etich_2, null);
+			c_panel_1.add(creaza_text_1(), null);
+			c_panel_1.add(creaza_but_1(), null);		
+		}
+		return c_panel_1;
+	}
+}
+</pre> </font>
+</td></tr></table>
+<!------------------------------------------------------------------->
+
+<ul>
+ <li> Se realizeaza fisierul de tip utiliz_c_text_v2.html cu urmatorul continut:
+</ul>
+<!------------------------------------------------------------------->
+<textarea width="100%" height="400px" style="width:100%;height:210px" name="code" wrap="logical" rows="12" cols="42">
+<html>
+<body>
+<center>
+	<table>
+		<tr><td>
+			&lt;applet code=Contoale.utiliz_c_text_v2.class width="350" height="200" &gt;&lt;/applet&gt;
+		</td></tr>
+	</table>
+</center>
+</body>
+</html>
+</textarea>
+<!------------------------------------------------------------------->
+
+<br><br><!------------------------------------------------------------------->
+<table width="100%" border=1><tr><td bgcolor="AliceBlue">
+<font size="3" color="Blue"><pre>
+
+</pre> </font>
+</td></tr></table>
+<!------------------------------------------------------------------->
+
+<!------------------------------------------------------------------->
+<br><br><textarea width="100%" height="400px" style="width:100%;height:50px" name="code" wrap="logical" rows="12" cols="42">
+</textarea>
+<!------------------------------------------------------------------->
+
+</body>
+</html>
