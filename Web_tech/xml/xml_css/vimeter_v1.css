@@ -1,0 +1,54 @@
+vimeter
+{
+background-color: #ffffff;
+width: 100%;
+}
+
+type
+{
+display: block;
+margin-bottom: 10pt;
+margin-left: 0;
+color: #00FF00;
+font-size: 14pt;
+}
+code
+{
+display: block;
+color: #000000;
+font-size: 10pt;
+margin-left: 10pt;
+}
+
+attrib
+{
+display: block;
+margin-bottom: 10pt;
+margin-left: 0;
+color: #FF0000;
+font-size: 14pt;
+}
+aspect,backcolor,forecolor,width,height,poz
+{
+display: block;
+color: #000000;
+font-size: 10pt;
+margin-left: 10pt;
+}
+
+values
+{
+display: block;
+margin-bottom: 10pt;
+margin-left: 0;
+color: #0000FF;
+font-size: 14pt;
+}
+val,minval,maxval
+{
+display: block;
+color: #000000;
+font-size: 12pt;
+margin-left: 10pt;
+
+}

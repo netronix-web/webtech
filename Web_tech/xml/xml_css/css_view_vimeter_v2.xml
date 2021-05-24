@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/css" href="vimeter_v2.css"?>
+<vimeter>
+	<displ>
+		<caption> Voltmetru </caption>	
+		<code> VA-220 </code>
+		<mod> analog </mod>
+		<aspect> bar markmax="1" </aspect>
+		<backcolor> blue </backcolor>
+		<forecolor> white </forecolor>
+		<width> 150 </width>
+		<height> 100 </height>
+		<poz> vertical </poz>
+		<unit> volt </unit>
+		<val> 220 </val>
+		<minval> 50 </minval>
+		<maxval> 250 </maxval>
+	</displ>
+	<displ>
+		<caption> Ampermetru </caption>	
+		<code> A-100 </code>
+		<mod> analogic </mod>
+		<aspect> arc markmax="1" </aspect>
+		<backcolor> blue </backcolor>
+		<forecolor> white </forecolor>
+		<width> 150 </width>
+		<height> 150 </height>
+		<poz> vertical </poz>
+		<unit> amper </unit>
+		<val> 120 </val>
+		<minval> 0 </minval>
+		<maxval> 150 </maxval>
+	</displ>
+		<displ>
+		<caption> Frecventmetru </caption>	
+		<code> F-50 </code>
+		<mod> digital </mod>
+		<aspect> segm </aspect>
+		<backcolor> black </backcolor>
+		<forecolor> green </forecolor>
+		<width> 100 </width>
+		<height> 50 </height>
+		<poz> orizontal </poz>
+		<unit> Hz </unit>
+		<val> 50 </val>
+		<minval> 0 </minval>
+		<maxval> 75 </maxval>
+	</displ>		
+</vimeter>

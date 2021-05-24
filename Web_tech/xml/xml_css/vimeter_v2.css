@@ -1,0 +1,28 @@
+vimeter
+{
+background-color: #ffffff;
+width: 100%;
+
+displ
+{
+display: block;
+margin-bottom: 10pt;
+margin-left: 0;
+}
+caption
+{
+display: block;
+margin-bottom: 10pt;
+margin-left: 0;
+color: #FF0000;
+font-size: 16pt;
+}
+
+
+code,mod,aspect,backcolor,forecolor,width,height,poz,unit,val,minval,maxval
+{
+display: block;
+color: #0000FF;
+margin-left: 12pt;
+
+}
