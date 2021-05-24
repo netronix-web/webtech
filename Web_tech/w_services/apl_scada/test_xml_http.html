@@ -1,0 +1,140 @@
+<html>
+<head>
+<title>Web Service Test </title>
+<script type="text/javascript">
+	var SERVICE_URL = "http://localhost:51655/Service1.asmx";
+	var SOAP_ACTION_BASE = "http://localhost:51655/Service1";
+	var bEnabled;
+	var oXmlHttp;
+	function setUIEnabled(bEnabled)
+	{
+		var oButton = document.getElementById("cmdRequest");
+		oButton.disabled = false;
+		var oList = document.getElementById("lstMethods");
+		oList.disabled = false;
+	}
+
+	function performOperation()
+	{
+		var oList = document.getElementById("lstMethods");
+		var sMethod = oList.options[oList.selectedIndex].value;
+		var sact = document.getElementById("txtact").value;
+		var scod = document.getElementById("txtcod").value;
+		//Clear the message panes
+		document.getElementById("txtRequest").value = "";
+		document.getElementById("txtResponse").value = "";
+		document.getElementById("txtResult").value = "";
+		performSpecificOperation(sMethod, sact, scod);
+	}
+	var iCallId = 0;
+
+	function getRequest(sMethod, sact, scod)
+	{
+		var sRequest ="<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"+
+		"<soap:Envelope xmlns:xsi=\""
+		+ "http://www.w3.org/2001/XMLSchema-instance\" "
+		+ "xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" "
+		+ "xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n"
+		+ "<soap:Body>\n"
+		+ "<" + sMethod + " xmlns=\"" + SOAP_ACTION_BASE + "\">\n"
+		+ "<act>" + sact + "</act>\n"
+		+ "<cod>" + scod + "</cod>\n"
+		+ "</" + sMethod + ">\n"
+		+ "</soap:Body>\n"
+		+ "</soap:Envelope>\n";
+		return sRequest;
+	}
+	function CreateCallObject ()
+	{
+
+		try {
+			  xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
+		     } 
+		catch (e) 
+		{
+		  try {
+			   xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+		      }
+		  catch (E) 
+		     {
+			   xmlhttp = false;
+              }
+		 }
+		if (!xmlhttp) 
+        {
+		try {
+			xmlhttp = new XMLHttpRequest();
+	        } 
+        catch (e)
+           {
+			xmlhttp=false;
+		   }
+	    }
+	    return xmlhttp;
+	    }
+
+
+
+
+	function performSpecificOperation(sMethod, sact, scod) 
+	{
+		oXmlHttp = CreateCallObject();
+        //alert(oXmlHttp);
+	    var sRequest = getRequest(sMethod, sact, scod);
+		var sSoapActionHeader = SOAP_ACTION_BASE + "/" + sMethod;
+	
+		oXmlHttp.open("POST", SERVICE_URL, true);
+
+		oXmlHttp.onreadystatechange = handleResponse;
+		oXmlHttp.setRequestHeader("Content-Type", "text/xml");
+		oXmlHttp.setRequestHeader("SOAPAction", sSoapActionHeader);
+		oXmlHttp.send(sRequest);
+		document.getElementById("txtRequest").value = sRequest;
+	}
+	function handleResponse()
+	{
+		if (oXmlHttp.readyState == 4)
+		{
+			setUIEnabled(true);
+			var oResponseOutput = document.getElementById("txtResponse");
+			var oResultOutput = document.getElementById("txtResult");
+			var oXmlResponse = oXmlHttp.responseXML;
+			var sHeaders = oXmlHttp.getAllResponseHeaders();
+			if (oXmlHttp.status != 200 || !oXmlResponse.xml)
+			{
+				alert("Error accessing Web service.\n"+ oXmlHttp.statusText+ "\nSee response pane for further details.");
+				
+				var sResponse = (oXmlResponse.xml ? oXmlResponse.xml : oXmlResponseText);
+				var sResponse =oXmlResponse.xml;
+				oResponseOutput.value = sHeaders + sResponse;
+				return;
+			}
+			oResponseOutput.value = sHeaders + oXmlResponse.xml;
+			var sResult =oXmlResponse.documentElement.firstChild.firstChild.firstChild.firstChild.data;
+			oResultOutput.value = sResult;
+		}
+	}
+</script>
+</head>
+<body> <!--onLoad>"setUIEnabled(true)"> -->
+
+	Operation:
+	<select id="lstMethods" style="width: 200px">
+	<option value="val_tp" selected="selected">Valoare TP</option>
+	<option value="stare_act">Stare Actuator</option>
+	<option value="poz_act">Pozitie Actuator</option>
+	<option value="torq_act">Cuplu Actuator</option>
+	</select>
+
+	<br/><br/>
+	Operand 1: <input type="text" id="txtact" size="10"/><br/>
+	Operand 2: <input type="text" id="txtcod" size="10"/><br/><br/>
+	<input type="button" id="cmdRequest" value="performOperation" onClick="performOperation();"/>
+	<br/><br/>
+	Result: <input type="text" size="20" id="txtResult">
+<br/>
+	<textarea rows="12" cols="120" id="txtRequest"></textarea>
+	<textarea rows="14" cols="120" id="txtResponse"></textarea>
+	<textarea rows="2" cols="120" id="oXmlResponseText"></textarea>
+</body>
+</html>

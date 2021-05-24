@@ -1,0 +1,150 @@
+<html>
+<head>
+<title>Scada Web Service </title>
+<script type="text/javascript">
+	var SERVICE_URL = "http://localhost:51655/Service1.asmx";
+	var SOAP_ACTION_BASE = "http://localhost:51655/Service1";
+	var bEnabled;
+	var oXmlHttp;
+	var rq="";
+	var rasp="";
+	function webs(){
+		window.open("http://localhost:51655/Service1.asmx","Wac","resizable=no,width=600,height=350");
+	}
+	function setUIEnabled(bEnabled)
+	{
+		var oButton = document.getElementById("cmdRequest");
+		oButton.disabled = false;
+		var oList = document.getElementById("lstMethods");
+		oList.disabled = false;
+	}
+
+	function performOperation()
+	{
+		var oList = document.getElementById("lstMethods");
+		var sMethod = oList.options[oList.selectedIndex].value;
+		var sact = document.getElementById("txt_act").value;
+		var scod = document.getElementById("txt_cod").value;
+		//Clear the message panes
+		//document.getElementById("txtRequest").value = "";*******
+		//document.getElementById("txtResponse").value = "";******
+		document.getElementById("txtResult").value = "";
+		performSpecificOperation(sMethod, sact, scod);
+	}
+	var iCallId = 0;
+
+	function getRequest(sMethod, sact, scod)
+	{
+		var sRequest ="<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"+
+		"<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n"
+		+ "<soap:Body>\n"
+		+ "<" + sMethod + " xmlns=\"" + SOAP_ACTION_BASE + "\">\n"
+		+ "<act>" + sact + "</act>\n"
+		+ "<cod>" + scod + "</cod>\n"
+		+ "</" + sMethod + ">\n"
+		+ "</soap:Body>\n"
+		+ "</soap:Envelope>\n";
+		return sRequest;
+	}
+	function CreateCallObject ()
+	{
+
+		try {
+			  xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
+		     } 
+		catch (e) 
+		{
+		  try {
+			   xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+		      }
+		  catch (E) 
+		     {
+			   xmlhttp = false;
+              }
+		 }
+		if (!xmlhttp) 
+        {
+		try {
+			xmlhttp = new XMLHttpRequest();
+	        } 
+        catch (e)
+           {
+			xmlhttp=false;
+		   }
+	    }
+	    return xmlhttp;
+	    }
+
+	function performSpecificOperation(sMethod, sact, scod) 
+	{
+		oXmlHttp = CreateCallObject();
+        //alert("S-a creat oXmlHttp");
+        rq= getRequest(sMethod, sact, scod);
+		var sRequest = getRequest(sMethod, sact, scod);
+		var sSoapActionHeader = SOAP_ACTION_BASE + "/" + sMethod;
+		oXmlHttp.open("POST", SERVICE_URL, true);
+		oXmlHttp.onreadystatechange = handleResponse;
+		//alert("S-a apelat handleResponse ");
+		oXmlHttp.setRequestHeader("Content-Type", "text/xml");
+		oXmlHttp.setRequestHeader("SOAPAction", sSoapActionHeader);
+		oXmlHttp.send(sRequest);
+		//document.getElementById("txtRequest").value = sRequest;********
+	}
+	function handleResponse()
+	{
+	//alert("S-a lansat");
+		if (oXmlHttp.readyState == 4)
+		{
+			setUIEnabled(true);
+			var oResponseOutput ="" //document.getElementById("txtResponse"); *********
+			var oResultOutput = document.getElementById("txtResult");
+			var oXmlResponse = oXmlHttp.responseXML;
+			var sHeaders = oXmlHttp.getAllResponseHeaders();
+			if (oXmlHttp.status != 200 || !oXmlResponse.xml)
+			{
+				alert("Error accessing Web service.\n"+ oXmlHttp.statusText+ "\nSee response pane for further details.");
+				//var sResponse = (oXmlResponse.xml ? oXmlResponse.xml : oXmlResponseText);
+				var sResponse =oXmlResponse.xml;
+				oResponseOutput.value = sHeaders + sResponse;
+				return;
+			}
+			oResponseOutput.value = sHeaders + oXmlResponse.xml;
+			rasp=sHeaders + oXmlResponse.xml;
+			var sResult =oXmlResponse.documentElement.firstChild.firstChild.firstChild.firstChild.data;
+			oResultOutput.value = sResult;
+		}else{
+			//alert("Status="+oXmlHttp.readyState);
+		}
+	}
+</script>
+</head>
+<body> <!--onLoad>"setUIEnabled(true)"> -->
+<center><table border="1" width="500">
+<tr><td>
+<center><font size="3" color="blue"> SCADA Systems Management</font>
+<font color="red">-Test points and actuators </font> </center>
+</td></tr>
+<tr><td><br>
+<center><table border="1" bgcolor="WhiteSmoke" width=400><tr>
+	<td colspan=2><center> WEB Service : Service1 </center></td></tr>
+	<tr><td>Service:</td><td>
+	<select id="lstMethods" style="width: 150px">
+	<option value="val_tp" selected="selected">Test points values</option>
+	<option value="stare_act">Actuators status</option>
+	<option value="poz_act">Actuators positions</option>
+	<option value="torq_act">Actuators torque</option>
+	</select></td></tr>
+	
+	<tr><td>Actuator number:</td>
+	<td><input type="text" id="txt_act" size="10"/></td></tr>
+
+	<tr><td>Cod operation:</td>
+	<td> <input type="text" id="txt_cod" value="1" size="5"/></td></tr>
+	
+	<tr><td colspan="2"><center><input type="button" id="cmdRequest" value="Request" onClick="performOperation()"/></center></td>
+	<tr><td>Value : </td> <td> <input type="text" size="20" id="txtResult"></td></tr>
+	</table>
+<br><br>
+</td></tr></table></center>	
+</body>
+</html>
