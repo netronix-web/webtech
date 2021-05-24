@@ -1,0 +1,81 @@
+        public class instrum
+        {
+            int x0;
+            int y0;
+            int w;
+            int h;
+            int f, val_max, val_v;
+            int nr_max;
+            System.Drawing.Bitmap img;
+            public void setval(System.Drawing.Graphics zona_des, System.Drawing.Pen creion_r, int[] vals, int nrv)
+            {
+                int val, i, j;
+                img = new Bitmap(w, h, zona_des);
+                // sterg imaginea
+                for (j = 0; j < h; j++)
+                {
+                    for (i = 0; i < w; i++)
+                    {
+                        img.SetPixel(i, j, System.Drawing.Color.WhiteSmoke);
+                    }
+                }
+                // grid
+                for (j = 0; j < h; j++)
+                {
+                    // grid orizontal
+                    if (j % 10 == 0)
+                    {
+                        for (i = 0; i < w; i++)
+                        {
+                            if (j % 50 == 0)
+                                img.SetPixel(i, j, System.Drawing.Color.Gray);
+                            else
+                                img.SetPixel(i, j, System.Drawing.Color.LightGray);
+                        }
+                    }
+                    else
+                    {
+                        // grid orizontal vertical
+                        for (i = 0; i < w; i++)
+                        {
+                            if (i % 10 == 0)
+                            {
+                                if (i % 50 == 0)
+                                    img.SetPixel(i, j, System.Drawing.Color.Gray);
+                                else
+                                    img.SetPixel(i, j, System.Drawing.Color.LightGray);
+                            }
+                        }
+                    }
+                }
+                //chenar
+                for (i = 0; i < w; i++)
+                {
+                    img.SetPixel(i, 0, System.Drawing.Color.Blue);
+                    img.SetPixel(i, h - 1, System.Drawing.Color.Blue);
+                }
+                for (j = 0; j < h; j++)
+                {
+                    img.SetPixel(0, j, System.Drawing.Color.Blue);
+                    img.SetPixel(w - 1, j, System.Drawing.Color.Blue);
+                }
+                zona_des.DrawImage(img, x0, y0);
+                // afisare valoare sub forma de linii
+                val_v = System.Convert.ToInt16(System.Convert.ToDouble(vals[1]) * (System.Convert.ToDouble(h) / System.Convert.ToDouble(val_max)));
+                for (i = 1; i < w - 1; i++)
+                {
+                    val = System.Convert.ToInt16(System.Convert.ToDouble(vals[i]) * (System.Convert.ToDouble(h) / System.Convert.ToDouble(val_max))); //scalare
+                    zona_des.DrawLine(creion_r, x0 + i, y0 + val_v, x0 + i + 1, y0 + val);
+                    val_v = val;
+                }
+            }
+            public instrum(int pozx, int pozy, int n_maxx, int n_maxy)
+            {
+                x0 = pozx;
+                y0 = pozy;
+                w = n_maxx;
+                h = n_maxy;
+                nr_max = n_maxx;
+                val_max = n_maxy;
+            }
+        }
