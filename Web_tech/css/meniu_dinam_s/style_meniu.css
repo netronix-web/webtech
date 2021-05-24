@@ -1,0 +1,105 @@
+@charset "utf-8";
+/* CSS Document */
+
+html,body{
+	background-image: url(main_blue_bg.jpg);
+}
+body{
+	behavior: url(csshover.htc);  /*   SCRIPT PENTRU  IE6 DEOARECE IE6 nu stie unele comenzi de ex: li:hover sau a:hover ul    */
+}
+
+.container{
+	width:850px;
+	margin:0 auto;
+	height:auto !important;
+	min-height:75%;
+	height:75%;
+	background-attachment: scroll;
+	/*background-image: url(midlle_bg.jpg);*/
+	background-color:#808080;
+	background-repeat: repeat-y;
+	position:relative;
+}
+.meniu_principal{
+	width:850px;
+	height:35px;
+	margin:0;
+	padding:0;
+	position:relative;
+	background-color:#6633CC;
+}
+.meniu_principal li{
+	display:block;
+	float:left;
+	width:120px;
+	line-height:35px;
+	padding-left:15px;
+}
+.meniu_principal li a{
+	color:#FFFFFF;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:12px;
+	font-weight:bold;
+	text-decoration:none;
+}
+.meniu_principal li a:hover{
+	text-decoration:underline;
+}
+.meniu_principal li:hover ul,
+.meniu_principal li a:hover ul{
+	display:block;
+}
+.meniu_principal li ul{
+	display:none;
+	position:absolute;
+	height:35px;
+	top:35px;
+	left:0;
+	background-color:#FFFFFF;
+	width:850px;
+	margin:0;
+	padding:0;
+}
+
+.meniu_principal li ul li{
+	color:#000099;
+	font-weight:bold;
+	padding-left:25px;
+}
+
+.meniu_principal li ul li a{
+	color:#000099;
+	font-weight:bold;
+	padding-left:25px;
+}
+.content{
+	width:850px;
+	position:relative;
+}
+.continut_p{
+	width:850px;
+	background-color:#D3D3D3;
+}
+
+#menu li:hover ul,
+#menu  a:hover ul{
+	display:block;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
