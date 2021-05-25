@@ -1,0 +1,362 @@
+<html><head>
+<title>Programare modulara</title>
+</head>
+<body>
+<a name="start"></a>
+<table width="100%">
+<tr><td height="50" background="../../Images/imm_s.bmp"><center><font color= "white" size=5> Sistemele de Reglre Automata </Center></TD></TR>
+</table>
+
+<br><br>&nbsp;&nbsp;&nbsp;&nbsp;SRA - Sistemele de Reglre Automata sunt sisteme cu bucla de reactie (loop control) care functioneaza pe baza analizei in 
+permanenta a valorii de iesire (marimii reglate), preluata prin intermediul reactiei negative. Diferenta dintre valoarea de iesire si valoarea de referinta, numita "eroare",  
+este folosita de SRA pentru eliminarea acesteia sau mentinerea ei in anumite intervale prestabilite. 
+<br><br><center><img src="im_citect701.gif"></center>
+<br>&nbsp;&nbsp;&nbsp;&nbsp; Un SRA se compune din urmatoarele elemente:
+<ul>
+	<li> RA - Regulator automat;
+	<li> PF - Partea fixata(Procesul condus);
+</ul>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Marimile definite:
+<ul>
+	<li> r - Referinta;
+	<li> e - Eroarea;
+	<li> u - Comanda;
+	<li> y - Variabila de proces(Marimea reglata, iesirea);
+</ul>
+
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Daca definim  H<sub>r</sub>(s) functia de transfer a regulatorului si  H<sub>f</sub>(s) functia de transfer a 
+partii fixate, Schema unui SRA devine:
+<br><br><center><img src="im_citect703.gif"></center>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;
+
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Partea fixata(PF) contine procesul tehnologic(PT) asupra caruia actioneaza regulatorul automat(RA).
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Procesul tehnologic(PT) este comandat de catre regulatorul automat(RA) prin intermediul elementelor de executie(EE). 
+Citirea marimii reglate(y - variabila de proces) se face prin intermediul traductorilor(T) care ofera marimea x proportionla cu marimea y adica x=k*y. 
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Putem deci reprezenta un SRA sub forma: 
+<br><br><center><img src="im_citect702.gif"></center>
+<br>&nbsp;&nbsp;&nbsp;&nbsp; Unde:
+<ul>
+	<li> RA - Regulator automat;
+	<li> PT - Procesul tehnologic;
+	<li> EE - Element de Executie;
+	<li> T  - Traductor;
+</ul>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Marimile definite:
+<ul>
+	<li> r - Referinta;
+	<li> e - Eroarea;
+	<li> u - Comanda;
+	<li> m - Executia;
+	<li> v - Perturbatia;
+	<li> y - Variabila de proces(Marimea reglata, iesirea);
+	<li> x - Reactia;
+
+</ul>
+
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Mult mai fireasca ar fi reprezentarea in care procesul tehnologic(PT) ar fi reprezentat separat, la care se adauga in 
+mod firesc dispozitivul de automatizare. Aceasta reprezentare ar corespunde dezvoltarii firesti a sistemelor tehnologice in care initial se realizeaza 
+un proces tehnologic dupa care se automatizeaza. 
+<br><br><center><img src="im_citect704.gif"></center>
+
+<br><br><a name="pid"></a>
+<font color= "Blue" size=5>1. Sisteme de reglare automata - PID</font>
+<br><br>&nbsp;&nbsp;&nbsp;&nbsp; In urmatoarela aplicatii vom realiza un SRA-uri (sisteme de reglare automata) de tip 
+PID (proportional-integrativ-derivativ) discret. 
+<br>&nbsp;&nbsp;&nbsp;&nbsp; Un SRA de tip PID mentine valoarea iesirii y in jurul valorii de referinta r prin intermediul comenzii u. Comanda u este generata deSRA prin intermedul unei functii de transfer caracterizata de trei constante: kp,ki,kd si Ti.
+<ul>
+	<li> kp este constanta - Proportionala (cu valori intre 0-4)
+	<li> ki este constanta - Integrativa (cu valori intre 0-5)
+	<li> kd este constanta - Derivativa (cu valori intre 0.2-2)
+	<li> Te este timpul de esantionare (250 ms adica timpul de Refresh al HMI)
+</ul>
+<!------------------------------------------------------------------->
+<html>
+
+&nbsp;&nbsp;&nbsp;&nbsp;In imaginea de jos este reprezentata comanda u (cu rosu) si iesirea y(cu verde).<br><br>
+<center><table bgcolor="WhiteSmoke" border =0>
+<tr><td align="center">
+	<center>Sistem de Reglare Automata PID</center>
+</td></tr>
+
+<tr><td>
+<canvas id="desen06" width="480" height="470" style="background-color:#ffffff;border:1px solid #c3c3c3; ">
+	Your browser does not support the HTML5 canvas tag.
+</canvas>
+</td></tr>
+<tr><td align="center">
+ <table border="0">
+  <tr>
+	<td width="25">r:</td>
+	<td width="150"><input type="range" value="375" id="r_id" min="0" max="500"  onchange="set_r()"/></td>   
+	<td width="50"><span id="r_t"></span></td>
+	<td width="25">kp:</td>
+	<td width="150"><input type="range" value="75" id="kp_id" min="0" max="250"  onchange="set_kp()"/></td>   
+	<td width="50"><span id="kp_t"></span></td>
+  </tr><tr>
+	<td width="25">ki:</td>
+	<td width="150"><input type="range" value="120" id="ki_id" min="0" max="200"  onchange="set_ki()"/></td>   
+	<td width="50"><span id="ki_t"></span></td>
+	<td width="25">kd:</td>
+	<td width="150"><input type="range" value="0" id="kd_id" min="0" max="50"  onchange="set_kd()"/></td>   
+	<td width="50"><span id="kd_t"></span></td>
+  </tr>
+ </table>
+</td></tr>
+</table></center>
+<script type="text/javascript">
+var r,kp,ki,kd;
+var ctx6=desen06.getContext("2d");
+ctx6.lineWidth = .5; 
+w=desen06.width ;
+h=desen06.height-20;
+val_max=1000;
+valls_0 = [];
+valls_1 = [];
+nrv=400;
+ht=400;
+for(i=0;i<nrv;i++){	
+	valls_0[i]=0;
+	valls_1[i]=0;
+}
+			
+function afisor_xt(c,pozx, pozy, n_maxx, n_maxy,v_max)
+	{
+		this.cnvs=c; // canvas
+		this.x0 = pozx;// pozitia pe x
+                this.y0 = pozy;// pozitia pe y
+                this.w = n_maxx; // latimea
+                this.h = n_maxy;// inaltimea
+                this.nr_max = n_maxx; // numarul de puncte pe x
+                this.val_max = v_max; // valoarea maxima
+	}
+afisor_xt.prototype = {
+	constructor: afisor_xt,
+	deseneaza:function (vls_0,vls_1, nv)  {
+	var val_v, val ,i ,j;
+	
+	// sterg continut
+	
+	this.cnvs.beginPath();
+	this.cnvs.fillStyle = "#FFFFFF";
+	this.cnvs.fillRect(this.x0-30,this.y0-10,this.x0+this.w,this.y0+this.h+30);
+	this.cnvs.stroke();	
+	
+	//chenar
+	
+	this.cnvs.beginPath();
+	this.cnvs.moveTo(this.x0,this.y0); 
+	this.cnvs.strokeStyle = "rgb(0,0,255)";
+	this.cnvs.lineTo(this.x0+this.w,this.y0);
+	this.cnvs.lineTo(this.x0+this.w,this.y0+this.h);
+	this.cnvs.lineTo(this.x0,this.y0+this.h);
+	this.cnvs.lineTo(this.x0,this.y0);
+	this.cnvs.stroke();
+    	val_v = vls_0[1] * this.h / this.val_max;
+
+	// grid orizontal minor
+			
+	this.cnvs.beginPath();
+    	this.cnvs.strokeStyle = "rgb(200,200,200)";
+	this.cnvs.font = "10px Arial";
+	for (j = this.h-10; j >=0; j -= 10)
+	{
+		this.cnvs.moveTo(this.x0,this.y0+j); 
+		this.cnvs.lineTo(this.x0 + this.w, this.y0 + j);
+    	}
+	
+	// grid vertical minor
+	
+	for (j = 10; j<=this.w-10; j += 10)
+    	{
+		this.cnvs.moveTo(this.x0+j,this.y0+1); 
+		this.cnvs.lineTo(this.x0 + j ,this.y0+ this.h+1);
+    	}
+	this.cnvs.stroke();
+
+	// grid vertical major
+			
+	this.cnvs.beginPath();
+    	this.cnvs.strokeStyle = "rgb(150,150,150)";
+    	for (j = 0; j <=this.h; j += 50)
+    	{
+		this.cnvs.moveTo(this.x0,this.y0+j); 
+		this.cnvs.lineTo(this.x0 + this.w ,this.y0 + j);
+		this.cnvs.strokeText(Math.round(this.val_max*j/this.h),this.x0-20,this.y0+this.h - j);
+   	}
+
+	// grid orizontal major
+	 
+    	for (j = 0; j<=this.w; j += 50)
+    	{
+		this.cnvs.moveTo(this.x0+j,this.y0); 
+		this.cnvs.lineTo(this.x0 + j ,this.y0+ this.h-1);	
+		this.cnvs.strokeText(j,this.x0 + j,this.y0 + this.h+10);
+   	 }
+	this.cnvs.stroke();
+	
+	// trasez graficul cnal 0
+
+	this.cnvs.beginPath();
+	this.cnvs.strokeStyle = "rgb(0,240,0)";
+	this.cnvs.moveTo(this.x0,this.y0+val_v); 
+	for (i = 0; i<=nrv; i +=1){
+		val = vls_0[i] * this.h / this.val_max; //scalare
+		this.cnvs.lineTo(this.x0 + i ,this.y0+ this.h-val);
+	}
+	this.cnvs.stroke();
+
+	// trasez graficul cnal 1
+
+	this.cnvs.beginPath();
+	this.cnvs.strokeStyle = "rgb(240,0,0)";
+	this.cnvs.moveTo(this.x0,this.y0+val_v); 
+	for (i = 0; i<=nrv; i +=1){
+		val = vls_1[i] * this.h / this.val_max; //scalare
+		this.cnvs.lineTo(this.x0 + i ,this.y0+ this.h-val);
+	}
+	this.cnvs.stroke();
+ }
+}
+oscil = new afisor_xt(ctx6,50,20,nrv,ht,val_max);
+function grafic(){
+var er=0,er_v=0;
+var y=0,y_v=0,inte=0,deriv=0,er=0,e_v=0;
+//kp=0.5;
+//kd=0.2;
+var Te=0.1;
+
+            for (i = 1; i <= nrv; i++)
+            {
+                er = r - y;           
+                inte = inte + er * Te;
+                deriv= (er - e_v) / Te;
+                u = (kp/100) * er + (ki/100) * inte + (kd/100) * deriv;
+                y = (u * Te + 5 * y_v) / (5 + Te);
+                valls_0[i] = y;
+		valls_1[i] = u;
+                e_v = er;
+                y_v = y;
+            }
+	
+	oscil.deseneaza(valls_0,valls_1,nrv);
+	set_r();
+	set_kp();
+	set_ki();
+	set_kd();
+	setTimeout("grafic()",100);
+}
+function set_r(){
+  r = document.getElementById('r_id').value;
+  r_t.innerHTML=r;
+}
+function set_kp(){
+  kp = document.getElementById('kp_id').value;
+  kp_t.innerHTML=kp/100;
+}
+function set_ki(){
+  ki = document.getElementById('ki_id').value;
+  ki_t.innerHTML=ki/100;
+}
+function set_kd(){
+  kd = document.getElementById('kd_id').value;
+  kd_t.innerHTML=kd/100;
+}
+set_r();
+set_kp();
+set_ki();
+set_kd();
+grafic();
+</script>
+
+<!------------------------------------------------------------------->
+
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Pentru implementarea regulatorului PID se va folosi metoda “Velocity”. Conform acesti metode, comanda u  
+din momentul k depinde de referinta r, de iesirea y si de  e_v (e, din momentul k-1). Intervalul de timp dintre momentul k si momentul k-1 
+este Te(Timpul de esantionare). 
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Comanda u se obtine prin insumarea elementului proportional, integrativ (inte)  si derivativ(deriv) astfel:
+<br><br><!------------------------------------------------------------------->
+<table width="100%" border=1><tr><td bgcolor="WhiteSmoke">
+<font size="3" color="DarkBlue"><pre>
+    e = r - y;
+    inte = inte + e * Te;
+    deriv = (e - e_v) / Te;
+    u = kp * e + ki * inte + kd * deriv;
+    e_v = e;
+
+</pre> </font>
+</td></tr></table>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;In care:
+<ul>
+	<li> y este iesirea din pasul curent
+	<li> r este valoareareferinta
+	<li> e este eroarea calculata (r-y) din pasul curent
+	<li> e_v este valoarea calculata pentru e in pasul anterior
+	<li> u este valoarea calculata pentru comanda din pasul curent
+	<li> kp este constanta - Proportionala (cu valori intre 0-4)
+	<li> ki este constanta - Integrativa (cu valori intre 0-5)
+	<li> kd este constanta - Derivativa (cu valori intre 0.2-2)
+	<li> Te este timpul de esantionare (250 ms adica timpul de Refresh al HMI)
+</ul>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Variabila de proces adica iesirea y reprezentand totodata marimea reglata ar trebui sa provina din procesul tehnologic(PT) prin
+plasarea unui traductor. Avand in vedere functia de transfer  H<sub>f</sub>(s)=1/(5s+1), vom simula y cu relatia:
+<br><br><center><b> y = (u*Te + 5 * y_v) / (5 + Te);</b> </center>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;In care:
+<ul>
+	<li> y este valoarea calculata pentru iesire din pasul curent
+	<li> y_v este valoarea calculata pentru y in pasul anterior
+	<li> u este valoarea calculata pentru comanda din pasul curent
+	<li> Te este timpul de esantionare (250 ms adica timpul de Refresh al HMI)
+</ul>
+&nbsp;&nbsp;&nbsp;&nbsp;Dupa cum se observa iesirea y depinde de de y_v(y din pasul anterior), comanda u din pasul curent si de timpul de esantionare Te 
+<br><br>&nbsp;&nbsp;&nbsp;&nbsp;Realizam aplicatia <a href="../downloads/pid/Pid_v00.vi"><b> Pid_v00 </b></a> si plasam urmatoarele elemente pe "Front Panel":
+<br><br><center> <img src="im_lv900.gif"></center>
+<br><br>&nbsp;&nbsp;&nbsp;&nbsp;Implementam expresiile pentru comanda u si iesirea y in  "Block Diagram":
+<br><br><center> <img src="im_lv901.gif"></center>
+<br><a name="fn_pid"></a>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;<font color= "Blue" size=4>Utilizare "Formula Node" pentru a implementa Regulatorul PID </font>
+
+<br><br>&nbsp;&nbsp;&nbsp;&nbsp;In aplicatia <a href="../downloads/pid/Pid_v01.vi"><b> Pid_v01 </b></a> incercam sa simplificam "Block Diagram" folosind "Formula Node". 
+<br><br><center> <img src="im_lv902.gif"></center>
+<br><a name="modul_pid"></a>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;<font color= "Blue" size=4>Crearea unui Sub Vi pid</font>
+
+<br><br>&nbsp;&nbsp;&nbsp;&nbsp;In aplicatia <a href="../downloads/pid/Pid_v02.vi"><b> Pid_v02 </b></a> se foloseste Sub VI-ul <a href="../downloads/pid/pid.vi"><b> pid </b></a> 
+Obtinindu-se astfel un "Block Diagram" mult simplificat. 
+<br><br><center> <img src="im_lv903.gif"></center>
+<br><br>&nbsp;&nbsp;&nbsp;&nbsp;Urmatoarele aplicatii vor putea folosi Sub VI-ul <a href="../downloads/pid/pid.vi"><b> pid </b></a>, dezvoltarea acestora fiind 
+mult simplificata prin folosirea acestui Sub VI.
+
+<br><a name="regl_nivel"></a>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;<font color= "Blue" size=4>Controlul nivelului unui lichid intr-un rezervor</font>
+
+<br><br>&nbsp;&nbsp;&nbsp;&nbsp;Pe baza aplicatiei anterioare vom realiza aplicatia <a href="../downloads/pid/Regl_nivel.vi"><b> Regl_nivel </b></a> 
+pentru controlul nivelului unui lichid intr-un rezervor.
+<br><br><center> <img src="im_lv907.gif"></center>
+<br>&nbsp;&nbsp;&nbsp;&nbsp; "Block Diagram" fiind similara cu "Block Diagram" a aplicatiei anterioare. 
+<br><br><center> <img src="im_lv908.gif"></center>
+
+<br><br>&nbsp;&nbsp;&nbsp;&nbsp;Imaginea de fundal se pregateste folosind diverse editoare dupa care se copiaza in Front Panel.
+
+<br><br><a name="pid_2020"></a>
+<font color= "Blue" size=5>2.Utilizarea modulullui PID din Control and Simulation </font>
+
+<br><br>&nbsp;&nbsp;&nbsp;&nbsp; Vom utiliza in continuare modulul Functions->Control and Simulation->PID care sa gaseste in versiunile mai noi 
+incepand cu LabVIEW 2020.
+
+<br><br>&nbsp;&nbsp;&nbsp;&nbsp;In aplicatia <a href="../downloads/pid_2020/Pid_v20.vi"><b> Pid_v20 </b></a> se foloseste Sub VI-ul Functions->Control and Simulation->PID.vi pentru a realiza un 
+SRA PID. 
+<br><br><center> <img src="im_lv904.gif"></center>
+<br><br>&nbsp;&nbsp;&nbsp;&nbsp;"Block Diagram" fiind: 
+<br><br><center> <img src="im_lv905.gif"></center>
+<br><br>&nbsp;&nbsp;&nbsp;&nbsp;In aplicatia <a href="../downloads/pid_2020/Pid_v21.vi"><b> Pid_v21 </b></a> incercam sa simplificam "Block Diagram" folosind "Formula Node". 
+<br><br><center> <img src="im_lv906.gif"></center>
+
+
+<br><br><!------------------------------------------------------------------->
+<table width="100%" border=1><tr><td bgcolor="#D9E3EE">
+<pre><font size="2" color="darkblue">
+</font></pre> 
+</td></tr></table>
+<!------------------------------------------------------------------->
+</body>
+</html>
