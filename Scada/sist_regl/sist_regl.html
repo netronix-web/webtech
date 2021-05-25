@@ -112,17 +112,17 @@ SRA prin intermedul unei functii de transfer caracterizata de trei constante: kp
  <table border="0">
   <tr>
 	<td width="25">r:</td>
-	<td width="150"><input type="range" value="375" id="r_id" min="0" max="500"  onchange="set_r()"/></td>   
+	<td width="150"><input type="range" value="375" id="r_id" min="0" max="500"  onchange="set_r()"/></td>
 	<td width="50"><span id="r_t"></span></td>
 	<td width="25">kp:</td>
-	<td width="150"><input type="range" value="75" id="kp_id" min="0" max="250"  onchange="set_kp()"/></td>   
+	<td width="150"><input type="range" value="75" id="kp_id" min="0" max="250"  onchange="set_kp()"/></td>
 	<td width="50"><span id="kp_t"></span></td>
   </tr><tr>
 	<td width="25">ki:</td>
-	<td width="150"><input type="range" value="120" id="ki_id" min="0" max="200"  onchange="set_ki()"/></td>   
+	<td width="150"><input type="range" value="120" id="ki_id" min="0" max="200"  onchange="set_ki()"/></td>
 	<td width="50"><span id="ki_t"></span></td>
 	<td width="25">kd:</td>
-	<td width="150"><input type="range" value="0" id="kd_id" min="0" max="50"  onchange="set_kd()"/></td>   
+	<td width="150"><input type="range" value="0" id="kd_id" min="0" max="50"  onchange="set_kd()"/></td>
 	<td width="50"><span id="kd_t"></span></td>
   </tr>
  </table>
@@ -295,7 +295,7 @@ grafic();
 
 <!------------------------------------------------------------------->
 
-<br>&nbsp;&nbsp;&nbsp;&nbsp;Pentru implementarea regulatorului PID se va folosi metoda “Velocity”. Conform acesti metode, comanda u  
+<br>&nbsp;&nbsp;&nbsp;&nbsp;Pentru implementarea regulatorului PID se va folosi metoda "Velocity". Conform acesti metode, comanda u  
 din momentul k depinde de referinta r, de iesirea y si de  e_v (e, din momentul k-1). Intervalul de timp dintre momentul k si momentul k-1 
 este Te(Timpul de esantionare). 
 <br>&nbsp;&nbsp;&nbsp;&nbsp;Comanda u se obtine prin insumarea elementului proportional, integrativ (inte)  si derivativ(deriv) astfel:
